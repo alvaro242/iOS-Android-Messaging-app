@@ -1,12 +1,14 @@
-import { StatusBar } from 'expo-status-bar';
 import { StyleSheet, Text, View } from 'react-native';
 import * as React from 'react';
-//import { NavigationContainer } from '@react-navigation/native';
 import StartScreen from "./app/screens/StartScreen";
+
 
 export default function App() {
 
-  return <StartScreen/>;
+  return (
+    <StartScreen/>
+    
+    
 
   /*
   return (
@@ -18,8 +20,9 @@ export default function App() {
       </View>
     </NavigationContainer>
     
+    */
   );
-  */
+  
 }
 
 const styles = StyleSheet.create({
