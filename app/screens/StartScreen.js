@@ -1,39 +1,48 @@
 import React from 'react';
-import { Image, ImageBackground, StyleSheet, Text, View } from 'react-native';
+import { Image, ImageBackground, StyleSheet, Text, View, TouchableHighlight} from 'react-native';
 
-
-function StartScreen(props) {
+export default function StartScreen({ navigation }) {
     return (
         <ImageBackground 
         style={styles.background}
         source={require("../assets/background.jpeg")} > 
             <View style={styles.logoContainer}>
                 <Image style={styles.logo} source={require("../assets/logo.png")}/>
-                <Text>Welcome!!</Text>
+                <Text>Telechat</Text>
             </View>
-            <View style={styles.login}>
-                <Text>Login</Text>
-            </View>
-            <View style={styles.signup}>
+            <TouchableHighlight style={styles.loginContainer} onPress={()=> {
+                console.log('Login Button!');
+                navigation.push("LogInScreen");
+                }}>
+                <Text>Log In</Text>
+             </TouchableHighlight>
+            <TouchableHighlight style={styles.signup} onPress={()=> {
+                console.log('Sign Up Button!');
+                navigation.push("SignUpScreen");
+                }}>
                 <Text>Sign Up</Text>
-            </View>
+            </TouchableHighlight>
         </ImageBackground>
+        
     );
 }
+    
 
 const styles = StyleSheet.create({
     background : {
         flex: 1,
         alignItems: 'center',
         justifyContent: 'center',
+       
     },
-    login : {
+    loginContainer : {
         width: "100%",
         height: 60,
         backgroundColor: "salmon",
         alignItems: 'center',
         justifyContent: 'center',
     },
+   
     signup : {
         width: "100%",
         height: 60,
@@ -42,14 +51,16 @@ const styles = StyleSheet.create({
         justifyContent: 'center',
     },
     logo : {
-        width: 70,
-        height: 70,
+        width: 120,
+        height: 90 ,
+        top: -10,
         
     },
     logoContainer : {
-        top: 100,
+        top: 120,
         flex: 1,
-    }
+        alignItems: 'center',
+    },
+  
 })
 
-export default StartScreen;
