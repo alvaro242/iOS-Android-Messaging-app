@@ -1,17 +1,21 @@
 import { StyleSheet, SafeAreaView } from 'react-native';
-import * as React from 'react';
 import StartScreen from "./app/screens/StartScreen";
 import LogInScreen from "./app/screens/LogInScreen";
 import SignUpScreen from "./app/screens/SignUpScreen";
 import { NavigationContainer } from "@react-navigation/native";
 import { createNativeStackNavigator } from "@react-navigation/native-stack";
+import React, { Component } from 'react'; 
+import AsyncStorage from '@react-native-async-storage/async-storage';
 
 const Stack = createNativeStackNavigator();
 
 
-export default function App() {
-  //SafeArea for iPhoneX+ devices
+export default class App extends Component {
+
+  render(){
+  
   return (
+    //SafeArea for iPhoneX+ devices
   <SafeAreaView style={styles.root}>
     <NavigationContainer>
       <Stack.Navigator>
@@ -35,7 +39,7 @@ export default function App() {
   </SafeAreaView>
 );
 
-}
+}}
 
 const styles = StyleSheet.create({
   root: {

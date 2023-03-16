@@ -2,13 +2,14 @@
 import { StyleSheet, Text, View, Button, Image, TextInput } from 'react-native';
 import { Formik } from 'formik';
 import * as yup from 'yup';
+import axios from "axios";
 
 const loginValidationSchema = yup.object().shape({
 
-  firstName: yup
+  first_name: yup
     .string()
     .required(''), //empty so we dont show any message is is not completed
-  lastName: yup
+  last_name: yup
     .string()
     .required(''),
   email: yup
@@ -33,6 +34,25 @@ const loginValidationSchema = yup.object().shape({
 
 
 export default function SignUpScreen({ navigation }) {
+
+  //Meter cada llamada a API dentro de un componente
+  function callToApiRegister(values){
+    console.log(values);
+    axios.post("http://localhost:3333/api/1.0.0/user/", values)
+    .then ((response) => {
+
+      //returns user ID on response.data.user_id and token on response.data.session_token
+      console.log(response);
+      //if response 201 I am logged in. 
+  
+  })
+  .catch ((error) =>{
+    
+      console.log(error);
+   
+    });
+
+  }
   
   return (
     
@@ -48,12 +68,12 @@ export default function SignUpScreen({ navigation }) {
             validationSchema={loginValidationSchema}
             
             
-            initialValues={{ firstName:'', lastName:'',  email: '', password: '', confirmPassword: ''}}
+            initialValues={{ first_name:'', last_name:'',  email: '', password: '', confirmPassword: ''}}
             onSubmit={values => 
                 
                 
                 delete values["confirmPassword"] &&
-                console.log(values)
+                callToApiRegister(values)
                 
             }
           >
@@ -61,28 +81,28 @@ export default function SignUpScreen({ navigation }) {
             {({ handleChange, handleBlur, handleSubmit, values, errors, isValid }) => (
               <>
                 <TextInput
-                  name="firstName"
+                  name="first_name"
                   placeholder="First Name"
                   style={styles.input}
-                  onChangeText={handleChange('firstName')}
-                  onBlur={handleBlur('firstName')}
-                  value={values.firstName}
+                  onChangeText={handleChange('first_name')}
+                  onBlur={handleBlur('first_name')}
+                  value={values.first_name}
                   keyboardType="email-address"
                 />
-                {errors.firstName &&
-                    <Text style={styles.error}>{errors.firstName}</Text>
+                {errors.first_name &&
+                    <Text style={styles.error}>{errors.first_name}</Text>
                 }
                 <TextInput
-                  name="lastName"
+                  name="last_name"
                   placeholder="Last Name"
                   style={styles.input}
-                  onChangeText={handleChange('lastName')}
-                  onBlur={handleBlur('lastName')}
-                  value={values.lastName}
+                  onChangeText={handleChange('last_name')}
+                  onBlur={handleBlur('last_name')}
+                  value={values.last_name}
                   keyboardType="text"
                 />
-                {errors.lastName &&
-                    <Text style={styles.error}>{errors.lastName}</Text>
+                {errors.last_name &&
+                    <Text style={styles.error}>{errors.last_name}</Text>
                 }
                 <TextInput
                   name="email"

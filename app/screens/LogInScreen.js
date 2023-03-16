@@ -6,6 +6,8 @@ import axios from "axios";
 
 
 
+
+
 const loginValidationSchema = yup.object().shape({
 
   
@@ -23,11 +25,27 @@ const loginValidationSchema = yup.object().shape({
 
 
 export default function LogInScreen({ navigation }) {
+
+
+  //Meter cada llamada a API dentro de un componente
+  function callToApi(values){
+    axios.post("http://localhost:3333/api/1.0.0/login/", values)
+    .then ((response) => {
+
+      console.log(response.data.token);
+  
+  })
+  .catch ((error) =>{
+    
+      console.log(error);
+   
+    });
+
+  }
+
   
   return (
 
-    
-    
     <View style={styles.container}>
         <View style={styles.logoContainer}>
             <Image style={styles.logo} source={require("../assets/logo.png")}/>
@@ -39,23 +57,7 @@ export default function LogInScreen({ navigation }) {
             <Formik
             validationSchema={loginValidationSchema}
             initialValues={{   email: '', password: ''}}
-            onSubmit={values => 
-                
-                
-                axios.post("http://localhost:3333/api/1.0.0/login/", values)
-                .then ((res) => {
-
-                    console.log(res.data.token);
-                
-                })
-                .catch ((err) =>{
-                    
-                    console.log(err) })
-
-                
-
-                
-            }
+            onSubmit={values => callToApi(values)}
           >
         
             {({ handleChange, handleBlur, handleSubmit, values, errors, isValid }) => (
@@ -88,9 +90,6 @@ export default function LogInScreen({ navigation }) {
                 }
                 
                 <Button onPress={handleSubmit} title="Log In" disabled={!isValid} />
-
-                
-                
               </>
             )}
           </Formik>
