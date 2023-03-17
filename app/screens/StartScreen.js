@@ -10,6 +10,12 @@ export default function StartScreen({ navigation }) {
                 <Image style={styles.logo} source={require("../assets/logo.png")}/>
                 <Text>Telechat</Text>
             </View>
+            <TouchableHighlight style={styles.privisionalHomeButton} onPress={()=> {
+                
+                navigation.push("HomeScreen");
+                }}>
+                <Text>Provisional: Home</Text>
+             </TouchableHighlight>
             <TouchableHighlight style={styles.loginContainer} onPress={()=> {
                 console.log('Login Button!');
                 navigation.push("LogInScreen");

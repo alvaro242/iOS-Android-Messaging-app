@@ -41,13 +41,14 @@ export default function SignUpScreen({ navigation }) {
     axios.post("http://localhost:3333/api/1.0.0/user/", values)
     .then ((response) => {
 
-      //returns user ID on response.data.user_id and token on response.data.session_token
+      //returns user ID on response.data.user_id, pending autologin
       console.log(response);
-      //if response 201 I am logged in. 
+      //if response 201 I should make a logged in. 
   
   })
   .catch ((error) =>{
     
+      //Error handling pending
       console.log(error);
    
     });
@@ -142,7 +143,7 @@ export default function SignUpScreen({ navigation }) {
                     <Text style={styles.error}>{errors.confirmPassword}</Text>
                 }
                 
-                <Button onPress={handleSubmit} title="Log In" disabled={!isValid} />
+                <Button onPress={handleSubmit} title="Sign Up" disabled={!isValid} />
                 
               </>
             )}

@@ -2,10 +2,11 @@ import { StyleSheet, SafeAreaView } from 'react-native';
 import StartScreen from "./app/screens/StartScreen";
 import LogInScreen from "./app/screens/LogInScreen";
 import SignUpScreen from "./app/screens/SignUpScreen";
+import HomeScreen from "./app/screens/HomeScreen";
 import { NavigationContainer } from "@react-navigation/native";
 import { createNativeStackNavigator } from "@react-navigation/native-stack";
 import React, { Component } from 'react'; 
-import AsyncStorage from '@react-native-async-storage/async-storage';
+
 
 const Stack = createNativeStackNavigator();
 
@@ -33,6 +34,11 @@ export default class App extends Component {
           name="SignUpScreen"
           component={SignUpScreen}
           options={{title: "Sign Up", } }
+        />
+        <Stack.Screen 
+          name="HomeScreen"
+          component={HomeScreen}
+          options={{title: "Home", } }
         />
       </Stack.Navigator>
     </NavigationContainer>

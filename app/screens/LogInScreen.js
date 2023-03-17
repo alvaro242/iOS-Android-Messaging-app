@@ -3,6 +3,7 @@ import { StyleSheet, Text, View, Image, TextInput, Button, Alert} from 'react-na
 import { Formik } from 'formik';
 import * as yup from 'yup';
 import axios from "axios";
+import AsyncStorage from '@react-native-async-storage/async-storage';
 
 
 
@@ -30,13 +31,29 @@ export default function LogInScreen({ navigation }) {
   //Meter cada llamada a API dentro de un componente
   function callToApi(values){
     axios.post("http://localhost:3333/api/1.0.0/login/", values)
-    .then ((response) => {
+    .then (async (response) => {
 
-      console.log(response.data.token);
+      
+
+      try{
+        await AsyncStorage.setItem("whatsthat_user_id", response.data.id)
+        await AsyncStorage.setItem("whatsthat_session_token", response.data.token)
+        console.log(response.data.token);
+
+        //this.setState({"submitted": false}); This seems like its not working
+
+        //this.props.navigation.navigate("SignUpScreen"); This looks like is not working
+
+      }
+      catch{
+        throw "Something went wrong"
+
+      }
   
   })
   .catch ((error) =>{
     
+      //error handling pending
       console.log(error);
    
     });
