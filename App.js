@@ -38,7 +38,7 @@ export default class App extends Component {
         <Stack.Screen 
           name="HomeScreen"
           component={HomeScreen}
-          options={{title: "Home", } }
+          options={{title: "Home", headerShown: false, gestureEnabled: false} }
         />
       </Stack.Navigator>
     </NavigationContainer>

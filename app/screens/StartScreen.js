@@ -13,6 +13,10 @@ export default function StartScreen({ navigation }) {
             <TouchableHighlight style={styles.privisionalHomeButton} onPress={()=> {
                 
                 navigation.push("HomeScreen");
+                navigation.navigate('HomeScreen', {
+                    screen: 'HomeScreen',
+                    initial: false,
+                  });
                 }}>
                 <Text>Provisional: Home</Text>
              </TouchableHighlight>

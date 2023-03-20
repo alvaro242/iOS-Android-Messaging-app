@@ -1,26 +1,25 @@
 
 import { StyleSheet, Text, View, Button, Image, TextInput } from 'react-native';
-import { Formik } from 'formik';
-import * as yup from 'yup';
 import axios from "axios";
+import { createBottomTabNavigator } from '@react-navigation/bottom-tabs';
+import ChatsScreen from "./ChatsScreen";
+import AccountScreen from "./AccountScreen";
+import ContactsScreen from "./ContactsScreen";
 
+const HomeTab = createBottomTabNavigator()
 
 export default function HomeScreen({ navigation }) {
 
   return (
     
-    <View style={styles.container}>
-        <Text>Provisional</Text>
-    </View>
-    
+    <HomeTab.Navigator initialRouteName="Home">
+          <HomeTab.Screen name="Contacts" component={ContactsScreen} options={{title: "Contacts", headerShown: false} }/>
+          <HomeTab.Screen name="Chats" component={ChatsScreen} options={{title: "Chats", headerShown: false} }/>
+          <HomeTab.Screen name="AccountScreen" component={AccountScreen} options={{title: "Account", headerShown: false} } />
+    </HomeTab.Navigator>
+   
   );
 }
-   
-    
-  
-  
-  
-
 
 
 
