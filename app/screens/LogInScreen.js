@@ -4,7 +4,8 @@ import { Formik } from 'formik';
 import * as yup from 'yup';
 import axios from "axios";
 import AsyncStorage from '@react-native-async-storage/async-storage';
-
+import HomeScreen from "./HomeScreen";
+import {styles} from './../components/Styles/customStyle';
 
 
 
@@ -39,6 +40,8 @@ export default function LogInScreen({ navigation }) {
         await AsyncStorage.setItem("whatsthat_user_id", response.data.id)
         await AsyncStorage.setItem("whatsthat_session_token", response.data.token)
         console.log(response.data.token);
+        navigation.push("HomeScreen");
+       
 
         //this.setState({"submitted": false}); This seems like its not working
 
@@ -63,14 +66,14 @@ export default function LogInScreen({ navigation }) {
   
   return (
 
-    <View style={styles.container}>
-        <View style={styles.logoContainer}>
-            <Image style={styles.logo} source={require("../assets/logo.png")}/>
+    <View style={styles.LoginContainer}>
+        <View style={styles.logoContainerLogin}>
+            <Image style={styles.logoLogin} source={require("../assets/logo.png")}/>
         </View>
         
         <Text>Create a new account</Text>
 
-        <View style={styles.formContainer}>
+        <View style={styles.formContainerLogin}>
             <Formik
             validationSchema={loginValidationSchema}
             initialValues={{   email: '', password: ''}}
@@ -83,27 +86,27 @@ export default function LogInScreen({ navigation }) {
                 <TextInput
                   name="email"
                   placeholder="Email Address"
-                  style={styles.input}
+                  style={styles.inputForm}
                   onChangeText={handleChange('email')}
                   onBlur={handleBlur('email')}
                   value={values.email}
                   keyboardType="text"
                 />
                 {errors.email &&
-                    <Text style={styles.error}>{errors.email}</Text>
+                    <Text style={styles.errorLogin}>{errors.email}</Text>
                 }
                 <TextInput
                   name="password"
                   placeholder="Password"
                   autoCapitalize='none'
-                  style={styles.input}
+                  style={styles.inputForm}
                   onChangeText={handleChange('password')}
                   onBlur={handleBlur('password')}
                   value={values.password}
                   secureTextEntry
                 />
                 {errors.password &&
-                    <Text style={styles.error}>{errors.password}</Text>
+                    <Text style={styles.errorLogin}>{errors.password}</Text>
                 }
                 
                 <Button onPress={handleSubmit} title="Log In" disabled={!isValid} />
@@ -117,51 +120,3 @@ export default function LogInScreen({ navigation }) {
 }
 
 
-
-const styles = StyleSheet.create({
-  
-    container: {
-        
-        justifyContent: 'center',
-        alignItems: "center",
-        backgroundColor: "white",
-  },
-    logo : {
-        width: 60,
-        height: 45 ,
-        margin: 10,
-    
-    }   ,
-    logoContainer : {
-        
-      
-        alignItems: 'center',
-    },
-    formContainer : {
-        width: '80%',
-    alignItems: 'center',
-    backgroundColor: 'white',
-    padding: 10,
-    elevation: 10,
-   
-    },
- 
-    input : {
-
-
-    height: 50,
-    padding: 10,
-    width: '90%',
-    margin: 10,
-    backgroundColor: 'white',
-    borderColor: 'gray',
-    borderWidth: StyleSheet.hairlineWidth,
-    borderRadius: 10,
-    },
-
-    error :{
-    fontSize: 14,
-    color: 'red',
-    }
-  
-});

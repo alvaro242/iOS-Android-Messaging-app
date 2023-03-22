@@ -1,5 +1,6 @@
 import React from 'react';
 import { Image, ImageBackground, StyleSheet, Text, View, TouchableHighlight} from 'react-native';
+import {styles} from './../components/Styles/customStyle';
 
 export default function StartScreen({ navigation }) {
     return (
@@ -7,7 +8,7 @@ export default function StartScreen({ navigation }) {
         style={styles.background}
         source={require("../assets/background.jpeg")} > 
             <View style={styles.logoContainer}>
-                <Image style={styles.logo} source={require("../assets/logo.png")}/>
+                <Image style={styles.logoStart} source={require("../assets/logo.png")}/>
                 <Text>Telechat</Text>
             </View>
             <TouchableHighlight style={styles.privisionalHomeButton} onPress={()=> {
@@ -26,7 +27,7 @@ export default function StartScreen({ navigation }) {
                 }}>
                 <Text>Log In</Text>
              </TouchableHighlight>
-            <TouchableHighlight style={styles.signup} onPress={()=> {
+            <TouchableHighlight style={styles.signupContainer} onPress={()=> {
                 console.log('Sign Up Button!');
                 navigation.push("SignUpScreen");
                 }}>
@@ -37,40 +38,4 @@ export default function StartScreen({ navigation }) {
     );
 }
     
-
-const styles = StyleSheet.create({
-    background : {
-        flex: 1,
-        alignItems: 'center',
-        justifyContent: 'center',
-       
-    },
-    loginContainer : {
-        width: "100%",
-        height: 60,
-        backgroundColor: "salmon",
-        alignItems: 'center',
-        justifyContent: 'center',
-    },
-   
-    signup : {
-        width: "100%",
-        height: 60,
-        backgroundColor: "yellow",
-        alignItems: 'center',
-        justifyContent: 'center',
-    },
-    logo : {
-        width: 120,
-        height: 90 ,
-        top: -10,
-        
-    },
-    logoContainer : {
-        top: 120,
-        flex: 1,
-        alignItems: 'center',
-    },
-  
-})
 

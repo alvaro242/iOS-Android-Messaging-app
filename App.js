@@ -1,4 +1,4 @@
-import { StyleSheet, SafeAreaView } from 'react-native';
+import {  SafeAreaView } from 'react-native';
 import StartScreen from "./app/screens/StartScreen";
 import LogInScreen from "./app/screens/LogInScreen";
 import SignUpScreen from "./app/screens/SignUpScreen";
@@ -6,6 +6,7 @@ import HomeScreen from "./app/screens/HomeScreen";
 import { NavigationContainer } from "@react-navigation/native";
 import { createNativeStackNavigator } from "@react-navigation/native-stack";
 import React, { Component } from 'react'; 
+import {styles} from './app/components/Styles/customStyle';
 
 
 
@@ -48,9 +49,3 @@ export default class App extends Component {
 
 }}
 
-const styles = StyleSheet.create({
-  root: {
-    flex: 1,
-    
-  },
-});
