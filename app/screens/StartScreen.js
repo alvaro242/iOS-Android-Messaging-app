@@ -2,17 +2,19 @@ import React from 'react';
 import { Image, ImageBackground, StyleSheet, Text, View, TouchableHighlight} from 'react-native';
 import {styles} from './../components/Styles/customStyle';
 
+// if logged in t
+
 export default function StartScreen({ navigation }) {
     return (
         <ImageBackground 
         style={styles.background}
-        source={require("../assets/background.jpeg")} > 
+        source={require("../assets/IntroBackground.jpeg")} > 
             <View style={styles.logoContainer}>
                 <Image style={styles.logoStart} source={require("../assets/logo.png")}/>
                 <Text>Telechat</Text>
             </View>
             <TouchableHighlight style={styles.privisionalHomeButton} onPress={()=> {
-                
+
                 navigation.push("HomeScreen");
                 navigation.navigate('HomeScreen', {
                     screen: 'HomeScreen',

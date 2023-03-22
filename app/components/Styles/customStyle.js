@@ -1,4 +1,7 @@
 import { StyleSheet } from 'react-native';
+import { Dimensions } from 'react-native';
+
+let ScreenHeight = Dimensions.get("window").height;
 
 export const styles = StyleSheet.create({
     root: {
@@ -110,6 +113,25 @@ export const styles = StyleSheet.create({
     padding: 10,
     elevation: 10,
    
+    },
+
+    //header
+
+    header : {
+        flex: 1,
+        alignItems: 'center',
+        justifyContent: 'center',
+        height: 40,
+       
+    },
+
+    contactsContainer : {
+        flex: 1,
+        width: "100%",
+        height: ScreenHeight,
+        backgroundColor: "salmon",
+        alignItems: 'center',
+        justifyContent: 'center',
     },
   
 });
