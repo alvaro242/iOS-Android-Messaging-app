@@ -1,10 +1,13 @@
 
-import { StyleSheet, Text, View, Button, Image, TextInput } from 'react-native';
+import { StyleSheet, Icon, Text, View, Button, Image, TextInput } from 'react-native';
 import axios from "axios";
 import { createBottomTabNavigator } from '@react-navigation/bottom-tabs';
 import ChatsScreen from "./ChatsScreen";
 import AccountScreen from "./AccountScreen";
 import ContactsScreen from "./ContactsScreen";
+import SettingsScreen from "./SettingsScreen";
+import { MaterialCommunityIcons } from 'react-native-vector-icons';
+
 
 const HomeTab = createBottomTabNavigator()
 
@@ -13,9 +16,18 @@ export default function HomeScreen({ navigation }) {
   return (
     
     <HomeTab.Navigator initialRouteName="Home">
-          <HomeTab.Screen name="Contacts" component={ContactsScreen} options={{title: "Contacts", headerShown: false} }/>
-          <HomeTab.Screen name="Chats" component={ChatsScreen} options={{title: "Chats", headerShown: false} }/>
-          <HomeTab.Screen name="AccountScreen" component={AccountScreen} options={{title: "Account", headerShown: false} } />
+          <HomeTab.Screen name="Contacts" component={ContactsScreen} options={{tabBarLabel: "Contacts", headerShown: false, tabBarIcon: ({ color, size }) => (
+          <MaterialCommunityIcons name="contacts" color={color} size={size} />
+      ),}} />
+          <HomeTab.Screen name="Chats" component={ChatsScreen} options={{tabBarLabel: "Chats", headerShown: false, tabBarIcon: ({ color, size }) => (
+          <MaterialCommunityIcons name="chat" color={color} size={size} />
+      ),}} />
+          <HomeTab.Screen name="AccountScreen" component={AccountScreen} options={{tabBarLabel: "Account", headerShown: false, tabBarIcon: ({ color, size }) => (
+          <MaterialCommunityIcons name="account" color={color} size={size} />
+      ),}} />
+        <HomeTab.Screen name="SettingsScreen" component={SettingsScreen} options={{tabBarLabel: "Settings", headerShown: false, tabBarIcon: ({ color, size }) => (
+            <MaterialCommunityIcons name="cog" color={color} size={size} />
+        ),}} />
     </HomeTab.Navigator>
    
   );
