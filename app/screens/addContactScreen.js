@@ -3,7 +3,7 @@ import { Formik } from "formik";
 import * as yup from "yup";
 import axios from "axios";
 import { styles } from "./../components/Styles/customStyle";
-import React, { useState, useEffect } from "react";
+import React, { Component, useState, useEffect } from "react";
 
 import { loadKey } from "../components/utils/loadKey";
 import { addFriend } from "../components/utils/API";
@@ -34,3 +34,29 @@ export default function AddContactScreen({ navigation }) {
     </View>
   );
 }
+
+/*Class component but cant use useState hook
+
+export default class addContactScreen extends Component {
+  render() {
+    return (
+      <View style={styles.addContactContainer}>
+      <TextInput
+        name="friendID"
+        onChangeText={(friendID) => setText(friendID)}
+        keyboardType={"number-pad"}
+        style={styles.inputFormAddContact}
+        placeholder="ID"
+      ></TextInput>
+
+      <Button
+        style={styles.submitButton}
+        title="Add Friend"
+        onPress={() => addFriend(friendID, authKey)}
+      />
+    </View>
+    )
+  }
+}
+
+*/

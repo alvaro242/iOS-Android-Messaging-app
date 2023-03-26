@@ -14,72 +14,85 @@ import AccountScreen from "./AccountScreen";
 import ContactsScreen from "./ContactsScreen";
 import SettingsScreen from "./SettingsScreen";
 import { MaterialCommunityIcons } from "react-native-vector-icons";
+import React, { Component } from "react";
 
 const HomeTab = createBottomTabNavigator();
 
-export default function HomeScreen({ navigation }) {
-  return (
-    <HomeTab.Navigator initialRouteName="Home">
-      <HomeTab.Screen
-        name="Contacts"
-        component={ContactsScreen}
-        options={{
-          tabBarLabel: "Contacts",
-          headerShown: true,
-          tabBarIcon: ({ color, size }) => (
-            <MaterialCommunityIcons name="contacts" color={color} size={size} />
-          ),
-          headerRight: () => (
-            <MaterialCommunityIcons
-              name="account-plus"
-              color="black"
-              size="25"
-              onPress={() =>
-                navigation.navigate("addContactScreen", {
-                  screen: "addContactScreen",
-                })
-              }
-            />
-          ),
-        }}
-      />
-      <HomeTab.Screen
-        name="Chats"
-        component={ChatsScreen}
-        options={{
-          tabBarLabel: "Chats",
-          headerShown: true,
-          tabBarIcon: ({ color, size }) => (
-            <MaterialCommunityIcons name="chat" color={color} size={size} />
-          ),
-        }}
-      />
-      <HomeTab.Screen
-        name="AccountScreen"
-        component={AccountScreen}
-        options={{
-          title: "My Account",
-          tabBarLabel: "Account",
-          headerShown: true,
-          tabBarIcon: ({ color, size }) => (
-            <MaterialCommunityIcons name="account" color={color} size={size} />
-          ),
-        }}
-      />
-      <HomeTab.Screen
-        name="SettingsScreen"
-        component={SettingsScreen}
-        options={{
-          title: "Settings",
-          tabBarLabel: "Settings",
-          headerShown: true,
-          tabBarIcon: ({ color, size }) => (
-            <MaterialCommunityIcons name="cog" color={color} size={size} />
-          ),
-        }}
-      />
-    </HomeTab.Navigator>
-  );
+export default class HomeScreen extends Component {
+  render() {
+    const navigation = this.props.navigation;
+
+    return (
+      <HomeTab.Navigator initialRouteName="Home">
+        <HomeTab.Screen
+          name="Contacts"
+          component={ContactsScreen}
+          options={{
+            tabBarLabel: "Contacts",
+            headerShown: true,
+            tabBarIcon: ({ color, size }) => (
+              <MaterialCommunityIcons
+                name="contacts"
+                color={color}
+                size={size}
+              />
+            ),
+            headerRight: () => (
+              <MaterialCommunityIcons
+                name="account-plus"
+                color="black"
+                size="25"
+                onPress={() =>
+                  navigation.navigate("addContactScreen", {
+                    screen: "addContactScreen",
+                  })
+                }
+              />
+            ),
+          }}
+        />
+        <HomeTab.Screen
+          name="Chats"
+          component={ChatsScreen}
+          options={{
+            tabBarLabel: "Chats",
+            headerShown: true,
+            tabBarIcon: ({ color, size }) => (
+              <MaterialCommunityIcons name="chat" color={color} size={size} />
+            ),
+          }}
+        />
+        <HomeTab.Screen
+          name="AccountScreen"
+          component={AccountScreen}
+          options={{
+            title: "My Account",
+            tabBarLabel: "Account",
+            headerShown: true,
+            tabBarIcon: ({ color, size }) => (
+              <MaterialCommunityIcons
+                name="account"
+                color={color}
+                size={size}
+              />
+            ),
+          }}
+        />
+        <HomeTab.Screen
+          name="SettingsScreen"
+          component={SettingsScreen}
+          options={{
+            title: "Settings",
+            tabBarLabel: "Settings",
+            headerShown: true,
+            tabBarIcon: ({ color, size }) => (
+              <MaterialCommunityIcons name="cog" color={color} size={size} />
+            ),
+          }}
+        />
+      </HomeTab.Navigator>
+    );
+  }
 }
 
 const styles = StyleSheet.create({

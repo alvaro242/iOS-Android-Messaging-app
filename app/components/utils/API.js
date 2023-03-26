@@ -1,44 +1,12 @@
 import axios from "axios";
 import AsyncStorage from "@react-native-async-storage/async-storage";
+import ContactsScreen from "../../screens/ContactsScreen";
 
-export function apiCallGetAllContacts(token) {
-  let url = "http://localhost:3333/api/1.0.0/contacts";
-
-  axios
-    .get(url, {
-      headers: {
-        "X-Authorization": token,
-      },
-    })
-    .then((response) => {
-      //returns user ID on response.data.user_id, pending autologin
-      //if response 201 I should make a logged in.
-
-      if (response.status == 200) {
-        console.log("200!!");
-        console.log(response.data);
-      } else {
-        //show error informing about error from API
-      }
-    })
-    .catch((error) => {
-      //Error handling pending
-      console.log(error);
-
-      if (error.response.status == 401) {
-        console.log("not auth");
-      } else if (error.response.status == 400) {
-        console.log("You can´t add yourself as a contact");
-      } else if (error.response.status == 404) {
-        console.log("This friend ID doesn´t exist");
-      } else {
-        console.log("Error.  try again  later");
-      }
-    });
-}
+const localIP = "192.168.0.16";
 
 export function addFriend(friendID, authKey) {
-  let url = "http://localhost:3333/api/1.0.0/user/" + friendID + "/contact";
+  let url =
+    "http://" + localIP + ":3333/api/1.0.0/user/" + friendID + "/contact";
 
   axios
     .post(
@@ -83,7 +51,7 @@ export function addFriend(friendID, authKey) {
 export function registerUser(values) {
   console.log(values);
   axios
-    .post("http://localhost:3333/api/1.0.0/user/", values)
+    .post("http://" + localIP + ":3333/api/1.0.0/user/", values)
     .then((response) => {
       //returns user ID on response.data.user_id, pending autologin
       console.log(response.status);
@@ -106,10 +74,13 @@ export function logIn(values) {
   console.log(values);
 
   axios
-    .post("http://localhost:3333/api/1.0.0/login/", values)
+    .post("http://" + localIP + ":3333/api/1.0.0/login/", values)
     .then(async (response) => {
       try {
-        await AsyncStorage.setItem("whatsthat_user_id", response.data.id);
+        await AsyncStorage.setItem(
+          "whatsthat_user_id",
+          response.data.id.toString()
+        ); //expo recomends to stringify this
         await AsyncStorage.setItem(
           "whatsthat_session_token",
           response.data.token
