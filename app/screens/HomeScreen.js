@@ -15,15 +15,54 @@ import ContactsScreen from "./ContactsScreen";
 import SettingsScreen from "./SettingsScreen";
 import { MaterialCommunityIcons } from "react-native-vector-icons";
 import React, { Component } from "react";
+import AsyncStorage from "@react-native-async-storage/async-storage";
 
 const HomeTab = createBottomTabNavigator();
 
 export default class HomeScreen extends Component {
-  render() {
-    const navigation = this.props.navigation;
+  constructor(props) {
+    super(props);
+  }
 
+  componentDidMount() {
+    this.unsubscribe = this.props.navigation.addListener("focus", () => {
+      this.checkLoggedIn();
+    });
+  }
+
+  componentWillUnmount() {
+    this.unsubscribe();
+  }
+
+  checkLoggedIn = async () => {
+    const value = await AsyncStorage.getItem("whatsthat_session_token");
+    if (value == null) {
+      this.props.navigation.push("StartScreen");
+    }
+  };
+
+  render() {
     return (
-      <HomeTab.Navigator initialRouteName="Home">
+      <HomeTab.Navigator
+        initialRouteName="Home"
+        screenOptions={({ route }) => ({
+          headerShown: false,
+          tabBarStyle: {
+            height: 60,
+            paddingHorizontal: 5,
+            paddingTop: 0,
+            backgroundColor: "#EBF2F7",
+            //rgba(34,36,40,1) is cool
+            borderTopWidth: 0,
+          },
+          headerStyle: {
+            backgroundColor: "#AEE6FF",
+          },
+          headerTitleStyle: {
+            color: "#fff",
+          },
+        })}
+      >
         <HomeTab.Screen
           name="Contacts"
           component={ContactsScreen}

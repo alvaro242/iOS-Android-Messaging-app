@@ -16,6 +16,10 @@ import { logIn } from "../components/utils/API";
 import React, { Component } from "react";
 
 export default class LogInScreen extends Component {
+  constructor(props) {
+    super(props);
+  }
+
   render() {
     const loginValidationSchema = yup.object().shape({
       email: yup

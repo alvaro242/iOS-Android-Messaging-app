@@ -10,21 +10,36 @@ import React, { Component } from "react";
 import { styles } from "./app/components/Styles/customStyle";
 import { loadKey } from "./app/components/utils/loadKey";
 import AsyncStorage from "@react-native-async-storage/async-storage";
+import {
+  Image,
+  ImageBackground,
+  StyleSheet,
+  Text,
+  View,
+  TouchableHighlight,
+} from "react-native";
 
 const Stack = createNativeStackNavigator();
 
 export default class App extends Component {
+  constructor(props) {
+    super(props);
+  }
+
+  /*
+  checkLoggedIn = async () => {
+    const value = await AsyncStorage.getItem("whatsthat_session_token");
+    if (value == null) {
+      this.props.navigation.navigate("LogInScreen");
+    }
+  };
+*/
   render() {
     return (
       //SafeArea for iPhoneX+ devices
       <SafeAreaView style={styles.root}>
         <NavigationContainer>
           <Stack.Navigator>
-            <Stack.Screen
-              name="Start"
-              component={StartScreen}
-              options={{ title: "Welcome", headerShown: false }}
-            />
             <Stack.Screen
               name="HomeScreen"
               component={HomeScreen}
@@ -33,6 +48,11 @@ export default class App extends Component {
                 headerShown: false,
                 gestureEnabled: false,
               }}
+            />
+            <Stack.Screen
+              name="StartScreen"
+              component={StartScreen}
+              options={{ title: "Welcome", headerShown: false }}
             />
             <Stack.Screen
               name="LogInScreen"

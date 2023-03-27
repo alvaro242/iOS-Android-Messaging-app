@@ -1,5 +1,6 @@
 import { StyleSheet } from "react-native";
-import { Dimensions } from "react-native";
+import { Dimensions, StatusBar } from "react-native";
+import React from "react";
 
 let ScreenHeight = Dimensions.get("window").height;
 let ScreenWidth = Dimensions.get("window").width;
@@ -158,5 +159,16 @@ export const styles = StyleSheet.create({
     borderColor: "gray",
     borderWidth: StyleSheet.hairlineWidth,
     borderRadius: 10,
+  },
+
+  contactsContainer: {
+    backgroundColor: "grey",
+  },
+
+  contact: {
+    backgroundColor: "white",
+    padding: 30,
+    marginBottom: 2,
+    justifyContent: "center",
   },
 });

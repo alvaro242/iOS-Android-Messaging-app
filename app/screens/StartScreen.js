@@ -9,8 +9,13 @@ import {
 } from "react-native";
 import { styles } from "./../components/Styles/customStyle";
 import { Component } from "react";
+import AsyncStorage from "@react-native-async-storage/async-storage";
 
 export default class StartScreen extends Component {
+  constructor(props) {
+    super(props);
+  }
+
   render() {
     const navigation = this.props.navigation;
 

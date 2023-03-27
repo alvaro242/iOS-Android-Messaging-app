@@ -2,7 +2,7 @@ import axios from "axios";
 import AsyncStorage from "@react-native-async-storage/async-storage";
 import ContactsScreen from "../../screens/ContactsScreen";
 
-const localIP = "192.168.0.16";
+const localIP = "10.182.23.11";
 
 export function addFriend(friendID, authKey) {
   let url =
@@ -86,6 +86,7 @@ export function logIn(values) {
           response.data.token
         );
         console.log(response.data.token);
+        navigation.navigate("HomeScreen");
 
         //this.setState({"submitted": false}); This seems like its not working
       } catch {

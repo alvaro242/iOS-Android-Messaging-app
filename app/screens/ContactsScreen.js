@@ -3,6 +3,7 @@ import {
   View,
   FlatList,
   ActivityIndicator,
+  ScrollView,
   Image,
   TextInput,
   Button,
@@ -31,7 +32,8 @@ export default class ContactsScreen extends Component {
   }
 
   getAllContacts(token) {
-    let url = "http://localhost:3333/api/1.0.0/contacts";
+    const localIP = "10.182.23.11";
+    let url = "http://" + localIP + ":3333/api/1.0.0/contacts";
     //let token = "f9db1b258e24eed052094b402c422f9c";
 
     return fetch(url, {
@@ -68,18 +70,17 @@ export default class ContactsScreen extends Component {
     }
 
     return (
-      <View>
-        <Text>Hola! </Text>
+      <ScrollView style={styles.contactsContainer}>
         <FlatList
           data={this.state.contactsData}
           renderItem={({ item }) => (
-            <Text>
+            <Text style={styles.contact}>
               {item.first_name} {item.last_name}
             </Text>
           )}
           keyExtractor={({ user_id }, index) => user_id}
         />
-      </View>
+      </ScrollView>
     );
   }
 }
