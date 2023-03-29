@@ -26,6 +26,7 @@ export function addFriend(friendID, authKey) {
         if (response.data === "Already a contact") {
           console.log("Already a contact");
         } else {
+          navigation.navigate("ContactsScreen");
           console.log("Contact added");
         }
       } else {
