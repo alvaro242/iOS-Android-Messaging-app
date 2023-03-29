@@ -5,7 +5,7 @@ import axios from "axios";
 import { styles } from "./../components/Styles/customStyle";
 import React, { Component, useState, useEffect } from "react";
 
-import { loadKey } from "../components/utils/loadKey";
+import { loadKey } from "../components/utils/asyncStorage";
 import { addFriend } from "../components/utils/API";
 
 export default function AddContactScreen({ navigation }) {

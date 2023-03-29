@@ -19,12 +19,14 @@ import { addcontactScreen } from "./addContactScreen";
 import { createNativeStackNavigator } from "@react-navigation/native-stack";
 import React, { Component, useState, useEffect } from "react";
 import AsyncStorage from "@react-native-async-storage/async-storage";
-import { loadKey } from "../components/utils/loadKey";
+import { loadKey } from "../components/utils/asyncStorage";
 import { getAllContacts } from "../components/utils/API";
+import SettingsScreen from "./SettingsScreen";
 
 export default class ContactsScreen extends Component {
   constructor(props) {
     super(props);
+
     this.state = {
       isLoading: true,
       contactsData: [],
@@ -32,9 +34,8 @@ export default class ContactsScreen extends Component {
   }
 
   getAllContacts(token) {
-    const localIP = "10.182.23.11";
+    const localIP = "10.182.22.162";
     let url = "http://" + localIP + ":3333/api/1.0.0/contacts";
-    //let token = "f9db1b258e24eed052094b402c422f9c";
 
     return fetch(url, {
       method: "GET",
@@ -44,14 +45,11 @@ export default class ContactsScreen extends Component {
     })
       .then((response) => response.json())
       .then((responseJson) => {
-        this.setState({
-          //this makes taking this to the API component difficult
-          isLoading: false,
-          contactsData: responseJson,
-        });
+        //this makes exporting to API very difficult
+        this.setState({ isLoading: false, contactsData: responseJson });
       })
       .catch((error) => {
-        console.log("Not authorized");
+        console.log("No response / not auth");
         console.log(error);
       });
   }

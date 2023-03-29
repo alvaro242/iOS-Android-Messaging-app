@@ -14,3 +14,17 @@ export const loadKey = async () => {
     console.log("login again");
   }
 };
+
+export const loadKeyAndID = async () => {
+  try {
+    let key = await AsyncStorage.getItem("whatsthat_session_token");
+    let id = await AsyncStorage.getItem("whatsthat_user_id");
+    if (key !== null) {
+      return [key, id];
+    } else {
+      return "error";
+    }
+  } catch (err) {
+    console.log("login again");
+  }
+};

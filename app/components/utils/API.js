@@ -1,12 +1,12 @@
 import axios from "axios";
 import AsyncStorage from "@react-native-async-storage/async-storage";
-import ContactsScreen from "../../screens/ContactsScreen";
+import { setChanged } from "../../screens/ContactsScreen";
+import React, { useCallback } from "react";
 
-const localIP = "10.182.23.11";
+const serverIP = "10.182.22.162:3333";
 
 export function addFriend(friendID, authKey) {
-  let url =
-    "http://" + localIP + ":3333/api/1.0.0/user/" + friendID + "/contact";
+  let url = "http://" + serverIP + "/api/1.0.0/user/" + friendID + "/contact";
 
   axios
     .post(
@@ -51,7 +51,7 @@ export function addFriend(friendID, authKey) {
 export function registerUser(values) {
   console.log(values);
   axios
-    .post("http://" + localIP + ":3333/api/1.0.0/user/", values)
+    .post("http://" + serverIP + "/api/1.0.0/user/", values)
     .then((response) => {
       //returns user ID on response.data.user_id, pending autologin
       console.log(response.status);
@@ -74,7 +74,7 @@ export function logIn(values) {
   console.log(values);
 
   axios
-    .post("http://" + localIP + ":3333/api/1.0.0/login/", values)
+    .post("http://" + serverIP + "/api/1.0.0/login/", values)
     .then(async (response) => {
       try {
         await AsyncStorage.setItem(
@@ -96,5 +96,33 @@ export function logIn(values) {
     .catch((error) => {
       //error handling pending
       console.log(error);
+    });
+}
+
+export function logOut(token) {
+  console.log(token);
+  return fetch("http://" + serverIP + "/api/1.0.0/logout", {
+    method: "POST",
+    headers: {
+      "X-Authorization": token,
+    },
+  })
+    .then(async (response) => {
+      if (response.status == 200) {
+        await AsyncStorage.removeItem("whatsthat_session_token");
+        await AsyncStorage.removeItem("whatsthat_user_id");
+        console.log("the error is in navigatin");
+        navigation.navigate("StartScreen");
+      } else if (response.status == 401) {
+        console.log("Unauthorized");
+        await AsyncStorage.removeItem("whatsthat_session_token");
+        await AsyncStorage.removeItem("whatsthat_user_id");
+        navigation.navigate("StartScreen");
+      } else {
+        throw "Error";
+      }
+    })
+    .catch((error) => {
+      console.log("error");
     });
 }

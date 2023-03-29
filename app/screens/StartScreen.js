@@ -9,7 +9,6 @@ import {
 } from "react-native";
 import { styles } from "./../components/Styles/customStyle";
 import { Component } from "react";
-import AsyncStorage from "@react-native-async-storage/async-storage";
 
 export default class StartScreen extends Component {
   constructor(props) {
@@ -31,18 +30,6 @@ export default class StartScreen extends Component {
           />
           <Text>Telechat</Text>
         </View>
-        <TouchableHighlight
-          style={styles.privisionalHomeButton}
-          onPress={() => {
-            navigation.push("HomeScreen");
-            navigation.navigate("HomeScreen", {
-              screen: "HomeScreen",
-              initial: false,
-            });
-          }}
-        >
-          <Text>Provisional: Home</Text>
-        </TouchableHighlight>
         <TouchableHighlight
           style={styles.loginContainer}
           onPress={() => {

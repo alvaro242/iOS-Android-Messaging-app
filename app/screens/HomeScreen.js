@@ -16,6 +16,8 @@ import SettingsScreen from "./SettingsScreen";
 import { MaterialCommunityIcons } from "react-native-vector-icons";
 import React, { Component } from "react";
 import AsyncStorage from "@react-native-async-storage/async-storage";
+import { logOut } from "../components/utils/API";
+import { loadKey } from "../components/utils/asyncStorage";
 
 const HomeTab = createBottomTabNavigator();
 
@@ -76,13 +78,16 @@ export default class HomeScreen extends Component {
                 size={size}
               />
             ),
+            headerRightContainerStyle: {
+              paddingRight: 15,
+            },
             headerRight: () => (
               <MaterialCommunityIcons
                 name="account-plus"
                 color="black"
                 size="25"
                 onPress={() =>
-                  navigation.navigate("addContactScreen", {
+                  this.props.navigation.navigate("addContactScreen", {
                     screen: "addContactScreen",
                   })
                 }
@@ -113,6 +118,18 @@ export default class HomeScreen extends Component {
                 name="account"
                 color={color}
                 size={size}
+              />
+            ),
+            headerRightContainerStyle: {
+              paddingRight: 15,
+            },
+            headerRight: () => (
+              <MaterialCommunityIcons
+                name="logout"
+                //color="black"
+                size="25"
+                paddingHorizontal="30"
+                onPress={() => loadKey().then((key) => logOut(key))}
               />
             ),
           }}

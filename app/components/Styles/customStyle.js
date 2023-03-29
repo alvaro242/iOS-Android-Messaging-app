@@ -77,6 +77,17 @@ export const styles = StyleSheet.create({
     borderRadius: 10,
   },
 
+  inputFormBlocked: {
+    height: 50,
+    padding: 10,
+    width: "90%",
+    margin: 10,
+    //backgroundColor: "white",
+    borderColor: "gray",
+    borderWidth: StyleSheet.hairlineWidth,
+    borderRadius: 10,
+  },
+
   errorLogin: {
     fontSize: 14,
     color: "red",

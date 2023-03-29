@@ -8,7 +8,7 @@ import { NavigationContainer } from "@react-navigation/native";
 import { createNativeStackNavigator } from "@react-navigation/native-stack";
 import React, { Component } from "react";
 import { styles } from "./app/components/Styles/customStyle";
-import { loadKey } from "./app/components/utils/loadKey";
+
 import AsyncStorage from "@react-native-async-storage/async-storage";
 import {
   Image,
@@ -37,7 +37,7 @@ export default class App extends Component {
   render() {
     return (
       //SafeArea for iPhoneX+ devices
-      <SafeAreaView style={styles.root}>
+      <SafeAreaView edges={["right", "left", "top"]} style={styles.root}>
         <NavigationContainer>
           <Stack.Navigator>
             <Stack.Screen
