@@ -88,8 +88,6 @@ export function logIn(values) {
         );
         console.log(response.data.token);
         navigation.navigate("HomeScreen");
-
-        //this.setState({"submitted": false}); This seems like its not working
       } catch {
         throw "Something went wrong";
       }
@@ -119,6 +117,93 @@ export function logOut(token) {
         await AsyncStorage.removeItem("whatsthat_session_token");
         await AsyncStorage.removeItem("whatsthat_user_id");
         navigation.navigate("StartScreen");
+      } else {
+        throw "Error";
+      }
+    })
+    .catch((error) => {
+      console.log("error");
+    });
+}
+
+export function removeContact(userID, key) {
+  return fetch(
+    "http://" + serverIP + "/api/1.0.0/user/" + userID + "/contact",
+    {
+      method: "DELETE",
+      headers: {
+        "X-Authorization": key,
+      },
+    }
+  )
+    .then(async (response) => {
+      if (response.status == 200) {
+        console.log("The contact has been removed");
+        navigation.navigate("ContactsScreen");
+      } else if (response.status == 400) {
+        console.log("You can´t remove yourself as a contact");
+      } else if (response.status == 401) {
+        console.log("Unauthorized");
+      } else if (response.status == 404) {
+        console.log("Not Found");
+      } else if (response.status == 500) {
+        console.log("Server error");
+      } else {
+        throw "Error";
+      }
+    })
+    .catch((error) => {
+      console.log("error");
+    });
+}
+
+export function blockContact(userID, key) {
+  return fetch("http://" + serverIP + "/api/1.0.0/user/" + userID + "/block", {
+    method: "POST",
+    headers: {
+      "X-Authorization": key,
+    },
+  })
+    .then(async (response) => {
+      if (response.status == 200) {
+        console.log("The contact has been blocked");
+        navigation.navigate("ContactsScreen");
+      } else if (response.status == 400) {
+        console.log("You can´t block yourself");
+      } else if (response.status == 401) {
+        console.log("Unauthorized");
+      } else if (response.status == 404) {
+        console.log("Not Found");
+      } else if (response.status == 500) {
+        console.log("Server error");
+      } else {
+        throw "Error";
+      }
+    })
+    .catch((error) => {
+      console.log("error");
+    });
+}
+
+export function unblockContact(userID, key) {
+  return fetch("http://" + serverIP + "/api/1.0.0/user/" + userID + "/block", {
+    method: "DELETE",
+    headers: {
+      "X-Authorization": key,
+    },
+  })
+    .then(async (response) => {
+      if (response.status == 200) {
+        console.log("The contact has been unblocked");
+        navigation.navigate("blockedUsersScreen");
+      } else if (response.status == 400) {
+        console.log("You can´t block yourself");
+      } else if (response.status == 401) {
+        console.log("Unauthorized");
+      } else if (response.status == 404) {
+        console.log("Not Found");
+      } else if (response.status == 500) {
+        console.log("Server error");
       } else {
         throw "Error";
       }

@@ -44,36 +44,3 @@ export default class AddContactScreen extends Component {
     );
   }
 }
-
-/*
-export default function AddContactScreen({ navigation }) {
-  //const [Key, setKey] = useState();
-
-  let authKey = "";
-
-  loadKey().then((key) => (authKey = key));
-
-  const [friendID, setText] = useState("");
-  return (
-    <View style={styles.addContactContainer}>
-      <TextInput
-        name="friendID"
-        onChangeText={(friendID) => setText(friendID)}
-        keyboardType={"number-pad"}
-        style={styles.inputFormAddContact}
-        placeholder="ID"
-      ></TextInput>
-
-      <Button
-        style={styles.submitButton}
-        title="Add Friend"
-        onPress={() => addFriend(friendID, authKey)}
-      />
-    </View>
-  );
-}
-
-//Class component but cant use useState hook
-
-
-*/

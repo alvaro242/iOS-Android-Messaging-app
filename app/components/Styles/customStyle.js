@@ -182,4 +182,15 @@ export const styles = StyleSheet.create({
     marginBottom: 2,
     justifyContent: "center",
   },
+
+  settingsContainer: {
+    height: 40,
+    padding: 10,
+    width: "90%",
+    margin: 10,
+    backgroundColor: "white",
+    borderColor: "gray",
+    borderWidth: StyleSheet.hairlineWidth,
+    borderRadius: 10,
+  },
 });

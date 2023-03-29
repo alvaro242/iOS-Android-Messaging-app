@@ -1,41 +1,30 @@
+import React, { Component } from "react";
 import {
-  Text,
+  TextInput,
   View,
-  FlatList,
+  Text,
+  Button,
   ActivityIndicator,
   ScrollView,
-  Image,
-  TextInput,
-  Button,
-  Alert,
+  FlatList,
 } from "react-native";
-import { Formik } from "formik";
-import * as yup from "yup";
-import axios from "axios";
+import { styles } from "./../../components/Styles/customStyle";
+import { removeContact, blockContact } from "../../components/utils/API";
+import { loadKey } from "../../components/utils/asyncStorage";
 
-import { styles } from "./../components/Styles/customStyle";
-import { MaterialCommunityIcons } from "react-native-vector-icons";
-import { addcontactScreen } from "./addContactScreen";
-import { createNativeStackNavigator } from "@react-navigation/native-stack";
-import React, { Component, useState, useEffect } from "react";
-import AsyncStorage from "@react-native-async-storage/async-storage";
-import { loadKey } from "../components/utils/asyncStorage";
-import { getAllContacts } from "../components/utils/API";
-import SettingsScreen from "./SettingsScreen";
-
-export default class ContactsScreen extends Component {
+export default class BlockedUsersScreen extends Component {
   constructor(props) {
     super(props);
 
     this.state = {
       isLoading: true,
-      contactsData: [],
+      blockedContacsData: [],
     };
   }
 
-  getAllContacts(token) {
+  getBlockedContacts(token) {
     const localIP = "10.182.22.162";
-    let url = "http://" + localIP + ":3333/api/1.0.0/contacts";
+    let url = "http://" + localIP + ":3333/api/1.0.0/blocked";
 
     return fetch(url, {
       method: "GET",
@@ -46,7 +35,7 @@ export default class ContactsScreen extends Component {
       .then((response) => response.json())
       .then((responseJson) => {
         //this makes exporting to API very difficult
-        this.setState({ isLoading: false, contactsData: responseJson });
+        this.setState({ isLoading: false, blockedContacsData: responseJson });
       })
       .catch((error) => {
         console.log("No response / not auth");
@@ -55,7 +44,7 @@ export default class ContactsScreen extends Component {
   }
 
   componentDidMount() {
-    loadKey().then((key) => this.getAllContacts(key));
+    loadKey().then((key) => this.getBlockedContacts(key));
   }
 
   render() {
@@ -66,16 +55,15 @@ export default class ContactsScreen extends Component {
         </View>
       );
     }
-
     return (
       <ScrollView style={styles.contactsContainer}>
         <FlatList
-          data={this.state.contactsData}
+          data={this.state.blockedContacsData}
           renderItem={({ item }) => (
             <Text
               style={styles.contact}
               onPress={() => {
-                this.props.navigation.navigate("viewContactScreen", { item });
+                this.props.navigation.navigate("unblockUserScreen", { item });
               }}
             >
               {item.first_name} {item.last_name}

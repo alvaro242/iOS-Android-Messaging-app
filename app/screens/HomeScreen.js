@@ -50,12 +50,11 @@ export default class HomeScreen extends Component {
         screenOptions={({ route }) => ({
           headerShown: false,
           tabBarStyle: {
-            height: 60,
+            height: 80,
             paddingHorizontal: 5,
             paddingTop: 0,
             backgroundColor: "#EBF2F7",
-            //rgba(34,36,40,1) is cool
-            borderTopWidth: 0,
+            //rgba(34,36,40,1) is cool for black theme
           },
           headerStyle: {
             backgroundColor: "#AEE6FF",
