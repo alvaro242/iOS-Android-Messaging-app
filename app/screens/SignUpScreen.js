@@ -1,14 +1,13 @@
 import { Text, View, Button, Image, TextInput } from "react-native";
 import { Formik } from "formik";
 import * as yup from "yup";
-import axios from "axios";
 import { styles } from "./../components/Styles/customStyle";
 import { registerUser } from "../components/utils/API";
 import React, { Component } from "react";
 
 export default class SignUpScreen extends Component {
   render() {
-    const loginValidationSchema = yup.object().shape({
+    const signUpvalidationSchema = yup.object().shape({
       first_name: yup.string().required(""), //empty so we dont show any message is is not completed
       last_name: yup.string().required(""),
       email: yup.string().email(" ").required(""),
@@ -38,7 +37,7 @@ export default class SignUpScreen extends Component {
 
         <View style={styles.formContainerSignUp}>
           <Formik
-            validationSchema={loginValidationSchema}
+            validationSchema={signUpvalidationSchema}
             initialValues={{
               first_name: "",
               last_name: "",

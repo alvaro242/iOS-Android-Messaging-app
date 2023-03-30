@@ -82,7 +82,7 @@ export const styles = StyleSheet.create({
     padding: 10,
     width: "90%",
     margin: 10,
-    //backgroundColor: "white",
+    backgroundColor: "#EBEBEB",
     borderColor: "gray",
     borderWidth: StyleSheet.hairlineWidth,
     borderRadius: 10,
@@ -177,6 +177,13 @@ export const styles = StyleSheet.create({
   },
 
   contact: {
+    backgroundColor: "white",
+    padding: 30,
+    marginBottom: 2,
+    justifyContent: "center",
+  },
+
+  myAccount: {
     backgroundColor: "white",
     padding: 30,
     marginBottom: 2,

@@ -36,7 +36,10 @@ export default class ContactsScreen extends Component {
   componentDidMount() {
     loadKey().then((key) =>
       getAllContacts(key).then((responseJson) =>
-        this.setState({ isLoading: false, contactsData: responseJson })
+        this.setState({
+          isLoading: false,
+          contactsData: responseJson,
+        })
       )
     );
   }

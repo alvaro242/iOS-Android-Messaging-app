@@ -11,6 +11,7 @@ import { NavigationContainer } from "@react-navigation/native";
 import { createNativeStackNavigator } from "@react-navigation/native-stack";
 import React, { Component } from "react";
 import { styles } from "./app/components/Styles/customStyle";
+import ChangePassword from "./app/screens/settingsScreens/ChangePasswordScreen";
 
 import AsyncStorage from "@react-native-async-storage/async-storage";
 import {
@@ -104,6 +105,15 @@ export default class App extends Component {
             component={unblockUserScreen}
             options={{
               title: "Blocked User",
+              headerShown: true,
+              gestureEnabled: true,
+            }}
+          />
+          <Stack.Screen
+            name="ChangePassword"
+            component={ChangePassword}
+            options={{
+              title: "Change Password",
               headerShown: true,
               gestureEnabled: true,
             }}

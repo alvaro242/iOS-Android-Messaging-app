@@ -5,50 +5,6 @@ import React, { useCallback } from "react";
 
 let serverIP = "10.182.22.162:3333";
 
-export function addFriend(friendID, authKey) {
-  let url = "http://" + serverIP + "/api/1.0.0/user/" + friendID + "/contact";
-
-  axios
-    .post(
-      url,
-      {},
-      {
-        headers: {
-          "X-Authorization": authKey,
-        },
-      }
-    )
-    .then((response) => {
-      //returns user ID on response.data.user_id, pending autologin
-      //if response 201 I should make a logged in.
-
-      if (response.status == 200) {
-        if (response.data === "Already a contact") {
-          console.log("Already a contact");
-        } else {
-          navigation.navigate("ContactsScreen");
-          console.log("Contact added");
-        }
-      } else {
-        //show error informing about error from API
-      }
-    })
-    .catch((error) => {
-      //Error handling pending
-      console.log(error);
-
-      if (error.response.status == 401) {
-        console.log("not auth");
-      } else if (error.response.status == 400) {
-        console.log("You can´t add yourself as a contact");
-      } else if (error.response.status == 404) {
-        console.log("This friend ID doesn´t exist");
-      } else {
-        console.log("Error.  try again  later");
-      }
-    });
-}
-
 export function registerUser(values) {
   console.log(values);
   axios
@@ -69,6 +25,44 @@ export function registerUser(values) {
       //Error handling pending
       console.log(error);
     });
+}
+
+export function getUserInformation(token, userID) {
+  let url = "http://" + serverIP + "/api/1.0.0/user/" + userID;
+
+  return fetch(url, {
+    method: "GET",
+    headers: {
+      "X-Authorization": token,
+    },
+  })
+    .then((response) => {
+      return response.json();
+    })
+
+    .catch((error) => {
+      console.log("No response / not auth");
+      console.log(error);
+    });
+}
+
+export function UpdateUserInformation(values, userID, token) {
+  console.log(values);
+  console.log(userID);
+  console.log(token);
+
+  let url = "http://" + serverIP + "/api/1.0.0/user/" + userID;
+
+  return fetch(url, {
+    method: "PATCH",
+    headers: {
+      "Content-Type": "application/json",
+      "X-Authorization": token,
+    },
+    body: JSON.stringify(values),
+  })
+    .then((response) => console.log(response))
+    .catch((error) => console.log(error));
 }
 
 export function logIn(values) {
@@ -127,6 +121,80 @@ export function logOut(token) {
     });
 }
 
+//TO IMPLEMENT -> GET USERS PROFILE PHOTO
+
+//TO IMPLEMENT -> Upload Profile Photo
+
+//TO IMPLEMENT -> Search for users
+
+export function getAllContacts(token) {
+  let url = "http://" + serverIP + "/api/1.0.0/contacts";
+
+  return (
+    fetch(url, {
+      method: "GET",
+      headers: {
+        "X-Authorization": token,
+      },
+    })
+      .then((response) => {
+        return response.json();
+      })
+      /*.then((responseJson) => {
+      //this makes exporting to my API component very difficult
+      this.setState({ isLoading: false, contactsData: responseJson });
+    })*/
+      .catch((error) => {
+        console.log("No response / not auth");
+        console.log(error);
+      })
+  );
+}
+
+export function addFriend(friendID, authKey) {
+  let url = "http://" + serverIP + "/api/1.0.0/user/" + friendID + "/contact";
+
+  axios
+    .post(
+      url,
+      {},
+      {
+        headers: {
+          "X-Authorization": authKey,
+        },
+      }
+    )
+    .then((response) => {
+      //returns user ID on response.data.user_id, pending autologin
+      //if response 201 I should make a logged in.
+
+      if (response.status == 200) {
+        if (response.data === "Already a contact") {
+          console.log("Already a contact");
+        } else {
+          navigation.navigate("ContactsScreen");
+          console.log("Contact added");
+        }
+      } else {
+        //show error informing about error from API
+      }
+    })
+    .catch((error) => {
+      //Error handling pending
+      console.log(error);
+
+      if (error.response.status == 401) {
+        console.log("not auth");
+      } else if (error.response.status == 400) {
+        console.log("You can´t add yourself as a contact");
+      } else if (error.response.status == 404) {
+        console.log("This friend ID doesn´t exist");
+      } else {
+        console.log("Error.  try again  later");
+      }
+    });
+}
+
 export function removeContact(userID, key) {
   return fetch(
     "http://" + serverIP + "/api/1.0.0/user/" + userID + "/contact",
@@ -156,6 +224,32 @@ export function removeContact(userID, key) {
     .catch((error) => {
       console.log("error");
     });
+}
+
+export function getBlockedContacts(token) {
+  let url = "http://" + serverIP + "/api/1.0.0/blocked";
+
+  return (
+    fetch(url, {
+      method: "GET",
+      headers: {
+        "X-Authorization": token,
+      },
+    })
+      .then((response) => {
+        return response.json();
+      })
+      /*
+    .then((responseJson) => {
+      
+      this.setState({ isLoading: false, blockedContacsData: responseJson });
+    })
+    */
+      .catch((error) => {
+        console.log("No response / not auth");
+        console.log(error);
+      })
+  );
 }
 
 export function blockContact(userID, key) {
@@ -214,52 +308,4 @@ export function unblockContact(userID, key) {
     });
 }
 
-export function getAllContacts(token) {
-  let url = "http://" + serverIP + "/api/1.0.0/contacts";
-
-  return (
-    fetch(url, {
-      method: "GET",
-      headers: {
-        "X-Authorization": token,
-      },
-    })
-      .then((response) => {
-        return response.json();
-      })
-      /*.then((responseJson) => {
-      //this makes exporting to my API component very difficult
-      this.setState({ isLoading: false, contactsData: responseJson });
-    })*/
-      .catch((error) => {
-        console.log("No response / not auth");
-        console.log(error);
-      })
-  );
-}
-
-export function getBlockedContacts(token) {
-  let url = "http://" + serverIP + "/api/1.0.0/blocked";
-
-  return (
-    fetch(url, {
-      method: "GET",
-      headers: {
-        "X-Authorization": token,
-      },
-    })
-      .then((response) => {
-        return response.json();
-      })
-      /*
-    .then((responseJson) => {
-      
-      this.setState({ isLoading: false, blockedContacsData: responseJson });
-    })
-    */
-      .catch((error) => {
-        console.log("No response / not auth");
-        console.log(error);
-      })
-  );
-}
+// TO IMPLEMENT ALL CHAT
