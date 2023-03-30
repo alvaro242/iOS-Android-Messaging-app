@@ -22,6 +22,7 @@ import AsyncStorage from "@react-native-async-storage/async-storage";
 import { loadKey } from "../components/utils/asyncStorage";
 import { getAllContacts } from "../components/utils/API";
 import SettingsScreen from "./SettingsScreen";
+import { getServerIP } from "../components/utils/utils";
 
 export default class ContactsScreen extends Component {
   constructor(props) {
@@ -34,8 +35,7 @@ export default class ContactsScreen extends Component {
   }
 
   getAllContacts(token) {
-    const localIP = "10.182.22.162";
-    let url = "http://" + localIP + ":3333/api/1.0.0/contacts";
+    let url = "http://" + getServerIP() + "/api/1.0.0/contacts";
 
     return fetch(url, {
       method: "GET",
@@ -45,7 +45,7 @@ export default class ContactsScreen extends Component {
     })
       .then((response) => response.json())
       .then((responseJson) => {
-        //this makes exporting to API very difficult
+        //this makes exporting to my API component very difficult
         this.setState({ isLoading: false, contactsData: responseJson });
       })
       .catch((error) => {

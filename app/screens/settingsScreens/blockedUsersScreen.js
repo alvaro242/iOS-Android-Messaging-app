@@ -11,6 +11,7 @@ import {
 import { styles } from "./../../components/Styles/customStyle";
 import { removeContact, blockContact } from "../../components/utils/API";
 import { loadKey } from "../../components/utils/asyncStorage";
+import { getServerIP } from "../../components/utils/utils";
 
 export default class BlockedUsersScreen extends Component {
   constructor(props) {
@@ -23,8 +24,7 @@ export default class BlockedUsersScreen extends Component {
   }
 
   getBlockedContacts(token) {
-    const localIP = "10.182.22.162";
-    let url = "http://" + localIP + ":3333/api/1.0.0/blocked";
+    let url = "http://" + getServerIP() + "/api/1.0.0/blocked";
 
     return fetch(url, {
       method: "GET",
