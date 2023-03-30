@@ -39,7 +39,7 @@ export default class HomeScreen extends Component {
   checkLoggedIn = async () => {
     const value = await AsyncStorage.getItem("whatsthat_session_token");
     if (value == null) {
-      this.props.navigation.push("StartScreen");
+      this.props.navigation.navigate("StartScreen");
     }
   };
 

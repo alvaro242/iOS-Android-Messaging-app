@@ -11,7 +11,7 @@ import {
 import { styles } from "./../../components/Styles/customStyle";
 import { removeContact, blockContact } from "../../components/utils/API";
 import { loadKey } from "../../components/utils/asyncStorage";
-import { getServerIP } from "../../components/utils/utils";
+import { getBlockedContacts } from "../../components/utils/API";
 
 export default class BlockedUsersScreen extends Component {
   constructor(props) {
@@ -22,6 +22,7 @@ export default class BlockedUsersScreen extends Component {
       blockedContacsData: [],
     };
   }
+  /*
 
   getBlockedContacts(token) {
     let url = "http://" + getServerIP() + "/api/1.0.0/blocked";
@@ -42,9 +43,13 @@ export default class BlockedUsersScreen extends Component {
         console.log(error);
       });
   }
-
+*/
   componentDidMount() {
-    loadKey().then((key) => this.getBlockedContacts(key));
+    loadKey().then((key) =>
+      getBlockedContacts(key).then((responseJson) =>
+        this.setState({ isLoading: false, blockedContacsData: responseJson })
+      )
+    );
   }
 
   render() {

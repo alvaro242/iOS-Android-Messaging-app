@@ -2,11 +2,11 @@ import axios from "axios";
 import AsyncStorage from "@react-native-async-storage/async-storage";
 import { setChanged } from "../../screens/ContactsScreen";
 import React, { useCallback } from "react";
-import { getServerIP } from "./utils";
+
+let serverIP = "10.182.22.162:3333";
 
 export function addFriend(friendID, authKey) {
-  let url =
-    "http://" + getServerIP() + "/api/1.0.0/user/" + friendID + "/contact";
+  let url = "http://" + serverIP + "/api/1.0.0/user/" + friendID + "/contact";
 
   axios
     .post(
@@ -75,7 +75,7 @@ export function logIn(values) {
   console.log(values);
 
   axios
-    .post("http://" + getServerIP() + "/api/1.0.0/login/", values)
+    .post("http://" + serverIP + "/api/1.0.0/login/", values)
     .then(async (response) => {
       try {
         await AsyncStorage.setItem(
@@ -87,6 +87,7 @@ export function logIn(values) {
           response.data.token
         );
         console.log(response.data.token);
+        console.log("this works");
         navigation.navigate("HomeScreen");
       } catch {
         throw "Something went wrong";
@@ -100,7 +101,7 @@ export function logIn(values) {
 
 export function logOut(token) {
   console.log(token);
-  return fetch("http://" + getServerIP() + "/api/1.0.0/logout", {
+  return fetch("http://" + serverIP + "/api/1.0.0/logout", {
     method: "POST",
     headers: {
       "X-Authorization": token,
@@ -128,7 +129,7 @@ export function logOut(token) {
 
 export function removeContact(userID, key) {
   return fetch(
-    "http://" + getServerIP() + "/api/1.0.0/user/" + userID + "/contact",
+    "http://" + serverIP + "/api/1.0.0/user/" + userID + "/contact",
     {
       method: "DELETE",
       headers: {
@@ -158,15 +159,12 @@ export function removeContact(userID, key) {
 }
 
 export function blockContact(userID, key) {
-  return fetch(
-    "http://" + getServerIP() + "/api/1.0.0/user/" + userID + "/block",
-    {
-      method: "POST",
-      headers: {
-        "X-Authorization": key,
-      },
-    }
-  )
+  return fetch("http://" + serverIP + "/api/1.0.0/user/" + userID + "/block", {
+    method: "POST",
+    headers: {
+      "X-Authorization": key,
+    },
+  })
     .then(async (response) => {
       if (response.status == 200) {
         console.log("The contact has been blocked");
@@ -189,15 +187,12 @@ export function blockContact(userID, key) {
 }
 
 export function unblockContact(userID, key) {
-  return fetch(
-    "http://" + getServerIP() + "/api/1.0.0/user/" + userID + "/block",
-    {
-      method: "DELETE",
-      headers: {
-        "X-Authorization": key,
-      },
-    }
-  )
+  return fetch("http://" + serverIP + "/api/1.0.0/user/" + userID + "/block", {
+    method: "DELETE",
+    headers: {
+      "X-Authorization": key,
+    },
+  })
     .then(async (response) => {
       if (response.status == 200) {
         console.log("The contact has been unblocked");
@@ -217,4 +212,54 @@ export function unblockContact(userID, key) {
     .catch((error) => {
       console.log("error");
     });
+}
+
+export function getAllContacts(token) {
+  let url = "http://" + serverIP + "/api/1.0.0/contacts";
+
+  return (
+    fetch(url, {
+      method: "GET",
+      headers: {
+        "X-Authorization": token,
+      },
+    })
+      .then((response) => {
+        return response.json();
+      })
+      /*.then((responseJson) => {
+      //this makes exporting to my API component very difficult
+      this.setState({ isLoading: false, contactsData: responseJson });
+    })*/
+      .catch((error) => {
+        console.log("No response / not auth");
+        console.log(error);
+      })
+  );
+}
+
+export function getBlockedContacts(token) {
+  let url = "http://" + serverIP + "/api/1.0.0/blocked";
+
+  return (
+    fetch(url, {
+      method: "GET",
+      headers: {
+        "X-Authorization": token,
+      },
+    })
+      .then((response) => {
+        return response.json();
+      })
+      /*
+    .then((responseJson) => {
+      
+      this.setState({ isLoading: false, blockedContacsData: responseJson });
+    })
+    */
+      .catch((error) => {
+        console.log("No response / not auth");
+        console.log(error);
+      })
+  );
 }

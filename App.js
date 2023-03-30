@@ -62,6 +62,7 @@ export default class App extends Component {
             component={LogInScreen}
             options={{ title: "Log In" }}
           />
+
           <Stack.Screen
             name="SignUpScreen"
             component={SignUpScreen}

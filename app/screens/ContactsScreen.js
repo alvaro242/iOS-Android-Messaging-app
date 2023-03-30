@@ -22,7 +22,6 @@ import AsyncStorage from "@react-native-async-storage/async-storage";
 import { loadKey } from "../components/utils/asyncStorage";
 import { getAllContacts } from "../components/utils/API";
 import SettingsScreen from "./SettingsScreen";
-import { getServerIP } from "../components/utils/utils";
 
 export default class ContactsScreen extends Component {
   constructor(props) {
@@ -34,28 +33,12 @@ export default class ContactsScreen extends Component {
     };
   }
 
-  getAllContacts(token) {
-    let url = "http://" + getServerIP() + "/api/1.0.0/contacts";
-
-    return fetch(url, {
-      method: "GET",
-      headers: {
-        "X-Authorization": token,
-      },
-    })
-      .then((response) => response.json())
-      .then((responseJson) => {
-        //this makes exporting to my API component very difficult
-        this.setState({ isLoading: false, contactsData: responseJson });
-      })
-      .catch((error) => {
-        console.log("No response / not auth");
-        console.log(error);
-      });
-  }
-
   componentDidMount() {
-    loadKey().then((key) => this.getAllContacts(key));
+    loadKey().then((key) =>
+      getAllContacts(key).then((responseJson) =>
+        this.setState({ isLoading: false, contactsData: responseJson })
+      )
+    );
   }
 
   render() {
