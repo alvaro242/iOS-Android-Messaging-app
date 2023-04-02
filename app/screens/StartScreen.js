@@ -9,11 +9,29 @@ import {
 } from "react-native";
 import { styles } from "./../components/Styles/customStyle";
 import { Component } from "react";
+import AsyncStorage from "@react-native-async-storage/async-storage";
 
 export default class StartScreen extends Component {
   constructor(props) {
     super(props);
   }
+
+  componentDidMount() {
+    this.unsubscribe = this.props.navigation.addListener("focus", () => {
+      this.checkLoggedIn();
+    });
+  }
+
+  componentWillUnmount() {
+    this.unsubscribe();
+  }
+
+  checkLoggedIn = async () => {
+    const value = await AsyncStorage.getItem("whatsthat_session_token");
+    if (value != null) {
+      this.props.navigation.navigate("HomeScreen");
+    }
+  };
 
   render() {
     const navigation = this.props.navigation;

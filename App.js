@@ -45,6 +45,11 @@ export default class App extends Component {
       <NavigationContainer>
         <Stack.Navigator>
           <Stack.Screen
+            name="StartScreen"
+            component={StartScreen}
+            options={{ title: "Welcome", headerShown: false }}
+          />
+          <Stack.Screen
             name="HomeScreen"
             component={HomeScreen}
             options={{
@@ -52,11 +57,6 @@ export default class App extends Component {
               headerShown: false,
               gestureEnabled: false,
             }}
-          />
-          <Stack.Screen
-            name="StartScreen"
-            component={StartScreen}
-            options={{ title: "Welcome", headerShown: false }}
           />
           <Stack.Screen
             name="LogInScreen"

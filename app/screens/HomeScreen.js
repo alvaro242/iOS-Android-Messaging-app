@@ -28,6 +28,7 @@ export default class HomeScreen extends Component {
 
   componentDidMount() {
     this.unsubscribe = this.props.navigation.addListener("focus", () => {
+      console.log("trhiggered");
       this.checkLoggedIn();
     });
   }
@@ -38,7 +39,7 @@ export default class HomeScreen extends Component {
 
   checkLoggedIn = async () => {
     const value = await AsyncStorage.getItem("whatsthat_session_token");
-    if (value == null) {
+    if (value === null) {
       this.props.navigation.navigate("StartScreen");
     }
   };
@@ -57,10 +58,11 @@ export default class HomeScreen extends Component {
             //rgba(34,36,40,1) is cool for black theme
           },
           headerStyle: {
-            backgroundColor: "#AEE6FF",
+            backgroundColor: "#5D80F0",
           },
           headerTitleStyle: {
             color: "#fff",
+            fontWeight: "bold",
           },
         })}
       >

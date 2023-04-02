@@ -2,8 +2,9 @@ import axios from "axios";
 import AsyncStorage from "@react-native-async-storage/async-storage";
 import { setChanged } from "../../screens/ContactsScreen";
 import React, { useCallback } from "react";
+import { Alert } from "react-native";
 
-let serverIP = "10.182.22.162:3333";
+let serverIP = "192.168.0.16:3333";
 
 export function registerUser(values) {
   console.log(values);
@@ -47,10 +48,6 @@ export function getUserInformation(token, userID) {
 }
 
 export function UpdateUserInformation(values, userID, token) {
-  console.log(values);
-  console.log(userID);
-  console.log(token);
-
   let url = "http://" + serverIP + "/api/1.0.0/user/" + userID;
 
   return fetch(url, {
@@ -82,6 +79,7 @@ export function logIn(values) {
         );
         console.log(response.data.token);
         console.log("this works");
+
         navigation.navigate("HomeScreen");
       } catch {
         throw "Something went wrong";
@@ -121,7 +119,25 @@ export function logOut(token) {
     });
 }
 
-//TO IMPLEMENT -> GET USERS PROFILE PHOTO
+export function getProfilePicture(userID, token) {
+  let url = "http://" + serverIP + "/api/1.0.0/user/" + userID + "/photo";
+
+  return fetch(url, {
+    method: "GET",
+    headers: {
+      accept: "image/png",
+      "X-Authorization": token,
+    },
+  })
+    .then((response) => {
+      return response.blob();
+    })
+    .then((resBlob) => {
+      let data = URL.createObjectURL(resBlob);
+      return data;
+    })
+    .catch((error) => console.log(error));
+}
 
 //TO IMPLEMENT -> Upload Profile Photo
 
@@ -172,8 +188,7 @@ export function addFriend(friendID, authKey) {
         if (response.data === "Already a contact") {
           console.log("Already a contact");
         } else {
-          navigation.navigate("ContactsScreen");
-          console.log("Contact added");
+          alert("Contact added");
         }
       } else {
         //show error informing about error from API
@@ -208,7 +223,7 @@ export function removeContact(userID, key) {
     .then(async (response) => {
       if (response.status == 200) {
         console.log("The contact has been removed");
-        navigation.navigate("ContactsScreen");
+        alert("The Contact has been removed");
       } else if (response.status == 400) {
         console.log("You can´t remove yourself as a contact");
       } else if (response.status == 401) {
@@ -262,7 +277,7 @@ export function blockContact(userID, key) {
     .then(async (response) => {
       if (response.status == 200) {
         console.log("The contact has been blocked");
-        navigation.navigate("ContactsScreen");
+        alert("The contact has been blocked");
       } else if (response.status == 400) {
         console.log("You can´t block yourself");
       } else if (response.status == 401) {

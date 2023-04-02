@@ -15,6 +15,7 @@ import { loadKeyAndID } from "../components/utils/asyncStorage";
 import { styles } from "./../components/Styles/customStyle";
 import { getUserInformation } from "../components/utils/API";
 import { UpdateUserInformation } from "../components/utils/API";
+import { getProfilePicture } from "../components/utils/API";
 import { loadKey } from "../components/utils/asyncStorage";
 import * as yup from "yup";
 import { Formik } from "formik";
@@ -27,6 +28,7 @@ export default class AccountScreen extends Component {
       isLoading: true,
       accountData: [],
       token: "",
+      photo: "",
     };
   }
 
@@ -36,11 +38,15 @@ export default class AccountScreen extends Component {
     loadKey().then((key) => this.setState({ token: key }));
 
     loadKeyAndID().then((response) =>
-      getUserInformation(response[0], response[1]).then((responseJson) =>
-        this.setState({
-          isLoading: false,
-          accountData: responseJson,
-        })
+      getUserInformation(response[0], response[1]).then(
+        (responseJson) =>
+          this.setState({
+            isLoading: false,
+            accountData: responseJson,
+          }) &
+          getProfilePicture(response[1], response[0]).then((response) =>
+            this.setState({ photo: response })
+          )
       )
     );
   }
@@ -62,7 +68,9 @@ export default class AccountScreen extends Component {
     console.log(this.state.accountData);
     return (
       <View style={styles.myAccount}>
-        <Text>Udpte my account information</Text>
+        <View style={styles.picture}>
+          <Image style={styles.myPic} source={this.state.photo} />
+        </View>
 
         <View style={styles.formContainerSignUp}>
           <Formik
