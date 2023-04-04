@@ -22,32 +22,11 @@ export default class BlockedUsersScreen extends Component {
       blockedContacsData: [],
     };
   }
-  /*
 
-  getBlockedContacts(token) {
-    let url = "http://" + getServerIP() + "/api/1.0.0/blocked";
-
-    return fetch(url, {
-      method: "GET",
-      headers: {
-        "X-Authorization": token,
-      },
-    })
-      .then((response) => response.json())
-      .then((responseJson) => {
-        //this makes exporting to API very difficult
-        this.setState({ isLoading: false, blockedContacsData: responseJson });
-      })
-      .catch((error) => {
-        console.log("No response / not auth");
-        console.log(error);
-      });
-  }
-*/
   componentDidMount() {
     loadKey().then((key) =>
       getBlockedContacts(key).then((responseJson) =>
-        this.setState({ isLoading: false, blockedContacsData: responseJson })
+        this.setState({ blockedContacsData: responseJson, isLoading: false })
       )
     );
   }

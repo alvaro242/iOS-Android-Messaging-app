@@ -28,7 +28,6 @@ export default class HomeScreen extends Component {
 
   componentDidMount() {
     this.unsubscribe = this.props.navigation.addListener("focus", () => {
-      console.log("trhiggered");
       this.checkLoggedIn();
     });
   }
@@ -49,7 +48,7 @@ export default class HomeScreen extends Component {
       <HomeTab.Navigator
         initialRouteName="Home"
         screenOptions={({ route }) => ({
-          headerShown: false,
+          //headerShown: false,
           tabBarStyle: {
             height: 80,
             paddingHorizontal: 5,

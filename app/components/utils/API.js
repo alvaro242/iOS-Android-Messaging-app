@@ -1,7 +1,5 @@
 import axios from "axios";
 import AsyncStorage from "@react-native-async-storage/async-storage";
-import { setChanged } from "../../screens/ContactsScreen";
-import React, { useCallback } from "react";
 import { Alert } from "react-native";
 
 let serverIP = "192.168.0.16:3333";

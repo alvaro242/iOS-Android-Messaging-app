@@ -25,7 +25,7 @@ export default class SignUpScreen extends Component {
     });
 
     return (
-      <View style={styles.containerSignUp}>
+      <View>
         <View style={styles.logoContainerSignUp}>
           <Image
             style={styles.logoSignUp}
@@ -33,9 +33,8 @@ export default class SignUpScreen extends Component {
           />
         </View>
 
-        <Text>Create a new account</Text>
-
         <View style={styles.formContainerSignUp}>
+          <Text>Create a new account</Text>
           <Formik
             validationSchema={signUpvalidationSchema}
             initialValues={{

@@ -22,12 +22,14 @@ import AsyncStorage from "@react-native-async-storage/async-storage";
 import { loadKey } from "../components/utils/asyncStorage";
 import { getAllContacts } from "../components/utils/API";
 import SettingsScreen from "./SettingsScreen";
+import { RefreshControl } from "react-native-web-refresh-control";
 
 export default class ContactsScreen extends Component {
   constructor(props) {
     super(props);
 
     this.state = {
+      refreshing: false,
       isLoading: true,
       contactsData: [],
     };
@@ -44,6 +46,19 @@ export default class ContactsScreen extends Component {
     );
   }
 
+  refresh = () => {
+    this.setState({ refreshing: true });
+
+    loadKey().then((key) =>
+      getAllContacts(key).then((responseJson) =>
+        this.setState({
+          contactsData: responseJson,
+          refreshing: false,
+        })
+      )
+    );
+  };
+
   render() {
     if (this.state.isLoading) {
       return (
@@ -54,7 +69,15 @@ export default class ContactsScreen extends Component {
     }
 
     return (
-      <ScrollView style={styles.contactsContainer}>
+      <ScrollView
+        style={styles.contactsContainer}
+        refreshControl={
+          <RefreshControl
+            refreshing={this.state.refreshing}
+            onRefresh={this.refresh}
+          />
+        }
+      >
         <FlatList
           data={this.state.contactsData}
           renderItem={({ item }) => (

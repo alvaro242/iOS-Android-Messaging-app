@@ -1,4 +1,5 @@
-Respuestas de la API, handling errors and nice popup
+Respuestas de la API, handling errors and nice popup // render in screen, como el ActivityIndicator 
 Validation forms
 cambiar lineas entre contactos, a gris claro
 cambiar botones 
+revision parpadeo pantalla inicial

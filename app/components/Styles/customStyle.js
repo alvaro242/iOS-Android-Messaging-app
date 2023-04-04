@@ -107,6 +107,7 @@ export const styles = StyleSheet.create({
   },
   logoContainerSignUp: {
     alignItems: "center",
+    backgroundColor: "white",
   },
   formContainerSignUp: {
     alignItems: "center",
@@ -192,16 +193,22 @@ export const styles = StyleSheet.create({
   settingsContainer: {
     height: 40,
     padding: 10,
-    width: "90%",
+    width: "80%",
+    height: 120,
     margin: 10,
     backgroundColor: "white",
     borderColor: "gray",
     borderWidth: StyleSheet.hairlineWidth,
     borderRadius: 5,
 
-    alignItems: "center",
     backgroundColor: "white",
     elevation: 10,
+  },
+
+  settingsOption: {
+    borderBottomWidth: 0.5,
+    borderColor: "grey",
+    padding: 10,
   },
 
   myPic: {

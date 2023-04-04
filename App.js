@@ -43,7 +43,17 @@ export default class App extends Component {
       //SafeArea for iPhoneX+ devices
       //<SafeAreaView edges={["right", "left", "top"]} style={styles.root}>
       <NavigationContainer>
-        <Stack.Navigator>
+        <Stack.Navigator
+          screenOptions={({ route }) => ({
+            headerStyle: {
+              backgroundColor: "#5D80F0",
+            },
+            headerTitleStyle: {
+              color: "#fff",
+              fontWeight: "bold",
+            },
+          })}
+        >
           <Stack.Screen
             name="StartScreen"
             component={StartScreen}

@@ -151,15 +151,24 @@ export default class AccountScreen extends Component {
               </>
             )}
           </Formik>
-        </View>
-        <View style={styles.settingsContainer}>
-          <Text
-            onPress={() => {
-              this.props.navigation.navigate("ChangePassword");
-            }}
-          >
-            Change Password
-          </Text>
+          <View style={styles.settingsContainer}>
+            <Text
+              style={styles.settingsOption}
+              onPress={() => {
+                this.props.navigation.navigate("ChangePassword");
+              }}
+            >
+              Change Password
+            </Text>
+            <Text
+              style={styles.settingsOption}
+              onPress={() => {
+                //this.props.navigation.navigate("ChangePassword");
+              }}
+            >
+              Change Profile Picture
+            </Text>
+          </View>
         </View>
       </View>
     );
