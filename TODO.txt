@@ -3,3 +3,4 @@ Validation forms
 cambiar lineas entre contactos, a gris claro
 cambiar botones 
 revision parpadeo pantalla inicial
+arreglar patch request para que solo se envie lo que se modifica

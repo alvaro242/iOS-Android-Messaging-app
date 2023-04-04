@@ -19,6 +19,7 @@ import { getProfilePicture } from "../components/utils/API";
 import { loadKey } from "../components/utils/asyncStorage";
 import * as yup from "yup";
 import { Formik } from "formik";
+import { CameraSendToServer } from "../components/utils/camera-takephoto";
 
 export default class AccountScreen extends Component {
   constructor(props) {
@@ -163,7 +164,7 @@ export default class AccountScreen extends Component {
             <Text
               style={styles.settingsOption}
               onPress={() => {
-                //this.props.navigation.navigate("ChangePassword");
+                this.props.navigation.navigate("CameraSendToServer");
               }}
             >
               Change Profile Picture

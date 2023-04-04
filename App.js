@@ -12,6 +12,7 @@ import { createNativeStackNavigator } from "@react-navigation/native-stack";
 import React, { Component } from "react";
 import { styles } from "./app/components/Styles/customStyle";
 import ChangePassword from "./app/screens/settingsScreens/ChangePasswordScreen";
+import CameraSendToServer from "./app/components/utils/camera-takephoto";
 
 import AsyncStorage from "@react-native-async-storage/async-storage";
 import {
@@ -124,6 +125,15 @@ export default class App extends Component {
             component={ChangePassword}
             options={{
               title: "Change Password",
+              headerShown: true,
+              gestureEnabled: true,
+            }}
+          />
+          <Stack.Screen
+            name="CameraSendToServer"
+            component={CameraSendToServer}
+            options={{
+              title: "Take a new profile pic",
               headerShown: true,
               gestureEnabled: true,
             }}
