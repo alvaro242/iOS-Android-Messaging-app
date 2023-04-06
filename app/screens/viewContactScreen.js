@@ -41,6 +41,7 @@ export default class ViewContactScreen extends Component {
 
     let contact = this.props.route.params.item;
     console.log(contact);
+    console.log(this.state.photo);
     return (
       <View>
         <View style={styles.picture}>

@@ -12,7 +12,9 @@ import { createNativeStackNavigator } from "@react-navigation/native-stack";
 import React, { Component } from "react";
 import { styles } from "./app/components/Styles/customStyle";
 import ChangePassword from "./app/screens/settingsScreens/ChangePasswordScreen";
-import CameraSendToServer from "./app/components/utils/camera-takephoto";
+import CameraComponent from "./app/components/utils/camera";
+import ConfirmPhotoScreen from "./app/screens/ConfirmPhotoScreen";
+import { navigationRef } from "./app/components/utils/RootNavigation";
 
 import AsyncStorage from "@react-native-async-storage/async-storage";
 import {
@@ -43,8 +45,9 @@ export default class App extends Component {
     return (
       //SafeArea for iPhoneX+ devices
       //<SafeAreaView edges={["right", "left", "top"]} style={styles.root}>
-      <NavigationContainer>
+      <NavigationContainer ref={navigationRef}>
         <Stack.Navigator
+          initialRouteName="Home"
           screenOptions={({ route }) => ({
             headerStyle: {
               backgroundColor: "#5D80F0",
@@ -130,10 +133,19 @@ export default class App extends Component {
             }}
           />
           <Stack.Screen
-            name="CameraSendToServer"
-            component={CameraSendToServer}
+            name="CameraComponent"
+            component={CameraComponent}
             options={{
               title: "Take a new profile pic",
+              headerShown: true,
+              gestureEnabled: true,
+            }}
+          />
+          <Stack.Screen
+            name="ConfirmPhotoScreen"
+            component={ConfirmPhotoScreen}
+            options={{
+              title: "Confirm new picture",
               headerShown: true,
               gestureEnabled: true,
             }}

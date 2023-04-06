@@ -6,8 +6,10 @@ import {
 } from "expo-camera";
 import { useState } from "react";
 import { StyleSheet, Text, TouchableOpacity, View } from "react-native";
+import * as RootNavigation from "./RootNavigation";
+import { MaterialCommunityIcons } from "react-native-vector-icons";
 
-export default function CameraSendToServer() {
+export default function CameraComponent() {
   const [type, setType] = useState(CameraType.back);
   const [permission, requestPermission] = Camera.useCameraPermissions();
   const [camera, setCamera] = useState(null);
@@ -24,20 +26,20 @@ export default function CameraSendToServer() {
       const options = {
         quality: 0.5,
         base64: true,
-        onPictureSaved: (photoData) => sendToServer(photoData),
+        onPictureSaved: (photoData) => sendToConfirmationScreen(photoData),
       };
-      const data = await camera.takePictureAsync(options);
+      const photoData = await camera.takePictureAsync(options);
     }
   }
 
-  async function sendToServer(data) {
-    console.log("HERE", data);
+  function sendToConfirmationScreen(photoData) {
+    RootNavigation.navigate("ConfirmPhotoScreen", { photoData });
 
-    let id = 10;
-    let token = "token here";
+    //let id = 10;
+    //let token = "token here";
 
-    let res = await fetch(data.uri);
-    let blob = await res.blob();
+    // let res = await fetch(photoData.uri);
+    //let blob = await res.blob();
 
     //network request here
   }
@@ -46,7 +48,7 @@ export default function CameraSendToServer() {
     return <Text>No access to camera</Text>;
   } else {
     return (
-      <View style={styles.container}>
+      <View style={styles.containerCamera}>
         <Camera style={styles.camera} type={type} ref={(ref) => setCamera(ref)}>
           <View style={styles.buttonContainer}>
             <TouchableOpacity style={styles.button} onPress={toggleCameraType}>
@@ -66,7 +68,7 @@ export default function CameraSendToServer() {
 }
 
 const styles = StyleSheet.create({
-  container: {
+  containerCamera: {
     flex: 1,
   },
   buttonContainer: {

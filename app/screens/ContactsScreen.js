@@ -69,30 +69,28 @@ export default class ContactsScreen extends Component {
     }
 
     return (
-      <ScrollView
-        style={styles.contactsContainer}
+      //<ScrollView style={styles.contactsContainer}>
+      <FlatList
         refreshControl={
           <RefreshControl
             refreshing={this.state.refreshing}
             onRefresh={this.refresh}
           />
         }
-      >
-        <FlatList
-          data={this.state.contactsData}
-          renderItem={({ item }) => (
-            <Text
-              style={styles.contact}
-              onPress={() => {
-                this.props.navigation.navigate("viewContactScreen", { item });
-              }}
-            >
-              {item.first_name} {item.last_name}
-            </Text>
-          )}
-          keyExtractor={({ user_id }, index) => user_id}
-        />
-      </ScrollView>
+        data={this.state.contactsData}
+        renderItem={({ item }) => (
+          <Text
+            style={styles.contact}
+            onPress={() => {
+              this.props.navigation.navigate("viewContactScreen", { item });
+            }}
+          >
+            {item.first_name} {item.last_name}
+          </Text>
+        )}
+        keyExtractor={({ user_id }, index) => user_id}
+      />
+      //</ScrollView>
     );
   }
 }

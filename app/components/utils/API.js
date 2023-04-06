@@ -1,8 +1,9 @@
 import axios from "axios";
 import AsyncStorage from "@react-native-async-storage/async-storage";
 import { Alert } from "react-native";
+import * as RootNavigation from "./RootNavigation";
 
-let serverIP = "192.168.0.16:3333";
+let serverIP = "10.182.28.157:3333";
 
 export function registerUser(values) {
   console.log(values);
@@ -14,7 +15,8 @@ export function registerUser(values) {
       //if response 201 I should make a logged in.
 
       if (response.status == 201) {
-        navigation.navigate("LogInScreen"); // or go to root
+        RootNavigation.navigate("LogInScreen");
+        // or go to root
         // pending: auto-login
       } else {
         //show error informing about error from API
@@ -75,12 +77,11 @@ export function logIn(values) {
           "whatsthat_session_token",
           response.data.token
         );
+        RootNavigation.navigate("HomeScreen");
         console.log(response.data.token);
         console.log("this works");
-
-        navigation.navigate("HomeScreen");
-      } catch {
-        throw "Something went wrong";
+      } catch (error) {
+        throw error;
       }
     })
     .catch((error) => {
@@ -102,12 +103,12 @@ export function logOut(token) {
         await AsyncStorage.removeItem("whatsthat_session_token");
         await AsyncStorage.removeItem("whatsthat_user_id");
         console.log("the error is in navigatin");
-        navigation.navigate("StartScreen");
+        RootNavigation.navigate("StartScreen");
       } else if (response.status == 401) {
         console.log("Unauthorized");
         await AsyncStorage.removeItem("whatsthat_session_token");
         await AsyncStorage.removeItem("whatsthat_user_id");
-        navigation.navigate("StartScreen");
+        RootNavigation.navigate("StartScreen");
       } else {
         throw "Error";
       }
@@ -137,7 +138,30 @@ export function getProfilePicture(userID, token) {
     .catch((error) => console.log(error));
 }
 
-//TO IMPLEMENT -> Upload Profile Photo
+export async function uploadProfilePic(token, id, photo) {
+  let url = "http://" + serverIP + "/api/1.0.0/user/" + id + "/photo";
+  let fetchpic = await fetch(photo);
+  let blob = await fetchpic.blob();
+
+  return fetch(url, {
+    method: "POST",
+    headers: {
+      "Content-Type": "image/png",
+      "X-Authorization": token,
+    },
+    body: blob,
+  })
+    .then((response) => {
+      if (response.status == 200) {
+        console.log("image updated");
+        RootNavigation.navigate("AccountScreen");
+      } else {
+        throw "something happened";
+      }
+    })
+
+    .catch((error) => console.log(error));
+}
 
 //TO IMPLEMENT -> Search for users
 
@@ -303,7 +327,7 @@ export function unblockContact(userID, key) {
     .then(async (response) => {
       if (response.status == 200) {
         console.log("The contact has been unblocked");
-        navigation.navigate("blockedUsersScreen");
+        RootNavigation.navigate("blockedUsersScreen");
       } else if (response.status == 400) {
         console.log("You can´t block yourself");
       } else if (response.status == 401) {

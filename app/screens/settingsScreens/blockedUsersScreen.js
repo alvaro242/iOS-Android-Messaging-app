@@ -12,6 +12,7 @@ import { styles } from "./../../components/Styles/customStyle";
 import { removeContact, blockContact } from "../../components/utils/API";
 import { loadKey } from "../../components/utils/asyncStorage";
 import { getBlockedContacts } from "../../components/utils/API";
+import { RefreshControl } from "react-native-web-refresh-control";
 
 export default class BlockedUsersScreen extends Component {
   constructor(props) {
@@ -20,6 +21,7 @@ export default class BlockedUsersScreen extends Component {
     this.state = {
       isLoading: true,
       blockedContacsData: [],
+      refreshing: false,
     };
   }
 
@@ -31,6 +33,20 @@ export default class BlockedUsersScreen extends Component {
     );
   }
 
+  refresh = () => {
+    this.setState({ refreshing: true });
+
+    loadKey().then((key) =>
+      getBlockedContacts(key).then((responseJson) =>
+        this.setState({
+          blockedContacsData: responseJson,
+          isLoading: false,
+          refreshing: false,
+        })
+      )
+    );
+  };
+
   render() {
     if (this.state.isLoading) {
       return (
@@ -40,7 +56,15 @@ export default class BlockedUsersScreen extends Component {
       );
     }
     return (
-      <ScrollView style={styles.contactsContainer}>
+      <ScrollView
+        style={styles.contactsContainer}
+        refreshControl={
+          <RefreshControl
+            refreshing={this.state.refreshing}
+            onRefresh={this.refresh}
+          />
+        }
+      >
         <FlatList
           data={this.state.blockedContacsData}
           renderItem={({ item }) => (

@@ -1,6 +1,4 @@
 Respuestas de la API, handling errors and nice popup // render in screen, como el ActivityIndicator 
-Validation forms
-cambiar lineas entre contactos, a gris claro
+validation?
 cambiar botones 
-revision parpadeo pantalla inicial
-arreglar patch request para que solo se envie lo que se modifica
+arreglar patch request para que solo se envie lo que se modifica - accountScreen
