@@ -3,11 +3,11 @@ import {
   View,
   FlatList,
   ActivityIndicator,
-  ScrollView,
   Image,
   TextInput,
   Button,
   Alert,
+  ScrollView,
 } from "react-native";
 import { Formik } from "formik";
 import * as yup from "yup";
@@ -20,8 +20,7 @@ import { createNativeStackNavigator } from "@react-navigation/native-stack";
 import React, { Component, useState, useEffect } from "react";
 import AsyncStorage from "@react-native-async-storage/async-storage";
 import { loadKey } from "../components/utils/asyncStorage";
-import { getAllContacts } from "../components/utils/API";
-import SettingsScreen from "./SettingsScreen";
+import { getAllContacts, searchCurrentUsers } from "../components/utils/API";
 import { RefreshControl } from "react-native-web-refresh-control";
 
 export default class ContactsScreen extends Component {
@@ -32,6 +31,9 @@ export default class ContactsScreen extends Component {
       refreshing: false,
       isLoading: true,
       contactsData: [],
+      searchWord: "",
+
+      clearFilter: "",
     };
   }
 
@@ -54,9 +56,31 @@ export default class ContactsScreen extends Component {
         this.setState({
           contactsData: responseJson,
           refreshing: false,
+          clearFilter: "",
         })
       )
     );
+  };
+
+  changeHandler = (e) => {
+    this.setState({
+      searchWord: e.target.value,
+    });
+  };
+
+  showFilteredContacts = () => {
+    this.setState({ isLoading: true });
+
+    loadKey()
+      .then((key) => searchCurrentUsers(this.state.searchWord, key))
+      .then((responseJson) =>
+        this.setState({
+          contactsData: responseJson,
+          isLoading: false,
+
+          clearFilter: "Clear search",
+        })
+      );
   };
 
   render() {
@@ -69,28 +93,57 @@ export default class ContactsScreen extends Component {
     }
 
     return (
-      //<ScrollView style={styles.contactsContainer}>
-      <FlatList
-        refreshControl={
-          <RefreshControl
-            refreshing={this.state.refreshing}
-            onRefresh={this.refresh}
+      <ScrollView>
+        <View style={styles.searchContactsContainer}>
+          <TextInput
+            style={styles.inputSearch}
+            name="Search"
+            placeholder="Search Contacts"
+            onChange={this.changeHandler}
+            keyboardType="text"
           />
-        }
-        data={this.state.contactsData}
-        renderItem={({ item }) => (
-          <Text
-            style={styles.contact}
-            onPress={() => {
-              this.props.navigation.navigate("viewContactScreen", { item });
-            }}
-          >
-            {item.first_name} {item.last_name}
-          </Text>
-        )}
-        keyExtractor={({ user_id }, index) => user_id}
-      />
-      //</ScrollView>
+          <View style={styles.submitButton}>
+            <Button
+              title="Search"
+              onPress={() => this.showFilteredContacts()}
+            />
+          </View>
+        </View>
+
+        <View>
+          <FlatList
+            refreshControl={
+              <RefreshControl
+                refreshing={this.state.refreshing}
+                onRefresh={this.refresh}
+              />
+            }
+            data={this.state.contactsData}
+            renderItem={({ item }) => (
+              <Text
+                style={styles.contact}
+                onPress={() => {
+                  this.props.navigation.navigate("viewContactScreen", {
+                    item,
+                  });
+                }}
+              >
+                {item.first_name} {item.last_name} {item.given_name}{" "}
+                {item.family_name}
+              </Text>
+            )}
+            keyExtractor={({ user_id }, index) => user_id}
+          />
+        </View>
+        <Text
+          style={styles.clearSearch}
+          onPress={() => {
+            this.refresh();
+          }}
+        >
+          {this.state.clearFilter}
+        </Text>
+      </ScrollView>
     );
   }
 }

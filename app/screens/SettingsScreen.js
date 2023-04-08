@@ -17,9 +17,10 @@ import { styles } from "./../components/Styles/customStyle";
 export default class SettingsScreen extends Component {
   render() {
     return (
-      <View>
+      <View style={styles.settingsScreen}>
         <View style={styles.settingsContainer}>
           <Text
+            style={styles.settingsOption}
             onPress={() => {
               this.props.navigation.navigate("blockedUsersScreen");
             }}

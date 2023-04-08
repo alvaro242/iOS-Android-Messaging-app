@@ -26,23 +26,6 @@ export default class HomeScreen extends Component {
     super(props);
   }
 
-  componentDidMount() {
-    this.unsubscribe = this.props.navigation.addListener("focus", () => {
-      this.checkLoggedIn();
-    });
-  }
-
-  componentWillUnmount() {
-    this.unsubscribe();
-  }
-
-  checkLoggedIn = async () => {
-    const value = await AsyncStorage.getItem("whatsthat_session_token");
-    if (value === null) {
-      this.props.navigation.navigate("StartScreen");
-    }
-  };
-
   render() {
     return (
       <HomeTab.Navigator

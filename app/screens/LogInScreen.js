@@ -1,16 +1,6 @@
-import {
-  StyleSheet,
-  Text,
-  View,
-  Image,
-  TextInput,
-  Button,
-  Alert,
-} from "react-native";
+import { Text, View, Image, TextInput, Button, Alert } from "react-native";
 import { Formik } from "formik";
 import * as yup from "yup";
-import axios from "axios";
-
 import { styles } from "./../components/Styles/customStyle";
 import { logIn } from "../components/utils/API";
 import React, { Component } from "react";

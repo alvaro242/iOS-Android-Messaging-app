@@ -3,7 +3,7 @@ import AsyncStorage from "@react-native-async-storage/async-storage";
 import { Alert } from "react-native";
 import * as RootNavigation from "./RootNavigation";
 
-let serverIP = "10.182.28.157:3333";
+let serverIP = "localhost:3333";
 
 export function registerUser(values) {
   console.log(values);
@@ -163,30 +163,47 @@ export async function uploadProfilePic(token, id, photo) {
     .catch((error) => console.log(error));
 }
 
-//TO IMPLEMENT -> Search for users
+export function searchCurrentUsers(searchWord, token) {
+  let url =
+    "http://" +
+    serverIP +
+    "/api/1.0.0/search?q=" +
+    searchWord +
+    "&limit=999&search_in=contacts";
+
+  return fetch(url, {
+    method: "GET",
+    headers: {
+      "X-Authorization": token,
+    },
+  })
+    .then((response) => {
+      console.log(response);
+      return response.json();
+    })
+
+    .catch((error) => {
+      console.log(error);
+    });
+}
+//TO IMPLEMENT -> Search new users
 
 export function getAllContacts(token) {
   let url = "http://" + serverIP + "/api/1.0.0/contacts";
 
-  return (
-    fetch(url, {
-      method: "GET",
-      headers: {
-        "X-Authorization": token,
-      },
+  return fetch(url, {
+    method: "GET",
+    headers: {
+      "X-Authorization": token,
+    },
+  })
+    .then((response) => {
+      return response.json();
     })
-      .then((response) => {
-        return response.json();
-      })
-      /*.then((responseJson) => {
-      //this makes exporting to my API component very difficult
-      this.setState({ isLoading: false, contactsData: responseJson });
-    })*/
-      .catch((error) => {
-        console.log("No response / not auth");
-        console.log(error);
-      })
-  );
+
+    .catch((error) => {
+      console.log(error);
+    });
 }
 
 export function addFriend(friendID, authKey) {

@@ -16,7 +16,6 @@ import { styles } from "./../components/Styles/customStyle";
 import { getUserInformation } from "../components/utils/API";
 import { UpdateUserInformation } from "../components/utils/API";
 import { getProfilePicture } from "../components/utils/API";
-import { loadKey } from "../components/utils/asyncStorage";
 import * as yup from "yup";
 import { Formik } from "formik";
 

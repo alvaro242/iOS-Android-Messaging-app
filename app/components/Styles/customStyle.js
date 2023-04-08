@@ -192,8 +192,8 @@ export const styles = StyleSheet.create({
 
   settingsContainer: {
     height: 40,
-    padding: 10,
-    width: "80%",
+    paddingHorizontal: 40,
+    width: "100%",
     height: 120,
     margin: 10,
     backgroundColor: "white",
@@ -208,7 +208,12 @@ export const styles = StyleSheet.create({
   settingsOption: {
     borderBottomWidth: 0.5,
     borderColor: "grey",
-    padding: 10,
+    //padding: 10,
+    paddingVertical: 15,
+  },
+
+  settingsScreen: {
+    alignSelf: "center",
   },
 
   myPic: {
@@ -217,4 +222,30 @@ export const styles = StyleSheet.create({
     alignSelf: "center",
     borderRadius: 100,
   },
+
+  searchContactsContainer: {
+    flexDirection: "row",
+    justifyContent: "center",
+    alignContent: "center",
+  },
+
+  inputSearch: {
+    height: 50,
+    padding: 10,
+    width: "80%",
+    margin: 10,
+    backgroundColor: "white",
+    borderColor: "gray",
+    borderWidth: StyleSheet.hairlineWidth,
+    borderRadius: 10,
+  },
+
+  searchContactsButton: {
+    height: "70%",
+  },
+
+  submitButton: {
+    justifyContent: "space-around",
+  },
+  clearSearch: { alignSelf: "center" },
 });
