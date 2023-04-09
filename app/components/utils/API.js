@@ -3,7 +3,7 @@ import AsyncStorage from "@react-native-async-storage/async-storage";
 import { Alert } from "react-native";
 import * as RootNavigation from "./RootNavigation";
 
-let serverIP = "localhost:3333";
+let serverIP = "192.168.0.16:3333";
 
 export function registerUser(values) {
   console.log(values);
@@ -102,7 +102,7 @@ export function logOut(token) {
       if (response.status == 200) {
         await AsyncStorage.removeItem("whatsthat_session_token");
         await AsyncStorage.removeItem("whatsthat_user_id");
-        console.log("the error is in navigatin");
+
         RootNavigation.navigate("StartScreen");
       } else if (response.status == 401) {
         console.log("Unauthorized");
@@ -110,10 +110,11 @@ export function logOut(token) {
         await AsyncStorage.removeItem("whatsthat_user_id");
         RootNavigation.navigate("StartScreen");
       } else {
-        throw "Error";
+        throw RootNavigation.navigate("StartScreen");
       }
     })
     .catch((error) => {
+      RootNavigation.navigate("StartScreen");
       console.log("error");
     });
 }
@@ -186,7 +187,30 @@ export function searchCurrentUsers(searchWord, token) {
       console.log(error);
     });
 }
-//TO IMPLEMENT -> Search new users
+
+export function searchBetweenAllUsers(searchWord, token) {
+  let url =
+    "http://" +
+    serverIP +
+    "/api/1.0.0/search?q=" +
+    searchWord +
+    "&limit=999&search_in=all";
+
+  return fetch(url, {
+    method: "GET",
+    headers: {
+      "X-Authorization": token,
+    },
+  })
+    .then((response) => {
+      console.log(response);
+      return response.json();
+    })
+
+    .catch((error) => {
+      console.log(error);
+    });
+}
 
 export function getAllContacts(token) {
   let url = "http://" + serverIP + "/api/1.0.0/contacts";

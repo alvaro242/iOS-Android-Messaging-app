@@ -127,6 +127,18 @@ export default class HomeScreen extends Component {
             tabBarIcon: ({ color, size }) => (
               <MaterialCommunityIcons name="cog" color={color} size={size} />
             ),
+            headerRightContainerStyle: {
+              paddingRight: 15,
+            },
+            headerRight: () => (
+              <MaterialCommunityIcons
+                name="logout"
+                //color="black"
+                size="25"
+                paddingHorizontal="25"
+                onPress={() => loadKey().then((key) => logOut(key))}
+              />
+            ),
           }}
         />
       </HomeTab.Navigator>

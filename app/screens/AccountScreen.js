@@ -13,9 +13,10 @@ import {
 import React, { Component } from "react";
 import { loadKeyAndID } from "../components/utils/asyncStorage";
 import { styles } from "./../components/Styles/customStyle";
-import { getUserInformation } from "../components/utils/API";
+import { getUserInformation, logOut } from "../components/utils/API";
 import { UpdateUserInformation } from "../components/utils/API";
 import { getProfilePicture } from "../components/utils/API";
+
 import * as yup from "yup";
 import { Formik } from "formik";
 
@@ -26,6 +27,7 @@ export default class AccountScreen extends Component {
     this.state = {
       isLoading: true,
       accountData: [],
+
       token: "",
       photo: "",
     };
@@ -34,18 +36,20 @@ export default class AccountScreen extends Component {
   componentDidMount() {
     this.unsubscribe = this.props.navigation.addListener("focus", () => {
       console.log("Triggered");
-      loadKeyAndID().then((response) =>
-        getUserInformation(response[0], response[1]).then(
-          (responseJson) =>
-            this.setState({
-              isLoading: false,
-              accountData: responseJson,
-              token: response[0],
-            }) &
-            getProfilePicture(response[1], response[0]).then((response) =>
-              this.setState({ photo: response })
-            )
-        )
+      loadKeyAndID().then(
+        (response) =>
+          getUserInformation(response[0], response[1]).then(
+            (responseJson) =>
+              this.setState({
+                isLoading: false,
+                accountData: responseJson,
+                token: response[0],
+              }) &
+              getProfilePicture(response[1], response[0]).then((response) =>
+                this.setState({ photo: response })
+              )
+          )
+        //
       );
     });
   }

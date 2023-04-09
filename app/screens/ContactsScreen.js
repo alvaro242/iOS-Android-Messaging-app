@@ -32,7 +32,6 @@ export default class ContactsScreen extends Component {
       isLoading: true,
       contactsData: [],
       searchWord: "",
-
       clearFilter: "",
     };
   }
@@ -50,7 +49,6 @@ export default class ContactsScreen extends Component {
 
   refresh = () => {
     this.setState({ refreshing: true });
-
     loadKey().then((key) =>
       getAllContacts(key).then((responseJson) =>
         this.setState({
@@ -128,6 +126,7 @@ export default class ContactsScreen extends Component {
                   });
                 }}
               >
+                {/* Firstname and lastname only will show when executing getallcontacts and given namy and family name when executing searchCurrentUsers*/}
                 {item.first_name} {item.last_name} {item.given_name}{" "}
                 {item.family_name}
               </Text>

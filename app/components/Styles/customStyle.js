@@ -154,9 +154,18 @@ export const styles = StyleSheet.create({
     justifyContent: "center",
   },
 
-  addContactContainer: {
-    position: "relative",
-    height: 500,
+  inputInsertID: {
+    height: 50,
+    padding: 10,
+    width: "30%",
+    margin: 10,
+    backgroundColor: "white",
+    borderColor: "gray",
+    borderWidth: StyleSheet.hairlineWidth,
+    borderRadius: 10,
+  },
+
+  searchText: {
     alignItems: "center",
     justifyContent: "center",
   },
@@ -247,5 +256,13 @@ export const styles = StyleSheet.create({
   submitButton: {
     justifyContent: "space-around",
   },
-  clearSearch: { alignSelf: "center" },
+  clearSearch: { alignSelf: "center", padding: 50 },
+
+  contactsFound: {
+    flexDirection: "row",
+    backgroundColor: "white",
+    padding: 30,
+    marginBottom: 2,
+    justifyContent: "space-between",
+  },
 });

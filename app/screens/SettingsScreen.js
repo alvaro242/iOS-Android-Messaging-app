@@ -2,6 +2,7 @@ import {
   StyleSheet,
   Text,
   View,
+  ScrollView,
   Image,
   TextInput,
   Button,
@@ -17,7 +18,7 @@ import { styles } from "./../components/Styles/customStyle";
 export default class SettingsScreen extends Component {
   render() {
     return (
-      <View style={styles.settingsScreen}>
+      <ScrollView style={styles.settingsScreen}>
         <View style={styles.settingsContainer}>
           <Text
             style={styles.settingsOption}
@@ -28,7 +29,7 @@ export default class SettingsScreen extends Component {
             Blocked users
           </Text>
         </View>
-      </View>
+      </ScrollView>
     );
   }
 }
