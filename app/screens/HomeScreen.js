@@ -150,7 +150,7 @@ const styles = StyleSheet.create({
   container: {
     justifyContent: "center",
     alignItems: "center",
-    backgroundColor: "white",
+    //backgroundColor: "white",
   },
   logo: {
     width: 60,

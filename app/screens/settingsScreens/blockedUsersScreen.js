@@ -57,7 +57,6 @@ export default class BlockedUsersScreen extends Component {
     }
     return (
       <ScrollView
-        style={styles.contactsContainer}
         refreshControl={
           <RefreshControl
             refreshing={this.state.refreshing}

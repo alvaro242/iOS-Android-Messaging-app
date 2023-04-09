@@ -181,10 +181,6 @@ export const styles = StyleSheet.create({
     borderRadius: 10,
   },
 
-  contactsContainer: {
-    backgroundColor: "grey",
-  },
-
   contact: {
     backgroundColor: "white",
     padding: 30,
