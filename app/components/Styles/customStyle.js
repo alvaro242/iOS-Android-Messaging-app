@@ -265,4 +265,11 @@ export const styles = StyleSheet.create({
     marginBottom: 2,
     justifyContent: "space-between",
   },
+
+  conversation: {
+    backgroundColor: "white",
+    padding: 30,
+    marginBottom: 2,
+    justifyContent: "center",
+  },
 });

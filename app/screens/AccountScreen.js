@@ -27,7 +27,8 @@ export default class AccountScreen extends Component {
     this.state = {
       isLoading: true,
       accountData: [],
-
+      errorLoading: false,
+      errorLoadingMessage: "error",
       token: "",
       photo: "",
     };
@@ -36,21 +37,28 @@ export default class AccountScreen extends Component {
   componentDidMount() {
     this.unsubscribe = this.props.navigation.addListener("focus", () => {
       console.log("Triggered");
-      loadKeyAndID().then(
-        (response) =>
-          getUserInformation(response[0], response[1]).then(
-            (responseJson) =>
-              this.setState({
-                isLoading: false,
-                accountData: responseJson,
-                token: response[0],
-              }) &
-              getProfilePicture(response[1], response[0]).then((response) =>
-                this.setState({ photo: response })
-              )
-          )
-        //
-      );
+      loadKeyAndID()
+        .then(
+          (response) =>
+            getUserInformation(response[0], response[1]).then(
+              (responseJson) =>
+                this.setState({
+                  isLoading: false,
+                  accountData: responseJson,
+                  token: response[0],
+                }) &
+                getProfilePicture(response[1], response[0]).then((response) =>
+                  this.setState({ photo: response })
+                )
+            )
+          //
+        )
+        .catch((error) =>
+          this.setState({
+            errorLoading: true,
+            errorLoadingMessage: error,
+          })
+        );
     });
   }
 
@@ -65,6 +73,13 @@ export default class AccountScreen extends Component {
       email: yup.string().email("Email must be valid"),
     });
 
+    if (this.state.errorLoading) {
+      return (
+        <View>
+          <Text>{this.state.errorLoadingMessage}</Text>
+        </View>
+      );
+    }
     if (this.state.isLoading) {
       return (
         <View>
@@ -72,7 +87,7 @@ export default class AccountScreen extends Component {
         </View>
       );
     }
-    console.log(this.state.accountData);
+
     return (
       <ScrollView>
         <View style={styles.myAccount}>

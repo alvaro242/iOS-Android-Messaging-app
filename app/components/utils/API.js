@@ -2,13 +2,21 @@ import axios from "axios";
 import AsyncStorage from "@react-native-async-storage/async-storage";
 import { Alert } from "react-native";
 import * as RootNavigation from "./RootNavigation";
+import { createErrorHandler } from "expo/build/errors/ExpoErrorManager";
 
 let serverIP = "192.168.0.16:3333";
 
 export function registerUser(values) {
+  let url = "http://" + serverIP + "/api/1.0.0/user/";
   console.log(values);
-  axios
-    .post("http://" + serverIP + "/api/1.0.0/user/", values)
+  fetch(url, {
+    method: "POST",
+    headers: {
+      "Content-Type": "application/json",
+      accept: "application/json",
+    },
+    body: JSON.stringify(values),
+  })
     .then((response) => {
       //returns user ID on response.data.user_id, pending autologin
       console.log(response.status);
@@ -19,14 +27,14 @@ export function registerUser(values) {
         // or go to root
         // pending: auto-login
       } else {
-        //show error informing about error from API
+        console.log(response);
       }
     })
     .catch((error) => {
       //Error handling pending
       console.log(error);
     });
-}
+} //validation on front end
 
 export function getUserInformation(token, userID) {
   let url = "http://" + serverIP + "/api/1.0.0/user/" + userID;
@@ -307,27 +315,20 @@ export function removeContact(userID, key) {
 export function getBlockedContacts(token) {
   let url = "http://" + serverIP + "/api/1.0.0/blocked";
 
-  return (
-    fetch(url, {
-      method: "GET",
-      headers: {
-        "X-Authorization": token,
-      },
+  return fetch(url, {
+    method: "GET",
+    headers: {
+      "X-Authorization": token,
+    },
+  })
+    .then((response) => {
+      return response.json();
     })
-      .then((response) => {
-        return response.json();
-      })
-      /*
-    .then((responseJson) => {
-      
-      this.setState({ isLoading: false, blockedContacsData: responseJson });
-    })
-    */
-      .catch((error) => {
-        console.log("No response / not auth");
-        console.log(error);
-      })
-  );
+
+    .catch((error) => {
+      console.log("No response / not auth");
+      console.log(error);
+    });
 }
 
 export function blockContact(userID, key) {
@@ -383,6 +384,25 @@ export function unblockContact(userID, key) {
     })
     .catch((error) => {
       console.log("error");
+    });
+}
+
+export function getAllChats(token) {
+  let url = "http://" + serverIP + "/api/1.0.0/chat";
+
+  return fetch(url, {
+    method: "GET",
+    headers: {
+      accept: "application/json",
+      "X-Authorization": token,
+    },
+  })
+    .then((response) => {
+      return response.json();
+    })
+
+    .catch((error) => {
+      console.log(error);
     });
 }
 
