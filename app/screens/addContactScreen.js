@@ -13,7 +13,7 @@ import axios from "axios";
 import { styles } from "./../components/Styles/customStyle";
 import React, { Component, useState, useEffect } from "react";
 
-import { loadKey } from "../components/utils/asyncStorage";
+import { loadKey } from "../components/utils/utils";
 import {
   addFriend,
   searchBetweenAllUsers,

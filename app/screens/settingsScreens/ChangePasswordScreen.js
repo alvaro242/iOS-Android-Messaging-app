@@ -10,9 +10,7 @@ import {
 } from "react-native";
 import { styles } from "../../components/Styles/customStyle";
 import { UpdateUserInformation } from "../../components/utils/API";
-import { loadKeyAndID } from "../../components/utils/asyncStorage";
-import { getBlockedContacts } from "../../components/utils/API";
-import { KeyboardAvoidingView } from "react-native-web";
+import { loadKeyAndID } from "../../components/utils/utils";
 import * as yup from "yup";
 import { Formik } from "formik";
 

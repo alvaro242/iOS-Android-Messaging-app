@@ -10,7 +10,7 @@ import {
 } from "react-native";
 import { styles } from "./../../components/Styles/customStyle";
 import { removeContact, blockContact } from "../../components/utils/API";
-import { loadKey } from "../../components/utils/asyncStorage";
+import { loadKey } from "../../components/utils/utils";
 import { getBlockedContacts } from "../../components/utils/API";
 import { RefreshControl } from "react-native-web-refresh-control";
 

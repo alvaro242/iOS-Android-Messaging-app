@@ -13,7 +13,7 @@ import {
   unblockContact,
   getProfilePicture,
 } from "../../components/utils/API";
-import { loadKey } from "../../components/utils/asyncStorage";
+import { loadKey } from "../../components/utils/utils";
 
 export default class UnblockUserScreen extends Component {
   constructor(props) {

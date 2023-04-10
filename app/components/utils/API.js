@@ -71,6 +71,7 @@ export function UpdateUserInformation(values, userID, token) {
 }
 
 export function logIn(values) {
+  /*
   console.log(values);
 
   axios
@@ -94,6 +95,39 @@ export function logIn(values) {
     })
     .catch((error) => {
       //error handling pending
+      console.log(error);
+    });
+    */
+
+  let url = "http://" + serverIP + "/api/1.0.0/login/";
+
+  fetch(url, {
+    method: "POST",
+    headers: {
+      "Content-Type": "application/json",
+      accept: "application/json",
+    },
+    body: JSON.stringify(values),
+  })
+    .then(async (response) => {
+      const responseJson = await response.json();
+
+      try {
+        await AsyncStorage.setItem(
+          "whatsthat_user_id",
+          responseJson.id.toString()
+        ); //expo recomends to stringify this
+        await AsyncStorage.setItem(
+          "whatsthat_session_token",
+          responseJson.token
+        );
+        RootNavigation.navigate("HomeScreen");
+      } catch (error) {
+        throw error;
+      }
+    })
+
+    .catch((error) => {
       console.log(error);
     });
 }

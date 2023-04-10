@@ -11,7 +11,7 @@ import {
   FlatList,
 } from "react-native";
 import React, { Component } from "react";
-import { loadKeyAndID } from "../components/utils/asyncStorage";
+import { loadKeyAndID } from "../components/utils/utils";
 import { styles } from "./../components/Styles/customStyle";
 import { getUserInformation, logOut } from "../components/utils/API";
 import { UpdateUserInformation } from "../components/utils/API";
@@ -36,7 +36,6 @@ export default class AccountScreen extends Component {
 
   componentDidMount() {
     this.unsubscribe = this.props.navigation.addListener("focus", () => {
-      console.log("Triggered");
       loadKeyAndID()
         .then(
           (response) =>

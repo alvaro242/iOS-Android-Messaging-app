@@ -16,10 +16,11 @@ import * as yup from "yup";
 import axios from "axios";
 import AsyncStorage from "@react-native-async-storage/async-storage";
 import React, { Component } from "react";
-import { loadKey } from "../components/utils/asyncStorage";
+import { loadKey } from "../components/utils/utils";
 import { getAllChats } from "../components/utils/API";
 import { styles } from "./../components/Styles/customStyle";
 import { RefreshControl } from "react-native-web-refresh-control";
+import { showTime } from "../components/utils/utils";
 
 export default class ChatsScreen extends Component {
   constructor(props) {
@@ -37,7 +38,7 @@ export default class ChatsScreen extends Component {
       getAllChats(key).then((responseJson) =>
         this.setState({
           isLoading: false,
-          allchatsdata: responseJson,
+          allchatsdata: responseJson.reverse(), //invert older so newest will appear first
         })
       )
     );
@@ -49,7 +50,7 @@ export default class ChatsScreen extends Component {
       getAllChats(key).then((responseJson) =>
         this.setState({
           refreshing: false,
-          allchatsdata: responseJson,
+          allchatsdata: responseJson.reverse(),
         })
       )
     );
@@ -74,31 +75,58 @@ export default class ChatsScreen extends Component {
             />
           }
           data={this.state.allchatsdata}
-          renderItem={({ item }) => (
-            <TouchableOpacity
-              onPress={() => {
-                console.log("press");
-                this.props.navigation.navigate("SettingsScreen");
-              }}
-              style={styles.conversation}
-            >
-              <View>
-                <Text>{item.name}</Text>
-              </View>
-              <View>
-                <Text>{item.last_message.message}</Text>
-              </View>
-              <View>
-                <Text>
-                  {item.last_message.author.first_name}{" "}
-                  {item.last_message.author.last_name}
-                </Text>
-              </View>
-              <View>
-                <Text>{item.last_message.timestamp}</Text>
-              </View>
-            </TouchableOpacity>
-          )}
+          renderItem={({ item }) => {
+            if (Object.keys(item.last_message).length != 0) {
+              return (
+                <TouchableOpacity
+                  onPress={() => {
+                    console.log("press");
+                    this.props.navigation.navigate("SettingsScreen");
+                  }}
+                  style={styles.conversation}
+                >
+                  <View>
+                    <Text>{item.name}</Text>
+                  </View>
+                  <View>
+                    <Text>{item.last_message.message}</Text>
+                  </View>
+                  <View>
+                    <Text>
+                      By: {item.last_message.author.first_name} {""}
+                      {item.last_message.author.last_name}
+                    </Text>
+                  </View>
+                  <View>
+                    <Text>
+                      {showTime(item.last_message.timestamp - 604800000)}
+                    </Text>
+                  </View>
+                </TouchableOpacity>
+              );
+            } else {
+              return (
+                <TouchableOpacity
+                  onPress={() => {
+                    console.log("press");
+                    this.props.navigation.navigate("SettingsScreen");
+                  }}
+                  style={styles.conversation}
+                >
+                  <View>
+                    <Text>{item.name}</Text>
+                  </View>
+                  <View>
+                    <Text>No messages</Text>
+                  </View>
+                  <View>
+                    <Text></Text>
+                  </View>
+                  <View></View>
+                </TouchableOpacity>
+              );
+            }
+          }}
           keyExtractor={({ chat_id }, index) => chat_id}
         />
       </ScrollView>

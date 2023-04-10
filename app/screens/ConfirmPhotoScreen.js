@@ -1,7 +1,7 @@
 import React, { Component } from "react";
 import { View, Text, Image, Button } from "react-native";
 import { styles } from "./../components/Styles/customStyle";
-import { loadKeyAndID } from "../components/utils/asyncStorage";
+import { loadKeyAndID } from "../components/utils/utils";
 import { uploadProfilePic } from "../components/utils/API";
 
 export default class ConfirmPhotoScreen extends Component {

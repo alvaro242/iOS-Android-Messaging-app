@@ -16,7 +16,6 @@ import CameraComponent from "./app/components/utils/camera";
 import ConfirmPhotoScreen from "./app/screens/ConfirmPhotoScreen";
 import { navigationRef } from "./app/components/utils/RootNavigation";
 
-import AsyncStorage from "@react-native-async-storage/async-storage";
 import {
   Image,
   ImageBackground,

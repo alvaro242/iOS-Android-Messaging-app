@@ -17,7 +17,7 @@ import { MaterialCommunityIcons } from "react-native-vector-icons";
 import React, { Component } from "react";
 import AsyncStorage from "@react-native-async-storage/async-storage";
 import { logOut } from "../components/utils/API";
-import { loadKey } from "../components/utils/asyncStorage";
+import { loadKey } from "../components/utils/utils";
 
 const HomeTab = createBottomTabNavigator();
 

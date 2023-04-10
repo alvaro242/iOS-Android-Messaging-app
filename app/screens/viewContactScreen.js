@@ -9,7 +9,7 @@ import {
 } from "react-native";
 import { styles } from "./../components/Styles/customStyle";
 import { removeContact, blockContact } from "../components/utils/API";
-import { loadKey } from "../components/utils/asyncStorage";
+import { loadKey } from "../components/utils/utils";
 import { getProfilePicture } from "../components/utils/API";
 
 export default class ViewContactScreen extends Component {
