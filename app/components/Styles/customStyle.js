@@ -262,10 +262,24 @@ export const styles = StyleSheet.create({
     justifyContent: "space-between",
   },
 
-  conversation: {
+  conversationPreview: {
     backgroundColor: "white",
     padding: 30,
     marginBottom: 2,
     justifyContent: "center",
+  },
+
+  convTitleAndTime: {
+    flexDirection: "row",
+    justifyContent: "space-between",
+  },
+
+  conversationTitle: {
+    fontWeight: "bold",
+  },
+
+  lastMessageAndNotifications: {
+    flexDirection: "row",
+    justifyContent: "space-between",
   },
 });

@@ -83,24 +83,29 @@ export default class ChatsScreen extends Component {
                     console.log("press");
                     this.props.navigation.navigate("SettingsScreen");
                   }}
-                  style={styles.conversation}
+                  style={styles.conversationPreview}
                 >
-                  <View>
-                    <Text>{item.name}</Text>
+                  <View style={styles.convTitleAndTime}>
+                    <View>
+                      <Text style={styles.conversationTitle}>{item.name}</Text>
+                    </View>
+                    <View>
+                      <Text>{showTime(item.last_message.timestamp)}</Text>
+                    </View>
                   </View>
-                  <View>
-                    <Text>{item.last_message.message}</Text>
+                  <View style={styles.authLastMessage}>
+                    <View>
+                      <Text>
+                        {item.last_message.author.first_name} {""}
+                        {item.last_message.author.last_name}
+                      </Text>
+                    </View>
                   </View>
-                  <View>
-                    <Text>
-                      By: {item.last_message.author.first_name} {""}
-                      {item.last_message.author.last_name}
-                    </Text>
-                  </View>
-                  <View>
-                    <Text>
-                      {showTime(item.last_message.timestamp - 604800000)}
-                    </Text>
+                  <View style={styles.lastMessageAndNotifications}>
+                    <View>
+                      <Text>{item.last_message.message}</Text>
+                    </View>
+                    <View></View>
                   </View>
                 </TouchableOpacity>
               );
@@ -109,20 +114,16 @@ export default class ChatsScreen extends Component {
                 <TouchableOpacity
                   onPress={() => {
                     console.log("press");
-                    this.props.navigation.navigate("SettingsScreen");
+                    this.props.navigation.navigate("ChatScreen");
                   }}
-                  style={styles.conversation}
+                  style={styles.conversationPreview}
                 >
                   <View>
-                    <Text>{item.name}</Text>
+                    <Text style={styles.conversationTitle}>{item.name}</Text>
                   </View>
                   <View>
                     <Text>No messages</Text>
                   </View>
-                  <View>
-                    <Text></Text>
-                  </View>
-                  <View></View>
                 </TouchableOpacity>
               );
             }

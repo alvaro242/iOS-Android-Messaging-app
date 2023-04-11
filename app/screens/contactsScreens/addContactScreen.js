@@ -10,15 +10,15 @@ import {
 import { Formik } from "formik";
 import * as yup from "yup";
 import axios from "axios";
-import { styles } from "./../components/Styles/customStyle";
+import { styles } from "../../components/Styles/customStyle";
 import React, { Component, useState, useEffect } from "react";
 
-import { loadKey } from "../components/utils/utils";
+import { loadKey } from "../../components/utils/utils";
 import {
   addFriend,
   searchBetweenAllUsers,
   getAllContacts,
-} from "../components/utils/API";
+} from "../../components/utils/API";
 
 export default class AddContactScreen extends Component {
   constructor(props) {

@@ -3,27 +3,19 @@ import StartScreen from "./app/screens/StartScreen";
 import LogInScreen from "./app/screens/LogInScreen";
 import SignUpScreen from "./app/screens/SignUpScreen";
 import HomeScreen from "./app/screens/HomeScreen";
-import addContactScreen from "./app/screens/addContactScreen";
+import addContactScreen from "./app/screens/contactsScreens/addContactScreen";
 import blockedUsersScreen from "./app/screens/settingsScreens/blockedUsersScreen";
 import unblockUserScreen from "./app/screens/settingsScreens/unblockUserScreen";
-import viewContactScreen from "./app/screens/viewContactScreen";
+import viewContactScreen from "./app/screens/contactsScreens/viewContactScreen";
 import { NavigationContainer } from "@react-navigation/native";
 import { createNativeStackNavigator } from "@react-navigation/native-stack";
 import React, { Component } from "react";
 import { styles } from "./app/components/Styles/customStyle";
 import ChangePassword from "./app/screens/settingsScreens/ChangePasswordScreen";
 import CameraComponent from "./app/components/utils/camera";
-import ConfirmPhotoScreen from "./app/screens/ConfirmPhotoScreen";
+import ConfirmPhotoScreen from "./app/screens/accountScreens/ConfirmPhotoScreen";
 import { navigationRef } from "./app/components/utils/RootNavigation";
-
-import {
-  Image,
-  ImageBackground,
-  StyleSheet,
-  Text,
-  View,
-  TouchableHighlight,
-} from "react-native";
+import ChatScreen from "./app/screens/chatScreens/chatScreen";
 
 const Stack = createNativeStackNavigator();
 
@@ -145,6 +137,15 @@ export default class App extends Component {
             component={ConfirmPhotoScreen}
             options={{
               title: "Confirm new picture",
+              headerShown: true,
+              gestureEnabled: true,
+            }}
+          />
+          <Stack.Screen
+            name="ChatScreen"
+            component={ChatScreen}
+            options={{
+              title: "Conversation",
               headerShown: true,
               gestureEnabled: true,
             }}

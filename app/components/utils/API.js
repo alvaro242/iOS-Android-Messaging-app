@@ -2,9 +2,8 @@ import axios from "axios";
 import AsyncStorage from "@react-native-async-storage/async-storage";
 import { Alert } from "react-native";
 import * as RootNavigation from "./RootNavigation";
-import { createErrorHandler } from "expo/build/errors/ExpoErrorManager";
 
-let serverIP = "192.168.0.16:3333";
+let serverIP = "localhost:3333";
 
 export function registerUser(values) {
   let url = "http://" + serverIP + "/api/1.0.0/user/";
