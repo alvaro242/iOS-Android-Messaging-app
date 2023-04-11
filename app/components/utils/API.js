@@ -70,34 +70,6 @@ export function UpdateUserInformation(values, userID, token) {
 }
 
 export function logIn(values) {
-  /*
-  console.log(values);
-
-  axios
-    .post("http://" + serverIP + "/api/1.0.0/login/", values)
-    .then(async (response) => {
-      try {
-        await AsyncStorage.setItem(
-          "whatsthat_user_id",
-          response.data.id.toString()
-        ); //expo recomends to stringify this
-        await AsyncStorage.setItem(
-          "whatsthat_session_token",
-          response.data.token
-        );
-        RootNavigation.navigate("HomeScreen");
-        console.log(response.data.token);
-        console.log("this works");
-      } catch (error) {
-        throw error;
-      }
-    })
-    .catch((error) => {
-      //error handling pending
-      console.log(error);
-    });
-    */
-
   let url = "http://" + serverIP + "/api/1.0.0/login/";
 
   fetch(url, {
@@ -435,6 +407,50 @@ export function getAllChats(token) {
     })
 
     .catch((error) => {
+      console.log(error);
+    });
+}
+
+export function createConversation(title, key) {
+  let url = "http://" + serverIP + "/api/1.0.0/chat/";
+
+  fetch(url, {
+    method: "POST",
+    headers: {
+      "Content-Type": "application/json",
+      accept: "application/json",
+      "X-Authorization": key,
+    },
+    body: JSON.stringify(title),
+  })
+    .then((response) => {
+      if (response.status == 201) {
+        alert("Conversation created: " + title);
+      } else {
+        console.log("error. Something went wrong");
+      }
+    })
+
+    .catch((error) => {
+      console.log(error);
+    });
+}
+
+export function getChatDetails(chatID, token) {
+  let url = "http://" + serverIP + "/api/1.0.0/chat/" + chatID;
+
+  return fetch(url, {
+    method: "GET",
+    headers: {
+      "X-Authorization": token,
+    },
+  })
+    .then((response) => {
+      return response.json();
+    })
+
+    .catch((error) => {
+      console.log("No response / not auth");
       console.log(error);
     });
 }

@@ -70,9 +70,7 @@ export default class HomeScreen extends Component {
                 color="black"
                 size="25"
                 onPress={() =>
-                  this.props.navigation.navigate("addContactScreen", {
-                    screen: "addContactScreen",
-                  })
+                  this.props.navigation.navigate("addContactScreen")
                 }
               />
             ),
@@ -86,6 +84,19 @@ export default class HomeScreen extends Component {
             headerShown: true,
             tabBarIcon: ({ color, size }) => (
               <MaterialCommunityIcons name="chat" color={color} size={size} />
+            ),
+            headerRightContainerStyle: {
+              paddingRight: 15,
+            },
+            headerRight: () => (
+              <MaterialCommunityIcons
+                name="chat-plus"
+                size="25"
+                paddingHorizontal="25"
+                onPress={() =>
+                  this.props.navigation.navigate("CreateChatScreen")
+                }
+              />
             ),
           }}
         />

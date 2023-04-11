@@ -30,7 +30,6 @@ export const loadKeyAndID = async () => {
 };
 
 export function showTime(messageTimeStamp) {
-  console.log(messageTimeStamp);
   var currentDate = new Date();
 
   var today =
@@ -43,7 +42,6 @@ export function showTime(messageTimeStamp) {
   "/" + currentDate.getMonth() + "/" + currentDate.getFullYear();
 
   var oneWeekAgoTimeStamp = Date.now() - 604800000;
-  console.log(oneWeekAgoTimeStamp);
 
   //if it was more than 7 days ago, return full date
   //if it was between 1 and 7 days ago, return week day

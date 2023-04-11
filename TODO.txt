@@ -5,3 +5,5 @@ arreglar patch request para que solo se envie lo que se modifica - accountScreen
 limpiar codigo e imports no usados
 ERROR HANDLING 
 La pantalla para crear una nueva conversacion debe requerir tambien de un primer mensaje
+Check with Ashley if pictures of users are ok
+can any member change 

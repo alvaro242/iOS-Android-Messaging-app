@@ -12,6 +12,7 @@ export default class ConfirmPhotoScreen extends Component {
   }
 
   render() {
+    console.log(this.props.route.params);
     let newPicUri = this.props.route.params.photoData.uri;
 
     return (

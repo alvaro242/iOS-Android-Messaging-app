@@ -80,8 +80,7 @@ export default class ChatsScreen extends Component {
               return (
                 <TouchableOpacity
                   onPress={() => {
-                    console.log("press");
-                    this.props.navigation.navigate("SettingsScreen");
+                    this.props.navigation.navigate("ChatScreen", { item });
                   }}
                   style={styles.conversationPreview}
                 >
@@ -113,8 +112,7 @@ export default class ChatsScreen extends Component {
               return (
                 <TouchableOpacity
                   onPress={() => {
-                    console.log("press");
-                    this.props.navigation.navigate("ChatScreen");
+                    this.props.navigation.navigate("ChatScreen", { item });
                   }}
                   style={styles.conversationPreview}
                 >

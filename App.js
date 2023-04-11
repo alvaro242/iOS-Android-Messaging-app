@@ -16,6 +16,10 @@ import CameraComponent from "./app/components/utils/camera";
 import ConfirmPhotoScreen from "./app/screens/accountScreens/ConfirmPhotoScreen";
 import { navigationRef } from "./app/components/utils/RootNavigation";
 import ChatScreen from "./app/screens/chatScreens/chatScreen";
+import CreateChatScreen from "./app/screens/chatScreens/createChatScreen";
+import AboutChat from "./app/screens/chatScreens/AboutChat";
+import { MaterialCommunityIcons } from "react-native-vector-icons";
+import * as RootNavigation from "./app/components/utils/RootNavigation";
 
 const Stack = createNativeStackNavigator();
 
@@ -146,6 +150,34 @@ export default class App extends Component {
             component={ChatScreen}
             options={{
               title: "Conversation",
+              headerShown: true,
+              gestureEnabled: true,
+              headerRightContainerStyle: {
+                paddingRight: 25,
+              },
+              headerRight: () => (
+                <MaterialCommunityIcons
+                  name="information-outline"
+                  size="25"
+                  onPress={() => RootNavigation.navigate("AboutChat")}
+                />
+              ),
+            }}
+          />
+          <Stack.Screen
+            name="CreateChatScreen"
+            component={CreateChatScreen}
+            options={{
+              title: "Create a new chat",
+              headerShown: true,
+              gestureEnabled: true,
+            }}
+          />
+          <Stack.Screen
+            name="AboutChat"
+            component={AboutChat}
+            options={{
+              title: "About",
               headerShown: true,
               gestureEnabled: true,
             }}

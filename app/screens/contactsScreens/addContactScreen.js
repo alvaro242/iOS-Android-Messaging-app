@@ -11,7 +11,7 @@ import { Formik } from "formik";
 import * as yup from "yup";
 import axios from "axios";
 import { styles } from "../../components/Styles/customStyle";
-import React, { Component, useState, useEffect } from "react";
+import React, { Component } from "react";
 
 import { loadKey } from "../../components/utils/utils";
 import {
@@ -79,8 +79,6 @@ export default class AddContactScreen extends Component {
 
   compare(contactsfound, AlreadyMyContacts) {
     // We will compare the contacts found with the ones are already our contacts
-    console.log(contactsfound);
-    console.log(AlreadyMyContacts);
 
     //code found on https://stackoverflow.com/questions/21987909/how-to-get-the-difference-between-two-arrays-of-objects-in-javascript
     const results = contactsfound.filter(
