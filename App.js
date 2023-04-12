@@ -149,19 +149,8 @@ export default class App extends Component {
             name="ChatScreen"
             component={ChatScreen}
             options={{
-              title: "Conversation",
-              headerShown: true,
+              headerShown: false,
               gestureEnabled: true,
-              headerRightContainerStyle: {
-                paddingRight: 25,
-              },
-              headerRight: () => (
-                <MaterialCommunityIcons
-                  name="information-outline"
-                  size="25"
-                  onPress={() => RootNavigation.navigate("AboutChat")}
-                />
-              ),
             }}
           />
           <Stack.Screen

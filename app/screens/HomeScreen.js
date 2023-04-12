@@ -67,8 +67,8 @@ export default class HomeScreen extends Component {
             headerRight: () => (
               <MaterialCommunityIcons
                 name="account-plus"
-                color="black"
-                size="25"
+                color="white"
+                size={25}
                 onPress={() =>
                   this.props.navigation.navigate("addContactScreen")
                 }
@@ -91,7 +91,8 @@ export default class HomeScreen extends Component {
             headerRight: () => (
               <MaterialCommunityIcons
                 name="chat-plus"
-                size="25"
+                size={25}
+                color="white"
                 paddingHorizontal="25"
                 onPress={() =>
                   this.props.navigation.navigate("CreateChatScreen")
@@ -121,7 +122,8 @@ export default class HomeScreen extends Component {
               <MaterialCommunityIcons
                 name="logout"
                 //color="black"
-                size="25"
+                size={25}
+                color="white"
                 paddingHorizontal="30"
                 onPress={() => loadKey().then((key) => logOut(key))}
               />
@@ -144,8 +146,8 @@ export default class HomeScreen extends Component {
             headerRight: () => (
               <MaterialCommunityIcons
                 name="logout"
-                //color="black"
-                size="25"
+                color="white"
+                size={25}
                 paddingHorizontal="25"
                 onPress={() => loadKey().then((key) => logOut(key))}
               />

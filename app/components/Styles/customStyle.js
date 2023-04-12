@@ -232,6 +232,7 @@ export const styles = StyleSheet.create({
     flexDirection: "row",
     justifyContent: "center",
     alignContent: "center",
+    padding: 20,
   },
 
   inputSearch: {
@@ -282,5 +283,30 @@ export const styles = StyleSheet.create({
     flexDirection: "row",
     justifyContent: "space-between",
   },
-  chatHeader: { flexDirection: "row", justifyContent: "space-between" },
+  chatHeader: {
+    flexDirection: "row",
+    justifyContent: "space-between",
+    backgroundColor: "#5D80F0",
+    height: 60,
+    alignItems: "center",
+    paddingHorizontal: 20,
+  },
+  nameChat: {
+    color: "white",
+    fontSize: 20,
+  },
+  aboutContainer: {
+    padding: 20,
+  },
+
+  membersContainer: {
+    padding: 20,
+    borderCurve: "circular",
+  },
+  member: {
+    backgroundColor: "white",
+    padding: 20,
+    marginBottom: 2,
+    justifyContent: "center",
+  },
 });

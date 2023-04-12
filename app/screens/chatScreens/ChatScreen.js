@@ -8,25 +8,40 @@ export default class ChatScreen extends Component {
   constructor(props) {
     super(props);
 
-    this.state = {};
+    this.state = {
+      chatInfo: this.props.route.params,
+      nameChat: this.props.route.params.item.name,
+    };
   }
+
+  componentDidMount() {}
 
   render() {
     //New header and disable default
-    let chatInfo = this.props.route.params;
 
     return (
       <View>
         <View style={styles.chatHeader}>
-          <View>
+          <View style={styles.headerTopLeft}>
             <MaterialCommunityIcons
-              name="information-outline"
-              size="25"
-              onPress={() => RootNavigation.navigate("AboutChat", chatInfo)}
+              name="arrow-left"
+              size={25}
+              color="white"
+              onPress={() => RootNavigation.navigate("Chats")}
             />
           </View>
           <View>
-            <Text>ChatScreen</Text>
+            <Text style={styles.nameChat}>{this.state.nameChat}</Text>
+          </View>
+          <View style={styles.topRight}>
+            <MaterialCommunityIcons
+              name="information-outline"
+              size={25}
+              color="white"
+              onPress={() =>
+                RootNavigation.navigate("AboutChat", this.state.chatInfo)
+              }
+            />
           </View>
         </View>
       </View>

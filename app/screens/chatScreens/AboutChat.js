@@ -36,7 +36,7 @@ export default class AboutChat extends Component {
 
     console.log(members);
     return (
-      <View>
+      <View style={styles.aboutContainer}>
         <View>
           <Text>Title: {chatInfo.name}</Text>
         </View>
@@ -45,19 +45,20 @@ export default class AboutChat extends Component {
             Creator: {creator.first_name} {creator.last_name}
           </Text>
         </View>
-        <View>
+        <View style={styles.membersContainer}>
           <Text>Members: </Text>
-        </View>
-        <View>
-          <FlatList
-            data={members}
-            renderItem={({ item }) => (
-              <Text style={styles.contact}>
-                {item.first_name} {item.last_name}
-              </Text>
-            )}
-            keyExtractor={({ user_id }, index) => user_id}
-          />
+
+          <View style={styles.membersContainer}>
+            <FlatList
+              data={members}
+              renderItem={({ item }) => (
+                <Text style={styles.member}>
+                  {item.first_name} {item.last_name}
+                </Text>
+              )}
+              keyExtractor={({ user_id }, index) => user_id}
+            />
+          </View>
         </View>
       </View>
     );
