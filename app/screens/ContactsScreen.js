@@ -20,8 +20,13 @@ import { createNativeStackNavigator } from "@react-navigation/native-stack";
 import React, { Component, useState, useEffect } from "react";
 import AsyncStorage from "@react-native-async-storage/async-storage";
 import { loadKey } from "../components/utils/utils";
-import { getAllContacts, searchCurrentUsers } from "../components/utils/API";
+import {
+  getAllContacts,
+  searchCurrentUsers,
+  getProfilePicture,
+} from "../components/utils/API";
 import { RefreshControl } from "react-native-web-refresh-control";
+import { TouchableOpacity } from "react-native-web";
 
 export default class ContactsScreen extends Component {
   constructor(props) {
@@ -31,22 +36,40 @@ export default class ContactsScreen extends Component {
       refreshing: false,
       isLoading: true,
       contactsData: [],
+      arrayOfPics: [],
+      token: "",
       searchWord: "",
       clearFilter: "",
+      counter: 0,
     };
   }
 
   componentDidMount() {
     loadKey().then((key) =>
-      getAllContacts(key).then((responseJson) =>
-        this.setState({
-          isLoading: false,
-          contactsData: responseJson,
-        })
+      getAllContacts(key).then(
+        (responseJson) =>
+          this.setState({
+            isLoading: false,
+            contactsData: responseJson,
+          }) // & this.loadAllPictures(responseJson, key)
       )
     );
   }
+  /*
+  loadAllPictures(responseJson, key) {
+    console.log(responseJson);
+    let responseLength = Object.keys(responseJson).length;
+    let arrayOfPics = [];
 
+    for (let i = 0; i < responseLength; i++) {
+      getProfilePicture(responseJson[i].user_id, key).then((response) => {
+        arrayOfPics[i] = response;
+      });
+    }
+
+    this.setState({ arrayOfPics: arrayOfPics });
+  }
+*/
   refresh = () => {
     this.setState({ refreshing: true });
     loadKey().then((key) =>
@@ -118,7 +141,7 @@ export default class ContactsScreen extends Component {
             }
             data={this.state.contactsData}
             renderItem={({ item }) => (
-              <Text
+              <TouchableOpacity
                 style={styles.contact}
                 onPress={() => {
                   this.props.navigation.navigate("viewContactScreen", {
@@ -126,10 +149,21 @@ export default class ContactsScreen extends Component {
                   });
                 }}
               >
-                {/* Firstname and lastname only will show when executing getallcontacts and given namy and family name when executing searchCurrentUsers*/}
-                {item.first_name} {item.last_name} {item.given_name}{" "}
-                {item.family_name}
-              </Text>
+                {/*}
+                <View style={styles.picture}>
+                  <Image
+                    style={styles.myPic}
+                    source={this.state.arrayOfPics[item.length]}
+                  />
+                </View>
+              {*/}
+
+                <Text>
+                  {/* Firstname and lastname only will show when executing getallcontacts and given namy and family name when executing searchCurrentUsers*/}
+                  {item.first_name} {item.last_name} {item.given_name}{" "}
+                  {item.family_name}
+                </Text>
+              </TouchableOpacity>
             )}
             keyExtractor={({ user_id }, index) => user_id}
           />

@@ -56,6 +56,18 @@ export default class ChatsScreen extends Component {
     );
   };
 
+  renderLastMessage(message) {
+    //cut the message if is too long
+
+    if (message.length < 40) {
+      return message;
+    } else {
+      let arraymessages = message.match(/.{1,40}/g);
+
+      return arraymessages[0] + "...";
+    }
+  }
+
   render() {
     if (this.state.isLoading) {
       return (
@@ -66,7 +78,6 @@ export default class ChatsScreen extends Component {
     }
     return (
       <ScrollView>
-        {console.log(this.state.allchatsdata)}
         <FlatList
           refreshControl={
             <RefreshControl
@@ -76,6 +87,7 @@ export default class ChatsScreen extends Component {
           }
           data={this.state.allchatsdata}
           renderItem={({ item }) => {
+            // If there are any messages on the conversation
             if (Object.keys(item.last_message).length != 0) {
               return (
                 <TouchableOpacity
@@ -102,7 +114,9 @@ export default class ChatsScreen extends Component {
                   </View>
                   <View style={styles.lastMessageAndNotifications}>
                     <View>
-                      <Text>{item.last_message.message}</Text>
+                      <Text>
+                        {this.renderLastMessage(item.last_message.message)}
+                      </Text>
                     </View>
                     <View></View>
                   </View>

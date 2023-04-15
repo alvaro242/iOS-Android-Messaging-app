@@ -16,7 +16,7 @@ import CameraComponent from "./app/components/utils/camera";
 import ConfirmPhotoScreen from "./app/screens/accountScreens/ConfirmPhotoScreen";
 import { navigationRef } from "./app/components/utils/RootNavigation";
 import ChatScreen from "./app/screens/chatScreens/chatScreen";
-import CreateChatScreen from "./app/screens/chatScreens/createChatScreen";
+import CreateChatScreen from "./app/screens/chatScreens/CreateChatScreen";
 import AboutChat from "./app/screens/chatScreens/AboutChat";
 import { MaterialCommunityIcons } from "react-native-vector-icons";
 import * as RootNavigation from "./app/components/utils/RootNavigation";
@@ -39,141 +39,141 @@ export default class App extends Component {
   render() {
     return (
       //SafeArea for iPhoneX+ devices
-      //<SafeAreaView edges={["right", "left", "top"]} style={styles.root}>
-      <NavigationContainer ref={navigationRef}>
-        <Stack.Navigator
-          initialRouteName="Home"
-          screenOptions={({ route }) => ({
-            headerStyle: {
-              backgroundColor: "#5D80F0",
-            },
-            headerTitleStyle: {
-              color: "#fff",
-              fontWeight: "bold",
-            },
-          })}
-        >
-          <Stack.Screen
-            name="StartScreen"
-            component={StartScreen}
-            options={{ title: "Welcome", headerShown: false }}
-          />
-          <Stack.Screen
-            name="HomeScreen"
-            component={HomeScreen}
-            options={{
-              title: "Home",
-              headerShown: false,
-              gestureEnabled: false,
-            }}
-          />
-          <Stack.Screen
-            name="LogInScreen"
-            component={LogInScreen}
-            options={{ title: "Log In" }}
-          />
+      <SafeAreaView edges={["right", "left", "top"]} style={styles.root}>
+        <NavigationContainer ref={navigationRef}>
+          <Stack.Navigator
+            initialRouteName="Home"
+            screenOptions={({ route }) => ({
+              headerStyle: {
+                backgroundColor: "#5D80F0",
+              },
+              headerTitleStyle: {
+                color: "#fff",
+                fontWeight: "bold",
+              },
+            })}
+          >
+            <Stack.Screen
+              name="StartScreen"
+              component={StartScreen}
+              options={{ title: "Welcome", headerShown: false }}
+            />
+            <Stack.Screen
+              name="HomeScreen"
+              component={HomeScreen}
+              options={{
+                title: "Home",
+                headerShown: false,
+                gestureEnabled: false,
+              }}
+            />
+            <Stack.Screen
+              name="LogInScreen"
+              component={LogInScreen}
+              options={{ title: "Log In" }}
+            />
 
-          <Stack.Screen
-            name="SignUpScreen"
-            component={SignUpScreen}
-            options={{ title: "Sign Up" }}
-          />
+            <Stack.Screen
+              name="SignUpScreen"
+              component={SignUpScreen}
+              options={{ title: "Sign Up" }}
+            />
 
-          <Stack.Screen
-            name="addContactScreen"
-            component={addContactScreen}
-            options={{
-              title: "Add Contact",
-              headerShown: true,
-              gestureEnabled: true,
-            }}
-          />
+            <Stack.Screen
+              name="addContactScreen"
+              component={addContactScreen}
+              options={{
+                title: "Add Contact",
+                headerShown: true,
+                gestureEnabled: true,
+              }}
+            />
 
-          <Stack.Screen
-            name="viewContactScreen"
-            component={viewContactScreen}
-            options={{
-              title: "Contact",
-              headerShown: true,
-              gestureEnabled: true,
-            }}
-          />
+            <Stack.Screen
+              name="viewContactScreen"
+              component={viewContactScreen}
+              options={{
+                title: "Contact",
+                headerShown: true,
+                gestureEnabled: true,
+              }}
+            />
 
-          <Stack.Screen
-            name="blockedUsersScreen"
-            component={blockedUsersScreen}
-            options={{
-              title: "Blocked Users",
-              headerShown: true,
-              gestureEnabled: true,
-            }}
-          />
+            <Stack.Screen
+              name="blockedUsersScreen"
+              component={blockedUsersScreen}
+              options={{
+                title: "Blocked Users",
+                headerShown: true,
+                gestureEnabled: true,
+              }}
+            />
 
-          <Stack.Screen
-            name="unblockUserScreen"
-            component={unblockUserScreen}
-            options={{
-              title: "Blocked User",
-              headerShown: true,
-              gestureEnabled: true,
-            }}
-          />
-          <Stack.Screen
-            name="ChangePassword"
-            component={ChangePassword}
-            options={{
-              title: "Change Password",
-              headerShown: true,
-              gestureEnabled: true,
-            }}
-          />
-          <Stack.Screen
-            name="CameraComponent"
-            component={CameraComponent}
-            options={{
-              title: "Take a new profile pic",
-              headerShown: true,
-              gestureEnabled: true,
-            }}
-          />
-          <Stack.Screen
-            name="ConfirmPhotoScreen"
-            component={ConfirmPhotoScreen}
-            options={{
-              title: "Confirm new picture",
-              headerShown: true,
-              gestureEnabled: true,
-            }}
-          />
-          <Stack.Screen
-            name="ChatScreen"
-            component={ChatScreen}
-            options={{
-              headerShown: false,
-              gestureEnabled: true,
-            }}
-          />
-          <Stack.Screen
-            name="CreateChatScreen"
-            component={CreateChatScreen}
-            options={{
-              title: "Create a new chat",
-              headerShown: true,
-              gestureEnabled: true,
-            }}
-          />
-          <Stack.Screen
-            name="AboutChat"
-            component={AboutChat}
-            options={{
-              title: "About",
-              headerShown: true,
-              gestureEnabled: true,
-            }}
-          />
-        </Stack.Navigator>
-      </NavigationContainer>
-      //</SafeAreaView>
+            <Stack.Screen
+              name="unblockUserScreen"
+              component={unblockUserScreen}
+              options={{
+                title: "Blocked User",
+                headerShown: true,
+                gestureEnabled: true,
+              }}
+            />
+            <Stack.Screen
+              name="ChangePassword"
+              component={ChangePassword}
+              options={{
+                title: "Change Password",
+                headerShown: true,
+                gestureEnabled: true,
+              }}
+            />
+            <Stack.Screen
+              name="CameraComponent"
+              component={CameraComponent}
+              options={{
+                title: "Take a new profile pic",
+                headerShown: true,
+                gestureEnabled: true,
+              }}
+            />
+            <Stack.Screen
+              name="ConfirmPhotoScreen"
+              component={ConfirmPhotoScreen}
+              options={{
+                title: "Confirm new picture",
+                headerShown: true,
+                gestureEnabled: true,
+              }}
+            />
+            <Stack.Screen
+              name="ChatScreen"
+              component={ChatScreen}
+              options={{
+                headerShown: false,
+                gestureEnabled: true,
+              }}
+            />
+            <Stack.Screen
+              name="CreateChatScreen"
+              component={CreateChatScreen}
+              options={{
+                title: "Create a new chat",
+                headerShown: true,
+                gestureEnabled: true,
+              }}
+            />
+            <Stack.Screen
+              name="AboutChat"
+              component={AboutChat}
+              options={{
+                title: "About",
+                headerShown: true,
+                gestureEnabled: true,
+              }}
+            />
+          </Stack.Navigator>
+        </NavigationContainer>
+      </SafeAreaView>
     );
   }
 }

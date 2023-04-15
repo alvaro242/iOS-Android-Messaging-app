@@ -3,7 +3,7 @@ import AsyncStorage from "@react-native-async-storage/async-storage";
 import { Alert } from "react-native";
 import * as RootNavigation from "./RootNavigation";
 
-let serverIP = "10.99.225.69:3333";
+let serverIP = "localhost:3333";
 
 export function registerUser(values) {
   let url = "http://" + serverIP + "/api/1.0.0/user/";
@@ -144,6 +144,28 @@ export function getProfilePicture(userID, token) {
   })
     .then((response) => {
       return response.blob();
+    })
+    .then((resBlob) => {
+      let data = URL.createObjectURL(resBlob);
+      return data;
+    })
+    .catch((error) => console.log(error));
+}
+
+export function getProfilePicAlternative(userID, token) {
+  let url = "http://" + serverIP + "/api/1.0.0/user/" + userID + "/photo";
+
+  return fetch(url, {
+    method: "GET",
+    headers: {
+      accept: "image/png",
+      "X-Authorization": token,
+    },
+  })
+    .then(async (response) => {
+      await response.blob();
+      let data = URL.createObjectURL(response);
+      return data;
     })
     .then((resBlob) => {
       let data = URL.createObjectURL(resBlob);
@@ -451,6 +473,33 @@ export function getChatDetails(chatID, token) {
 
     .catch((error) => {
       console.log("No response / not auth");
+      console.log(error);
+    });
+}
+
+export function sendNewMessage(message, chatID, key) {
+  const objectToAPI = { message: message };
+
+  let url = "http://" + serverIP + "/api/1.0.0/chat/" + chatID + "/message";
+
+  fetch(url, {
+    method: "POST",
+    headers: {
+      "Content-Type": "application/json",
+      accept: "application/json",
+      "X-Authorization": key,
+    },
+    body: JSON.stringify(objectToAPI),
+  })
+    .then((response) => {
+      if (response.status == 200) {
+        console.log("Message sent: " + message);
+      } else {
+        console.log("error. Something went wrong");
+      }
+    })
+
+    .catch((error) => {
       console.log(error);
     });
 }

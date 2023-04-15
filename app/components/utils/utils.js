@@ -5,7 +5,6 @@ export const loadKey = async () => {
     let key = await AsyncStorage.getItem("whatsthat_session_token");
 
     if (key !== null) {
-      console.log(key);
       return key;
     } else {
       return "error";
@@ -66,7 +65,12 @@ export function showTime(messageTimeStamp) {
     "/" +
     dateMessage.getFullYear();
 
-  var timeMessage = dateMessage.getHours() + ":" + dateMessage.getMinutes();
+  var timeMessage =
+    dateMessage.getHours() +
+    ":" +
+    //if minutes under 10 shows a 0 before the minute
+    (dateMessage.getMinutes() < 10 ? "0" : "") +
+    dateMessage.getMinutes();
 
   if (today == dayMessage) {
     return timeMessage;

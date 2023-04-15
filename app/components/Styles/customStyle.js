@@ -111,7 +111,7 @@ export const styles = StyleSheet.create({
   },
   formContainerSignUp: {
     alignItems: "center",
-    backgroundColor: "white",
+
     padding: 10,
     elevation: 10,
   },
@@ -137,14 +137,15 @@ export const styles = StyleSheet.create({
   },
 
   //contacts Screen
-
+  /*
   contactsContainer: {
     width: "100%",
     height: ScreenHeight,
     alignItems: "center",
     justifyContent: "center",
   },
-
+  */
+  /*
   contactsContentContainer: {
     flex: 1,
     width: "100%",
@@ -153,7 +154,7 @@ export const styles = StyleSheet.create({
     alignItems: "center",
     justifyContent: "center",
   },
-
+*/
   inputInsertID: {
     height: 50,
     padding: 10,
@@ -183,13 +184,13 @@ export const styles = StyleSheet.create({
 
   contact: {
     backgroundColor: "white",
-    padding: 30,
+    padding: 35,
     marginBottom: 2,
     justifyContent: "center",
   },
 
   myAccount: {
-    backgroundColor: "white",
+    backgroundColor: "#EBF2F7",
     padding: 30,
     marginBottom: 2,
     justifyContent: "center",
@@ -232,7 +233,9 @@ export const styles = StyleSheet.create({
     flexDirection: "row",
     justifyContent: "center",
     alignContent: "center",
-    padding: 20,
+    paddingHorizontal: 20,
+    paddingVertical: 5,
+    backgroundColor: "#EBF2F7",
   },
 
   inputSearch: {
@@ -308,5 +311,43 @@ export const styles = StyleSheet.create({
     padding: 20,
     marginBottom: 2,
     justifyContent: "center",
+  },
+  sendMessageContainer: {
+    flexDirection: "row",
+    justifyContent: "center",
+    alignContent: "center",
+    paddingHorizontal: 20,
+    paddingVertical: 5,
+    backgroundColor: "#EBF2F7",
+    justifyContent: "flex-end",
+    position: "absolute",
+    height: 70,
+    top: ScreenHeight - 70,
+    width: ScreenWidth,
+    left: 0,
+  },
+  screenContainer: { flex: 1 },
+
+  conversationContent: { flex: 1 },
+
+  memberpic: {
+    width: 50,
+    height: 50,
+    alignSelf: "center",
+    borderRadius: 100,
+  },
+
+  membersHeader: {
+    justifyContent: "space-between",
+    backgroundColor: "white",
+    height: 60,
+    alignItems: "center",
+    paddingHorizontal: 20,
+    alignItems: "center",
+    justifyContent: "center",
+  },
+
+  membersPicsRow: {
+    flexDirection: "row",
   },
 });

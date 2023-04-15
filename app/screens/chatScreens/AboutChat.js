@@ -35,6 +35,15 @@ export default class AboutChat extends Component {
     let members = this.state.members;
 
     console.log(members);
+
+    if (this.state.isLoading) {
+      return (
+        <View>
+          <ActivityIndicator />
+        </View>
+      );
+    }
+
     return (
       <View style={styles.aboutContainer}>
         <View>
@@ -48,7 +57,7 @@ export default class AboutChat extends Component {
         <View style={styles.membersContainer}>
           <Text>Members: </Text>
 
-          <View style={styles.membersContainer}>
+          <View>
             <FlatList
               data={members}
               renderItem={({ item }) => (

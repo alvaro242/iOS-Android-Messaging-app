@@ -7,3 +7,7 @@ ERROR HANDLING
 La pantalla para crear una nueva conversacion debe requerir tambien de un primer mensaje
 Check with Ashley if pictures of users are ok
 can any member change 
+total of messages of conversation
+Update chat information by anyone??
+anyonecan add members
+who can remove?
