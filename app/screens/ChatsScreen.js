@@ -30,17 +30,20 @@ export default class ChatsScreen extends Component {
       isLoading: true,
       allchatsdata: [],
       refreshing: false,
+      key: "",
     };
   }
 
   componentDidMount() {
-    loadKey().then((key) =>
-      getAllChats(key).then((responseJson) =>
-        this.setState({
-          isLoading: false,
-          allchatsdata: responseJson.reverse(), //invert older so newest will appear first
-        })
-      )
+    loadKey().then(
+      (key) =>
+        this.setState({ key: key }) &
+        getAllChats(key).then((responseJson) =>
+          this.setState({
+            isLoading: false,
+            allchatsdata: responseJson.reverse(), //invert older so newest will appear first
+          })
+        )
     );
   }
 
@@ -92,7 +95,10 @@ export default class ChatsScreen extends Component {
               return (
                 <TouchableOpacity
                   onPress={() => {
-                    this.props.navigation.navigate("ChatScreen", { item });
+                    this.props.navigation.navigate("ChatScreen", {
+                      item: item,
+                      key: this.state.key,
+                    });
                   }}
                   style={styles.conversationPreview}
                 >

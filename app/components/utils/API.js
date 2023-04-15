@@ -152,28 +152,6 @@ export function getProfilePicture(userID, token) {
     .catch((error) => console.log(error));
 }
 
-export function getProfilePicAlternative(userID, token) {
-  let url = "http://" + serverIP + "/api/1.0.0/user/" + userID + "/photo";
-
-  return fetch(url, {
-    method: "GET",
-    headers: {
-      accept: "image/png",
-      "X-Authorization": token,
-    },
-  })
-    .then(async (response) => {
-      await response.blob();
-      let data = URL.createObjectURL(response);
-      return data;
-    })
-    .then((resBlob) => {
-      let data = URL.createObjectURL(resBlob);
-      return data;
-    })
-    .catch((error) => console.log(error));
-}
-
 export async function uploadProfilePic(token, id, photo) {
   let url = "http://" + serverIP + "/api/1.0.0/user/" + id + "/photo";
   let fetchpic = await fetch(photo);

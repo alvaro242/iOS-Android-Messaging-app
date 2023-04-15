@@ -13,7 +13,7 @@ export default class AboutChat extends Component {
 
   componentDidMount() {
     loadKey().then((key) =>
-      getChatDetails(this.props.route.params.item.chat_id, key).then(
+      getChatDetails(this.props.route.params.chat_id, key).then(
         (responseJson) =>
           this.setState({
             isLoading: false,

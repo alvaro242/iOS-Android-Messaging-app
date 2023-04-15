@@ -23,14 +23,25 @@ export default class ChatScreen extends Component {
     super(props);
 
     this.state = {
-      chatInfo: this.props.route.params,
-      nameChat: this.props.route.params.item.name,
+      chatInfo: this.props.route.params.item,
+      key: this.props.route.params.key,
       conversation: "",
+      arrayOfUris: [],
+      arrayOfMemberImages: "",
       isLoading: true,
-      arrayofPics: [],
-      key: "",
       message: "",
     };
+  }
+
+  async componentDidMount() {
+    await getChatDetails(this.state.chatInfo.chat_id, this.state.key).then(
+      (response) => this.setState({ conversation: response })
+    );
+
+    await this.getPicsOfMembers(this.state.conversation.members);
+    this.renderpicsMembers(this.state.arrayOfUris);
+
+    console.log(this.state.conversation);
   }
 
   async getPicsOfMembers(members) {
@@ -46,50 +57,36 @@ export default class ChatScreen extends Component {
 
     this.setState({
       isLoading: false,
-      arrayofPics: arrayOfMemberPics,
+      arrayOfUris: arrayOfMemberPics,
     });
-
-    return arrayOfMemberPics;
   }
 
-  componentDidMount() {
-    loadKey().then(
-      (key) =>
-        this.setState({ key: key }) &
-        getChatDetails(this.props.route.params.item.chat_id, key).then(
-          (responseJson) =>
-            this.getPicsOfMembers(responseJson.members) &
-            this.setState({
-              conversation: responseJson,
-            })
-        )
-    );
-  }
-
-  renderPics(arrayOfPics) {
+  renderpicsMembers(arrayOfUris) {
     const Images = [];
 
-    for (let i = 0; i < arrayOfPics.length; i++) {
+    for (let i = 0; i < arrayOfUris.length; i++) {
       Images.push(
         <Image
           style={styles.memberpic}
-          source={arrayOfPics[i]}
+          source={arrayOfUris[i]}
           key={"MemberPic" + i}
         />
       );
     }
 
-    return <View style={styles.membersPicsRow}>{Images}</View>;
+    return Images;
   }
-
-  MessageChangeHandler = (e) => {
-    this.setState({
-      message: e.target.value,
-    });
-  };
 
   render() {
     //New header and disable default
+
+    if (this.state.isLoading) {
+      return (
+        <View>
+          <ActivityIndicator />
+        </View>
+      );
+    }
 
     return (
       <View>
@@ -104,7 +101,7 @@ export default class ChatScreen extends Component {
               />
             </View>
             <View>
-              <Text style={styles.nameChat}>{this.state.nameChat}</Text>
+              <Text style={styles.nameChat}>{this.state.chatInfo.name}</Text>
             </View>
             <View style={styles.topRight}>
               <MaterialCommunityIcons
@@ -118,10 +115,12 @@ export default class ChatScreen extends Component {
             </View>
           </View>
           <View style={styles.membersHeader}>
-            {this.renderPics(this.state.arrayofPics)}
+            <View style={styles.membersPicsRow}>
+              {this.renderpicsMembers(this.state.arrayOfUris)}
+            </View>
           </View>
           <View style={styles.conversationContent}>
-            <Text>Conversation</Text>
+            <Text>{this.state.conversation.name}</Text>
           </View>
           <View style={styles.sendMessageContainer}>
             <TextInput
@@ -136,7 +135,7 @@ export default class ChatScreen extends Component {
               onPress={() =>
                 sendNewMessage(
                   this.state.message,
-                  this.state.chatInfo.item.chat_id,
+                  this.state.chatInfo.chat_id,
                   this.state.key
                 )
               }
