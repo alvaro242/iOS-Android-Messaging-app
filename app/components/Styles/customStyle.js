@@ -305,12 +305,22 @@ export const styles = StyleSheet.create({
   membersContainer: {
     padding: 20,
     borderCurve: "circular",
+    width: "80%",
   },
-  member: {
+  memberContainer: {
+    flexDirection: "row",
     backgroundColor: "white",
     padding: 20,
     marginBottom: 2,
-    justifyContent: "center",
+    justifyContent: "flex-start",
+    paddingHorizontal: 10,
+    alignItems: "center",
+  },
+
+  nameMember: {
+    paddingHorizontal: 10,
+    justifyContent: "flex-start",
+    alignSelf: "center",
   },
   sendMessageContainer: {
     flexDirection: "row",
@@ -326,9 +336,7 @@ export const styles = StyleSheet.create({
     width: ScreenWidth,
     left: 0,
   },
-  screenContainer: { flex: 1 },
-
-  conversationContent: { flex: 1 },
+  screenContainer: { flex: 1, backgroundColor: "white" },
 
   memberpic: {
     width: 50,
@@ -339,7 +347,7 @@ export const styles = StyleSheet.create({
 
   membersHeader: {
     justifyContent: "space-between",
-    backgroundColor: "white",
+    backgroundColor: "#EBF2F7",
     height: 60,
     alignItems: "center",
     paddingHorizontal: 20,
@@ -350,4 +358,48 @@ export const styles = StyleSheet.create({
   membersPicsRow: {
     flexDirection: "row",
   },
+
+  conversationContainer: {
+    flex: 1,
+    height: "100%",
+  },
+
+  outerContainer: { padding: 5 },
+
+  messageContainer: {
+    padding: 10,
+    backgroundColor: "#33B7FF",
+    width: "70%",
+    borderRadius: 15,
+    alignSelf: "flex-start",
+  },
+
+  myMessageContainer: {
+    flexDirection: "row",
+    padding: 10,
+    width: "70%",
+    backgroundColor: "#63D25C",
+    borderRadius: 15,
+    alignSelf: "flex-end",
+  },
+
+  textMessage: {
+    fontSize: "80%",
+  },
+
+  timeMessage: {
+    fontSize: "50%",
+    color: "#ECECEC",
+    alignSelf: "flex-end",
+    fontWeight: "bold",
+    paddingHorizontal: 1,
+  },
+
+  sendButton: {
+    justifyContent: "center",
+    alignSelf: "center",
+    height: "30%",
+  },
+
+  menuContainer: { flexDirection: "row" },
 });

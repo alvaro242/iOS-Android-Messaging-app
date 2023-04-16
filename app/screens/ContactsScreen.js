@@ -55,21 +55,7 @@ export default class ContactsScreen extends Component {
       )
     );
   }
-  /*
-  loadAllPictures(responseJson, key) {
-    console.log(responseJson);
-    let responseLength = Object.keys(responseJson).length;
-    let arrayOfPics = [];
 
-    for (let i = 0; i < responseLength; i++) {
-      getProfilePicture(responseJson[i].user_id, key).then((response) => {
-        arrayOfPics[i] = response;
-      });
-    }
-
-    this.setState({ arrayOfPics: arrayOfPics });
-  }
-*/
   refresh = () => {
     this.setState({ refreshing: true });
     loadKey().then((key) =>

@@ -38,11 +38,12 @@ export default class ChatsScreen extends Component {
     loadKey().then(
       (key) =>
         this.setState({ key: key }) &
-        getAllChats(key).then((responseJson) =>
-          this.setState({
-            isLoading: false,
-            allchatsdata: responseJson.reverse(), //invert older so newest will appear first
-          })
+        getAllChats(key).then(
+          (responseJson) =>
+            this.setState({
+              isLoading: false,
+              allchatsdata: responseJson.reverse(), //invert older so newest will appear first
+            }) & console.log(responseJson)
         )
     );
   }

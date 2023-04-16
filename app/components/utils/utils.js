@@ -28,6 +28,19 @@ export const loadKeyAndID = async () => {
   }
 };
 
+export const loadCurrentUser = async () => {
+  try {
+    let id = await AsyncStorage.getItem("whatsthat_user_id");
+    if (id !== null) {
+      return id;
+    } else {
+      return "error";
+    }
+  } catch (err) {
+    console.log("login again");
+  }
+};
+
 export function showTime(messageTimeStamp) {
   var currentDate = new Date();
 
@@ -79,4 +92,17 @@ export function showTime(messageTimeStamp) {
   } else {
     return dayMessage;
   }
+}
+
+export function showOnlyTime(messageTimeStamp) {
+  var dateMessage = new Date(messageTimeStamp);
+
+  var timeMessage =
+    dateMessage.getHours() +
+    ":" +
+    //if minutes under 10 shows a 0 before the minute
+    (dateMessage.getMinutes() < 10 ? "0" : "") +
+    dateMessage.getMinutes();
+
+  return timeMessage;
 }
