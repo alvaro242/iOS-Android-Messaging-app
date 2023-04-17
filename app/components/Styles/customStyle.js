@@ -303,17 +303,23 @@ export const styles = StyleSheet.create({
   },
 
   membersContainer: {
-    padding: 20,
+    //paddingVertical: 40,
+    //paddingHorizontal: 20,
+    justifyContent: "center",
+    //alignItems: "center",
     borderCurve: "circular",
-    width: "80%",
+    width: "100%",
+    borderColor: "black",
+
+    borderRadius: 100,
   },
   memberContainer: {
     flexDirection: "row",
     backgroundColor: "white",
-    padding: 20,
+    paddingVertical: 10,
     marginBottom: 2,
-    justifyContent: "space-evenly",
-    paddingHorizontal: 10,
+    justifyContent: "space-between",
+
     alignItems: "center",
   },
 
@@ -342,6 +348,9 @@ export const styles = StyleSheet.create({
     width: 50,
     height: 50,
     alignSelf: "center",
+    borderRadius: 100,
+    alignContent: "content",
+    justifyContent: "center",
     borderRadius: 100,
   },
 
@@ -406,9 +415,14 @@ export const styles = StyleSheet.create({
   membersListHeader: {
     flexDirection: "row",
     justifyContent: "space-between",
-    paddingHorizontal: 15,
-    paddingVertical: 20,
+    // paddingHorizontal: 15,
+    //paddingVertical: 20,
     backgroundColor: "#EBF2F7",
     marginBottom: 2,
+  },
+
+  chatTitle: {
+    //alignItems: "center",
+    justifyContent: "center",
   },
 });

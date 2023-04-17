@@ -525,4 +525,21 @@ export function removeMember(chatID, userID, key) {
     });
 }
 
+export function updateChatName(newName, chatID, token) {
+  let url = "http://" + serverIP + "/api/1.0.0/chat/" + chatID;
+
+  let nameToServer = { name: newName };
+
+  return fetch(url, {
+    method: "PATCH",
+    headers: {
+      "Content-Type": "application/json",
+      "X-Authorization": token,
+    },
+    body: JSON.stringify(nameToServer),
+  })
+    .then((response) => console.log(response))
+    .catch((error) => console.log(error));
+}
+
 // TO IMPLEMENT ALL CHAT

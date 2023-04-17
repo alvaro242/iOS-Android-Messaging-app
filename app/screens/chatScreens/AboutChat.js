@@ -1,9 +1,18 @@
 import React, { Component } from "react";
-import { View, Text, ActivityIndicator, FlatList, Image } from "react-native";
+import {
+  View,
+  Text,
+  ActivityIndicator,
+  FlatList,
+  Image,
+  TextInput,
+  Button,
+} from "react-native";
 import {
   getChatDetails,
   getProfilePicture,
   removeMember,
+  updateChatName,
 } from "../../components/utils/API";
 import { loadCurrentUser, loadKey } from "../../components/utils/utils";
 import { styles } from "../../components/Styles/customStyle";
@@ -23,6 +32,7 @@ export default class AboutChat extends Component {
       membersWithPic: "",
       chatID: this.props.route.params.chat_id,
       currentUserID: "",
+      newTitle: "",
     };
   }
 
@@ -80,8 +90,25 @@ export default class AboutChat extends Component {
           />
         </TouchableOpacity>
       );
+    } else {
+      return (
+        //empty View to keep the format
+        <View>
+          <MaterialCommunityIcons
+            name="trash-can-outline"
+            color="grey"
+            size={30}
+          />
+        </View>
+      );
     }
   }
+
+  titleChangeHandler = (e) => {
+    this.setState({
+      newTitle: e.target.value,
+    });
+  };
 
   render() {
     let chatInfo = this.state.chatInfo;
@@ -99,15 +126,33 @@ export default class AboutChat extends Component {
 
     return (
       <View style={styles.aboutContainer}>
-        {console.log(this.state.key)}
-        {console.log()}
         <View>
-          <Text>Title: {chatInfo.name}</Text>
-        </View>
-        <View>
-          <Text>
-            Creator: {creator.first_name} {creator.last_name}
-          </Text>
+          <View>
+            <Text>
+              Created by: {creator.first_name} {creator.last_name}
+            </Text>
+          </View>
+
+          <View style={styles.searchContactsContainer}>
+            <View style={styles.chatTitle}>
+              <Text>Title: </Text>
+            </View>
+            <TextInput
+              style={styles.inputSearch}
+              name="Amend"
+              defaultValue={chatInfo.name}
+              onChange={this.titleChangeHandler}
+              keyboardType="text"
+            />
+            <View style={styles.submitButton}>
+              <Button
+                title="Amend"
+                onPress={() =>
+                  updateChatName(this.state.newTitle, chatID, this.state.key)
+                }
+              />
+            </View>
+          </View>
         </View>
         <View style={styles.membersContainer}>
           <View style={styles.membersListHeader}>
