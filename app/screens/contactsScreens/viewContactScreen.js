@@ -47,8 +47,8 @@ export default class ViewContactScreen extends Component {
         <View style={styles.picture}>
           <Image style={styles.myPic} source={this.state.photo} />
         </View>
-        <Text>Nombre : {contact.first_name}</Text>
-        <Text>Apellido : {contact.last_name}</Text>
+        <Text>Name : {contact.first_name}</Text>
+        <Text>Last Name : {contact.last_name}</Text>
         <Text>ID : {contact.user_id}</Text>
         <Text>Email : {contact.email}</Text>
         <Button

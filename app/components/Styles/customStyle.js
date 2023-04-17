@@ -312,7 +312,7 @@ export const styles = StyleSheet.create({
     backgroundColor: "white",
     padding: 20,
     marginBottom: 2,
-    justifyContent: "flex-start",
+    justifyContent: "space-evenly",
     paddingHorizontal: 10,
     alignItems: "center",
   },
@@ -402,4 +402,13 @@ export const styles = StyleSheet.create({
   },
 
   menuContainer: { flexDirection: "row" },
+
+  membersListHeader: {
+    flexDirection: "row",
+    justifyContent: "space-between",
+    paddingHorizontal: 15,
+    paddingVertical: 20,
+    backgroundColor: "#EBF2F7",
+    marginBottom: 2,
+  },
 });

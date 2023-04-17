@@ -1,9 +1,14 @@
 import React, { Component } from "react";
 import { View, Text, ActivityIndicator, FlatList, Image } from "react-native";
-import { getChatDetails, getProfilePicture } from "../../components/utils/API";
-import { loadKey } from "../../components/utils/utils";
+import {
+  getChatDetails,
+  getProfilePicture,
+  removeMember,
+} from "../../components/utils/API";
+import { loadCurrentUser, loadKey } from "../../components/utils/utils";
 import { styles } from "../../components/Styles/customStyle";
 import { TouchableOpacity } from "react-native-web";
+import { MaterialCommunityIcons } from "react-native-vector-icons";
 
 export default class AboutChat extends Component {
   constructor(props) {
@@ -16,13 +21,17 @@ export default class AboutChat extends Component {
       members: [],
       key: "",
       membersWithPic: "",
+      chatID: this.props.route.params.chat_id,
+      currentUserID: "",
     };
   }
 
   async componentDidMount() {
+    await loadCurrentUser().then((response) =>
+      this.setState({ currentUserID: response })
+    );
     await loadKey().then((response) => this.setState({ key: response }));
-
-    await getChatDetails(this.props.route.params.chat_id, this.state.key).then(
+    await getChatDetails(this.state.chatID, this.state.key).then(
       (responseJson) =>
         this.setState({
           chatInfo: responseJson,
@@ -31,7 +40,7 @@ export default class AboutChat extends Component {
         })
     );
 
-    await this.getPicsOfMembers(this.state.members);
+    this.getPicsOfMembers(this.state.members);
   }
 
   async getPicsOfMembers(members) {
@@ -49,8 +58,6 @@ export default class AboutChat extends Component {
       isLoading: false,
     });
 
-    console.log(arrayOfMemberPics);
-
     for (let i = 0; i < members.length; i++) {
       members[i].picUri = arrayOfMemberPics[i];
     }
@@ -58,12 +65,29 @@ export default class AboutChat extends Component {
     this.setState({ membersWithPic: members });
   }
 
+  checkAmItheMember(memberID, currentUserID) {
+    if (memberID != currentUserID) {
+      return (
+        <TouchableOpacity
+          onPress={() => {
+            removeMember(this.state.chatID, memberID, this.state.key);
+          }}
+        >
+          <MaterialCommunityIcons
+            name="trash-can-outline"
+            color="red"
+            size={30}
+          />
+        </TouchableOpacity>
+      );
+    }
+  }
+
   render() {
     let chatInfo = this.state.chatInfo;
     let creator = this.state.creator;
     let members = this.state.members;
-
-    console.log(members);
+    let chatID = this.state.chatID;
 
     if (this.state.isLoading) {
       return (
@@ -75,6 +99,8 @@ export default class AboutChat extends Component {
 
     return (
       <View style={styles.aboutContainer}>
+        {console.log(this.state.key)}
+        {console.log()}
         <View>
           <Text>Title: {chatInfo.name}</Text>
         </View>
@@ -84,8 +110,25 @@ export default class AboutChat extends Component {
           </Text>
         </View>
         <View style={styles.membersContainer}>
-          <Text>Members: </Text>
-
+          <View style={styles.membersListHeader}>
+            <Text>Members: </Text>
+            <View>
+              <TouchableOpacity
+                onPress={() => {
+                  this.props.navigation.navigate("AddNewMemberScreen", {
+                    members,
+                    chatID,
+                  });
+                }}
+              >
+                <MaterialCommunityIcons
+                  name="account-multiple-plus"
+                  color="black"
+                  size={30}
+                />
+              </TouchableOpacity>
+            </View>
+          </View>
           <View>
             <FlatList
               data={this.state.membersWithPic}
@@ -102,6 +145,10 @@ export default class AboutChat extends Component {
                   <Text style={styles.nameMember}>
                     {item.first_name} {item.last_name}
                   </Text>
+                  {this.checkAmItheMember(
+                    item.user_id,
+                    this.state.currentUserID
+                  )}
                 </TouchableOpacity>
               )}
               keyExtractor={({ user_id }, index) => user_id}

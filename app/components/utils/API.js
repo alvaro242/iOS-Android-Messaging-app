@@ -3,7 +3,7 @@ import AsyncStorage from "@react-native-async-storage/async-storage";
 import { Alert } from "react-native";
 import * as RootNavigation from "./RootNavigation";
 
-let serverIP = "192.168.0.16:3333";
+let serverIP = "localhost:3333";
 
 export function registerUser(values) {
   let url = "http://" + serverIP + "/api/1.0.0/user/";
@@ -477,6 +477,49 @@ export function sendNewMessage(message, chatID, key) {
       }
     })
 
+    .catch((error) => {
+      console.log(error);
+    });
+}
+
+export function addNewMemberToChat(chatID, userID, key) {
+  let url =
+    "http://" + serverIP + "/api/1.0.0/chat/" + chatID + "/user/" + userID;
+
+  fetch(url, {
+    method: "POST",
+    headers: {
+      "Content-Type": "application/json",
+      accept: "application/json",
+      "X-Authorization": key,
+    },
+  })
+    .then((response) => {
+      if (response.status == 200) {
+        console.log("member added");
+      } else {
+        console.log("error. Something went wrong");
+      }
+    })
+
+    .catch((error) => {
+      console.log(error);
+    });
+}
+
+export function removeMember(chatID, userID, key) {
+  return fetch(
+    "http://" + serverIP + "/api/1.0.0/chat/" + chatID + "/user/" + userID,
+    {
+      method: "DELETE",
+      headers: {
+        "X-Authorization": key,
+      },
+    }
+  )
+    .then(async (response) => {
+      console.log(response);
+    })
     .catch((error) => {
       console.log(error);
     });

@@ -12,3 +12,4 @@ Update chat information by anyone??
 anyonecan add members
 who can remove?
 MOSTRAR FECHAS EN CHATS 
+IF I REMOVE MY SELF TAKE ME TO CHATS SCREEN AND REFRESH 

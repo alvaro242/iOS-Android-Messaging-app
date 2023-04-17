@@ -65,15 +65,8 @@ export default class AddContactScreen extends Component {
     //get between all Contacts
     loadKey()
       .then((key) => searchBetweenAllUsers(this.state.searchWord, key))
-      .then(
-        (AllContactsFound) =>
-          this.compare(AllContactsFound, this.state.usersContacts) /* &
-          this.setState({
-            contactsFound: AllContactsFound,
-            isLoading: false,
-            
-          })
-          */
+      .then((AllContactsFound) =>
+        this.compare(AllContactsFound, this.state.usersContacts)
       );
   };
 

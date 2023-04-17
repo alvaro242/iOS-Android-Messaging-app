@@ -135,15 +135,6 @@ export default class ContactsScreen extends Component {
                   });
                 }}
               >
-                {/*}
-                <View style={styles.picture}>
-                  <Image
-                    style={styles.myPic}
-                    source={this.state.arrayOfPics[item.length]}
-                  />
-                </View>
-              {*/}
-
                 <Text>
                   {/* Firstname and lastname only will show when executing getallcontacts and given namy and family name when executing searchCurrentUsers*/}
                   {item.first_name} {item.last_name} {item.given_name}{" "}

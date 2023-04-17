@@ -7,6 +7,7 @@ import addContactScreen from "./app/screens/contactsScreens/addContactScreen";
 import blockedUsersScreen from "./app/screens/settingsScreens/blockedUsersScreen";
 import unblockUserScreen from "./app/screens/settingsScreens/unblockUserScreen";
 import viewContactScreen from "./app/screens/contactsScreens/viewContactScreen";
+import AddNewMemberScreen from "./app/screens/chatScreens/AddNewMemberScreen";
 import { NavigationContainer } from "@react-navigation/native";
 import { createNativeStackNavigator } from "@react-navigation/native-stack";
 import React, { Component } from "react";
@@ -167,6 +168,15 @@ export default class App extends Component {
               component={AboutChat}
               options={{
                 title: "About",
+                headerShown: true,
+                gestureEnabled: true,
+              }}
+            />
+            <Stack.Screen
+              name="AddNewMemberScreen"
+              component={AddNewMemberScreen}
+              options={{
+                title: "Add a new member",
                 headerShown: true,
                 gestureEnabled: true,
               }}
