@@ -21,6 +21,8 @@ import {
   getChatDetails,
   getProfilePicture,
   sendNewMessage,
+  updateMessage,
+  deleteMessage,
 } from "../../components/utils/API";
 import { Menu, Provider } from "react-native-paper";
 
@@ -38,12 +40,11 @@ export default class ChatScreen extends Component {
       message: "",
       userID: "",
       menuVisible: false,
+      originalMessage: "",
+      amendedMessage: "",
+      amendContainer: <View></View>,
     };
   }
-
-  _openMenu = () => this.setState({ visible: true });
-
-  _closeMenu = () => this.setState({ visible: false });
 
   async componentDidMount() {
     await loadKey().then((response) => this.setState({ key: response }));
@@ -102,12 +103,86 @@ export default class ChatScreen extends Component {
     });
   };
 
+  AmendMessageInputChangeHandler = (e) => {
+    this.setState({
+      amendedMessage: e.target.value,
+    });
+  };
+
   messageStyleHandler(userID, authorID) {
     if (userID == authorID) {
       return styles.myMessageContainer;
     } else {
       return styles.messageContainer;
     }
+  }
+
+  _openMenu = () => this.setState({ visible: true });
+
+  _closeMenu = () => this.setState({ visible: false });
+
+  handleMenu(message) {
+    //run the following only if user is author
+    console.log(message);
+    console.log(this.state.chatInfo);
+    if (this.state.userID == message.author.user_id) {
+      this._openMenu();
+      this.setState({
+        originalMessage: message.message,
+        messageIdToAmmend: message.chat_id,
+        messageID: message.message_id,
+      });
+    }
+  }
+
+  openAmendContainer(originalMessage) {
+    this._closeMenu();
+
+    this.setState({
+      amendContainer: (
+        <View style={styles.amendContainer}>
+          <MaterialCommunityIcons
+            name="close-circle-outline"
+            size={15}
+            color="black"
+            onPress={() => this.hideAmendContainerMessage()}
+          />
+          <TextInput
+            name="Message"
+            onChange={this.AmendMessageInputChangeHandler}
+            keyboardType={"Text"}
+            defaultValue={originalMessage}
+            style={styles.inputForm}
+          ></TextInput>
+          <View style={styles.sendButton}>
+            <Button
+              title="amend"
+              onPress={() =>
+                this.hideAmendContainerMessage() &
+                updateMessage(
+                  this.state.chatInfo.chat_id,
+                  this.state.messageID,
+                  this.state.key,
+                  this.state.amendedMessage
+                )
+              }
+            />
+          </View>
+        </View>
+      ),
+    });
+  }
+
+  handleDeleteMessage() {
+    deleteMessage(
+      this.state.chatInfo.chat_id,
+      this.state.messageID,
+      this.state.key
+    );
+  }
+
+  hideAmendContainerMessage() {
+    this.setState({ amendContainer: <View></View> });
   }
 
   render() {
@@ -164,7 +239,11 @@ export default class ChatScreen extends Component {
                     inverted={true}
                     renderItem={({ item }) => (
                       <View style={styles.outerContainer}>
-                        <TouchableWithoutFeedback onPress={this._openMenu}>
+                        <TouchableWithoutFeedback
+                          onPress={() => {
+                            this.handleMenu(item);
+                          }}
+                        >
                           <View
                             style={this.messageStyleHandler(
                               this.state.userID,
@@ -187,18 +266,20 @@ export default class ChatScreen extends Component {
               >
                 <Menu.Item
                   onPress={() => {
-                    console.log("1");
+                    this.openAmendContainer(this.state.originalMessage);
                   }}
                   title="Amend"
                 />
                 <Menu.Item
                   onPress={() => {
-                    console.log("2");
+                    this.handleDeleteMessage();
                   }}
                   title="Delete"
                 />
               </Menu>
             </View>
+
+            {this.state.amendContainer}
 
             <View style={styles.sendMessageContainer}>
               <TextInput

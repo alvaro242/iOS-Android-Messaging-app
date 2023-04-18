@@ -542,4 +542,49 @@ export function updateChatName(newName, chatID, token) {
     .catch((error) => console.log(error));
 }
 
+export function updateMessage(chatID, messageID, token, newMessage) {
+  let url =
+    "http://" +
+    serverIP +
+    "/api/1.0.0/chat/" +
+    chatID +
+    "/message/" +
+    messageID;
+  let messageToServer = { message: newMessage };
+
+  return fetch(url, {
+    method: "PATCH",
+    headers: {
+      "Content-Type": "application/json",
+      "X-Authorization": token,
+    },
+    body: JSON.stringify(messageToServer),
+  })
+    .then((response) => console.log(response))
+    .catch((error) => console.log(error));
+}
+
+export function deleteMessage(chatID, messageID, key) {
+  return fetch(
+    "http://" +
+      serverIP +
+      "/api/1.0.0/chat/" +
+      chatID +
+      "/message/" +
+      messageID,
+    {
+      method: "DELETE",
+      headers: {
+        "X-Authorization": key,
+      },
+    }
+  )
+    .then(async (response) => {
+      console.log(response);
+    })
+    .catch((error) => {
+      console.log(error);
+    });
+}
+
 // TO IMPLEMENT ALL CHAT

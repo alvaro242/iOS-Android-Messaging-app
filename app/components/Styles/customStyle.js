@@ -342,6 +342,21 @@ export const styles = StyleSheet.create({
     width: ScreenWidth,
     left: 0,
   },
+  amendContainer: {
+    flexDirection: "row",
+    justifyContent: "center",
+    alignContent: "center",
+    paddingHorizontal: 20,
+    paddingVertical: 5,
+    backgroundColor: "#EBF2F7",
+    justifyContent: "flex-end",
+    position: "absolute",
+    height: 70,
+    top: ScreenHeight - 140,
+    width: ScreenWidth,
+    left: 0,
+  },
+
   screenContainer: { flex: 1, backgroundColor: "white" },
 
   memberpic: {
@@ -410,7 +425,12 @@ export const styles = StyleSheet.create({
     height: "30%",
   },
 
-  menuContainer: { flexDirection: "row" },
+  menuContainer: {
+    height: ScreenHeight * 0.6,
+    top: ScreenHeight / 2,
+    justifyContent: "center",
+    alignItems: "center",
+  },
 
   membersListHeader: {
     flexDirection: "row",
