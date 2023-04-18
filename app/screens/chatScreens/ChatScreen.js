@@ -54,8 +54,7 @@ export default class ChatScreen extends Component {
     );
 
     await getChatDetails(this.state.chatInfo.chat_id, this.state.key).then(
-      (response) =>
-        this.setState({ conversation: response }) & console.log(response)
+      (response) => this.setState({ conversation: response })
     );
     //if any member, load the pics
     if (Object.keys(this.state.conversation.members).length != 0) {

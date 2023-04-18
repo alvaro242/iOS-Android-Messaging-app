@@ -131,6 +131,7 @@ export default class AboutChat extends Component {
             <Text>
               Created by: {creator.first_name} {creator.last_name}
             </Text>
+            <Text>Total of messages:{this.state.chatInfo.messages.length}</Text>
           </View>
 
           <View style={styles.searchContactsContainer}>
