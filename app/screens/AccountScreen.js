@@ -102,13 +102,32 @@ export default class AccountScreen extends Component {
                 last_name: this.state.accountData.last_name,
                 email: this.state.accountData.email,
               }}
-              onSubmit={(values) =>
+              onSubmit={(values) => {
+                //We send to API only necessary info = whatever hasn´t changed
+                let originalName = this.state.accountData.first_name;
+                let originalLastName = this.state.accountData.last_name;
+                let originalEmail = this.state.accountData.email;
+
+                const objectToAPI = {};
+
+                if (originalName != values.first_name) {
+                  objectToAPI.first_name = values.first_name;
+                }
+
+                if (originalLastName != values.last_name) {
+                  objectToAPI.last_name = values.last_name;
+                }
+
+                if (originalEmail != values.email) {
+                  objectToAPI.email = values.email;
+                }
+
                 UpdateUserInformation(
-                  values,
+                  objectToAPI,
                   this.state.accountData.user_id,
                   this.state.token
-                )
-              }
+                );
+              }}
             >
               {({
                 handleChange,
