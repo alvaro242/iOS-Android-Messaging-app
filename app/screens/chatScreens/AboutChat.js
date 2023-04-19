@@ -7,6 +7,7 @@ import {
   Image,
   TextInput,
   Button,
+  Alert,
 } from "react-native";
 import {
   getChatDetails,
@@ -14,7 +15,7 @@ import {
   removeMember,
   updateChatName,
 } from "../../components/utils/API";
-
+import { showAlert } from "../../components/utils/utils";
 import { styles } from "../../components/Styles/customStyle";
 import { TouchableOpacity } from "react-native-web";
 import { MaterialCommunityIcons } from "react-native-vector-icons";
@@ -212,6 +213,18 @@ export default class AboutChat extends Component {
             />
           </View>
         </View>
+        <TouchableOpacity
+          style={styles.abandonChat}
+          onPress={() => {
+            removeMember(
+              this.state.chatInfo.chat_id,
+              this.state.currentUserID,
+              this.state.key
+            ) & this.props.navigation.navigate("Chats");
+          }}
+        >
+          <Text>Abandon Chat</Text>
+        </TouchableOpacity>
       </View>
     );
   }

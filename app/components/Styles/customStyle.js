@@ -456,4 +456,12 @@ export const styles = StyleSheet.create({
     width: ScreenWidth,
     left: 0,
   },
+  abandonChat: {
+    marginTop: 10,
+    paddingVertical: 20,
+    backgroundColor: "white",
+    alignItems: "center",
+    borderWidth: 1,
+    borderColor: "red",
+  },
 });

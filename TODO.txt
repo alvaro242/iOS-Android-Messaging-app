@@ -1,7 +1,6 @@
 
 Check with Ashley if pictures of users are ok
 
-Leave the chat button -> take me to chats screen and refresh
 FIX LOCALTIME ON CHATS, PAGINAR CHATS POR FECHAS
 DRAFTS OPTIONS 
 SPANISH

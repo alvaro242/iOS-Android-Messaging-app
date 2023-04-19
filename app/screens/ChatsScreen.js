@@ -50,6 +50,7 @@ export default class ChatsScreen extends Component {
             }) & console.log(responseJson)
         )
     );
+    this.setState({ isLoading: false });
   };
 
   renderLastMessage(message) {
