@@ -7,7 +7,7 @@ import {
   Image,
   TextInput,
 } from "react-native";
-import axios from "axios";
+
 import { createBottomTabNavigator } from "@react-navigation/bottom-tabs";
 import ChatsScreen from "./ChatsScreen";
 import AccountScreen from "./AccountScreen";
@@ -15,7 +15,7 @@ import ContactsScreen from "./ContactsScreen";
 import SettingsScreen from "./SettingsScreen";
 import { MaterialCommunityIcons } from "react-native-vector-icons";
 import React, { Component } from "react";
-import AsyncStorage from "@react-native-async-storage/async-storage";
+
 import { logOut } from "../components/utils/API";
 import { loadKey } from "../components/utils/utils";
 

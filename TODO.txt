@@ -1,25 +1,9 @@
-Respuestas de la API, handling errors and nice popup // render in screen, como el ActivityIndicator 
-validation?
-cambiar botones 
-arreglar patch request para que solo se envie lo que se modifica - accountScreen
-limpiar codigo e imports no usados
-ERROR HANDLING 
+
 Check with Ashley if pictures of users are ok
-anyonecan add members
-MOSTRAR FECHAS EN CHATS 
-IF I REMOVE MY SELF TAKE ME TO CHATS SCREEN AND REFRESH 
-FOTO AL LADO DE QUIEN HAYA DICHO EL MENSAJE
 
-UPDATE TITLE OF CHAT
-UPDATE CHATINFO SCREEN
-UPDATE SCREEN AFTER MESSAGE IS SENT 
-
-AMEND AND DELETE MESSAGES FROM CHAT, UPDATE AFTER 
+Leave the chat button -> take me to chats screen and refresh
 FIX LOCALTIME ON CHATS, PAGINAR CHATS POR FECHAS
 DRAFTS OPTIONS 
 SPANISH
 
-LEAVE THE CHAT BUTTON
-
-
-EVITAR FUNCION ASINCRONA EN COMPONENTDIDMOUNT DE CHATS Y HACER COMPONENT DID FOCUS
+PAGINACION CHATS Y HANDLING ERRORS

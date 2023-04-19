@@ -7,6 +7,7 @@ import {
   Image,
   FlatList,
   TouchableWithoutFeedback,
+  ScrollView,
 } from "react-native";
 import React, { Component } from "react";
 import { styles } from "../../components/Styles/customStyle";
@@ -25,6 +26,7 @@ import {
   deleteMessage,
 } from "../../components/utils/API";
 import { Menu, Provider } from "react-native-paper";
+import { TouchableOpacity } from "react-native-web";
 
 export default class ChatScreen extends Component {
   constructor(props) {
@@ -38,28 +40,56 @@ export default class ChatScreen extends Component {
       arrayOfMemberImages: "",
       isLoading: true,
       message: "",
-      userID: "",
+      user_id: "",
       menuVisible: false,
       originalMessage: "",
       amendedMessage: "",
       amendContainer: <View></View>,
+      valueMessage: "",
     };
   }
+  componentDidMount() {
+    this.unsubscribe = this.props.navigation.addListener("focus", () => {
+      this.getData();
+    });
+  }
 
-  async componentDidMount() {
+  componentWillUnmount() {
+    this.unsubscribe();
+  }
+
+  async getData() {
     await loadKey().then((response) => this.setState({ key: response }));
 
     await loadCurrentUser().then((response) =>
-      this.setState({ userID: response })
+      this.setState({ user_id: response })
     );
 
     await getChatDetails(this.state.chatInfo.chat_id, this.state.key).then(
       (response) => this.setState({ conversation: response })
     );
-    //if any member, load the pics
+
+    this.loadPicsOfAuthors(this.state.conversation.messages, this.state.key);
+
+    //if any member, load the pics and render then in the member bar
     if (Object.keys(this.state.conversation.members).length != 0) {
       await this.getPicsOfMembers(this.state.conversation.members);
-      this.renderpicsMembers(this.state.arrayOfUris);
+      this.renderpicsMembers(
+        this.state.arrayOfUris,
+        this.state.conversation.members
+      );
+    }
+  }
+
+  async loadPicsOfAuthors(messages, key) {
+    //this function will load the pic inside of Author
+    messages.forEach(getPicofAuthor);
+
+    async function getPicofAuthor(item) {
+      let promise = getProfilePicture(item.author.user_id, key);
+      const picture = await Promise.resolve(promise);
+
+      item.author.picture = picture;
     }
   }
 
@@ -80,7 +110,8 @@ export default class ChatScreen extends Component {
     });
   }
 
-  renderpicsMembers(arrayOfUris) {
+  renderpicsMembers(arrayOfUris, members) {
+    //render into members bar
     const Images = [];
 
     for (let i = 0; i < arrayOfUris.length; i++) {
@@ -122,9 +153,8 @@ export default class ChatScreen extends Component {
 
   handleMenu(message) {
     //run the following only if user is author
-    console.log(message);
-    console.log(this.state.chatInfo);
-    if (this.state.userID == message.author.user_id) {
+
+    if (this.state.user_id == message.author.user_id) {
       this._openMenu();
       this.setState({
         originalMessage: message.message,
@@ -132,6 +162,27 @@ export default class ChatScreen extends Component {
         messageID: message.message_id,
       });
     }
+  }
+
+  handleSendMessage() {
+    sendNewMessage(
+      this.state.message,
+      this.state.chatInfo.chat_id,
+      this.state.key
+    );
+    this.getData();
+    this.textInput.clear();
+  }
+
+  AmendMessageHandler() {
+    this.hideAmendContainerMessage();
+    updateMessage(
+      this.state.chatInfo.chat_id,
+      this.state.messageID,
+      this.state.key,
+      this.state.amendedMessage
+    );
+    this.getData();
   }
 
   openAmendContainer(originalMessage) {
@@ -154,18 +205,7 @@ export default class ChatScreen extends Component {
             style={styles.inputForm}
           ></TextInput>
           <View style={styles.sendButton}>
-            <Button
-              title="amend"
-              onPress={() =>
-                this.hideAmendContainerMessage() &
-                updateMessage(
-                  this.state.chatInfo.chat_id,
-                  this.state.messageID,
-                  this.state.key,
-                  this.state.amendedMessage
-                )
-              }
-            />
+            <Button title="amend" onPress={() => this.AmendMessageHandler()} />
           </View>
         </View>
       ),
@@ -173,6 +213,8 @@ export default class ChatScreen extends Component {
   }
 
   handleDeleteMessage() {
+    this.getData();
+    this._closeMenu();
     deleteMessage(
       this.state.chatInfo.chat_id,
       this.state.messageID,
@@ -184,8 +226,32 @@ export default class ChatScreen extends Component {
     this.setState({ amendContainer: <View></View> });
   }
 
+  renderAuthorDetails(author, LoggedUser) {
+    // render only pic for other users
+    if (LoggedUser != author.user_id) {
+      return (
+        <TouchableOpacity style={{ padding: 10 }}>
+          <Image style={styles.authorPic} source={author.picture} />
+          <Text
+            style={{
+              fontSize: "10px",
+              color: "white",
+              alignContent: "flex-end",
+            }}
+          >
+            {author.first_name}
+          </Text>
+        </TouchableOpacity>
+      );
+    }
+  }
+
   render() {
     //New header and disable default
+
+    let user_id = this.state.user_id;
+    let chatInfo = this.state.chatInfo;
+    let key = this.state.key;
 
     if (this.state.isLoading) {
       return (
@@ -197,10 +263,10 @@ export default class ChatScreen extends Component {
 
     return (
       <Provider>
-        <View style={styles.screenContainer}>
+        <View style={styles.ChatScreenContainer}>
           <View>
             <View style={styles.chatHeader}>
-              <View style={styles.headerTopLeft}>
+              <View>
                 <MaterialCommunityIcons
                   name="arrow-left"
                   size={25}
@@ -209,15 +275,21 @@ export default class ChatScreen extends Component {
                 />
               </View>
               <View>
-                <Text style={styles.nameChat}>{this.state.chatInfo.name}</Text>
+                <Text style={styles.nameChat}>
+                  {this.state.conversation.name}
+                </Text>
               </View>
-              <View style={styles.topRight}>
+              <View>
                 <MaterialCommunityIcons
                   name="information-outline"
                   size={25}
                   color="white"
                   onPress={() =>
-                    RootNavigation.navigate("AboutChat", this.state.chatInfo)
+                    RootNavigation.navigate(
+                      "AboutChat",
+
+                      { chatInfo, user_id, key }
+                    )
                   }
                 />
               </View>
@@ -227,55 +299,65 @@ export default class ChatScreen extends Component {
                 {this.renderpicsMembers(this.state.arrayOfUris)}
               </View>
             </View>
-            <View style={styles.conversationContainer}>
-              <Menu
-                style={styles.menuContainer}
-                visible={this.state.visible}
-                onDismiss={this._closeMenu}
-                anchor={
-                  <FlatList
-                    data={this.state.conversation.messages}
-                    inverted={true}
-                    renderItem={({ item }) => (
-                      <View style={styles.outerContainer}>
-                        <TouchableWithoutFeedback
-                          onPress={() => {
-                            this.handleMenu(item);
-                          }}
-                        >
-                          <View
-                            style={this.messageStyleHandler(
-                              this.state.userID,
-                              item.author.user_id
-                            )}
-                          >
-                            <Text style={styles.textMessage}>
-                              {item.message}
-                            </Text>
-                            <Text style={styles.timeMessage}>
-                              {showOnlyTime(item.timestamp)}
-                            </Text>
+            <View>
+              <View>
+                <Menu
+                  style={styles.menuContainer}
+                  visible={this.state.visible}
+                  onDismiss={this._closeMenu}
+                  anchor={
+                    <ScrollView>
+                      <FlatList
+                        data={this.state.conversation.messages}
+                        inverted={true}
+                        renderItem={({ item }) => (
+                          <View style={styles.outerContainer}>
+                            <TouchableWithoutFeedback
+                              onPress={() => {
+                                this.handleMenu(item);
+                              }}
+                            >
+                              <View>
+                                <View
+                                  style={this.messageStyleHandler(
+                                    this.state.user_id,
+                                    item.author.user_id
+                                  )}
+                                >
+                                  {this.renderAuthorDetails(
+                                    item.author,
+                                    this.state.user_id
+                                  )}
+                                  <Text style={styles.textMessage}>
+                                    {item.message}
+                                  </Text>
+                                  <Text style={styles.timeMessage}>
+                                    {showOnlyTime(item.timestamp)}
+                                  </Text>
+                                </View>
+                              </View>
+                            </TouchableWithoutFeedback>
                           </View>
-                        </TouchableWithoutFeedback>
-                      </View>
-                    )}
-                    keyExtractor={({ message_id }, index) => message_id}
+                        )}
+                        keyExtractor={({ message_id }, index) => message_id}
+                      />
+                    </ScrollView>
+                  }
+                >
+                  <Menu.Item
+                    onPress={() => {
+                      this.openAmendContainer(this.state.originalMessage);
+                    }}
+                    title="Amend"
                   />
-                }
-              >
-                <Menu.Item
-                  onPress={() => {
-                    this.openAmendContainer(this.state.originalMessage);
-                  }}
-                  title="Amend"
-                />
-                <Menu.Item
-                  onPress={() => {
-                    this.handleDeleteMessage();
-                  }}
-                  title="Delete"
-                />
-              </Menu>
+                  <Menu.Item
+                    onPress={() => {
+                      this.handleDeleteMessage();
+                    }}
+                    title="Delete"
+                  />
+                </Menu>
+              </View>
             </View>
 
             {this.state.amendContainer}
@@ -285,19 +367,13 @@ export default class ChatScreen extends Component {
                 name="Message"
                 onChange={this.MessageChangeHandler}
                 keyboardType={"Text"}
+                ref={(input) => {
+                  this.textInput = input;
+                }}
                 style={styles.inputForm}
               ></TextInput>
               <View style={styles.sendButton}>
-                <Button
-                  title="send"
-                  onPress={() =>
-                    sendNewMessage(
-                      this.state.message,
-                      this.state.chatInfo.chat_id,
-                      this.state.key
-                    )
-                  }
-                />
+                <Button title="send" onPress={() => this.handleSendMessage()} />
               </View>
             </View>
           </View>

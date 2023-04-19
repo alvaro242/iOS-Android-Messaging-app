@@ -19,8 +19,6 @@ import { navigationRef } from "./app/components/utils/RootNavigation";
 import ChatScreen from "./app/screens/chatScreens/chatScreen";
 import CreateChatScreen from "./app/screens/chatScreens/CreateChatScreen";
 import AboutChat from "./app/screens/chatScreens/AboutChat";
-import { MaterialCommunityIcons } from "react-native-vector-icons";
-import * as RootNavigation from "./app/components/utils/RootNavigation";
 
 const Stack = createNativeStackNavigator();
 

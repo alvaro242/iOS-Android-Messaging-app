@@ -11,15 +11,11 @@ import {
   FlatList,
   TouchableOpacity,
 } from "react-native";
-import { Formik } from "formik";
-import * as yup from "yup";
-import axios from "axios";
-import AsyncStorage from "@react-native-async-storage/async-storage";
+
 import React, { Component } from "react";
 import { loadKey } from "../components/utils/utils";
 import { getAllChats } from "../components/utils/API";
 import { styles } from "./../components/Styles/customStyle";
-import { RefreshControl } from "react-native-web-refresh-control";
 import { showTime } from "../components/utils/utils";
 
 export default class ChatsScreen extends Component {
@@ -29,12 +25,20 @@ export default class ChatsScreen extends Component {
     this.state = {
       isLoading: true,
       allchatsdata: [],
-      refreshing: false,
       key: "",
     };
   }
-
   componentDidMount() {
+    this.unsubscribe = this.props.navigation.addListener("focus", () => {
+      this.getData();
+    });
+  }
+
+  componentWillUnmount() {
+    this.unsubscribe();
+  }
+
+  getData = () => {
     loadKey().then(
       (key) =>
         this.setState({ key: key }) &
@@ -45,18 +49,6 @@ export default class ChatsScreen extends Component {
               allchatsdata: responseJson.reverse(), //invert older so newest will appear first
             }) & console.log(responseJson)
         )
-    );
-  }
-
-  refresh = () => {
-    this.setState({ refreshing: true });
-    loadKey().then((key) =>
-      getAllChats(key).then((responseJson) =>
-        this.setState({
-          refreshing: false,
-          allchatsdata: responseJson.reverse(),
-        })
-      )
     );
   };
 
@@ -83,12 +75,6 @@ export default class ChatsScreen extends Component {
     return (
       <ScrollView>
         <FlatList
-          refreshControl={
-            <RefreshControl
-              refreshing={this.state.refreshing}
-              onRefresh={this.refresh}
-            />
-          }
           data={this.state.allchatsdata}
           renderItem={({ item }) => {
             // If there are any messages on the conversation

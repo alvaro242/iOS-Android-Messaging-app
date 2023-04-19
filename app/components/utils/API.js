@@ -166,12 +166,7 @@ export async function uploadProfilePic(token, id, photo) {
     body: blob,
   })
     .then((response) => {
-      if (response.status == 200) {
-        console.log("image updated");
-        RootNavigation.navigate("AccountScreen");
-      } else {
-        throw "something happened";
-      }
+      console.log(response);
     })
 
     .catch((error) => console.log(error));

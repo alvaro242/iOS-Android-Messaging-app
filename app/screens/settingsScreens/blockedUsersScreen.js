@@ -9,10 +9,8 @@ import {
   FlatList,
 } from "react-native";
 import { styles } from "./../../components/Styles/customStyle";
-import { removeContact, blockContact } from "../../components/utils/API";
 import { loadKey } from "../../components/utils/utils";
 import { getBlockedContacts } from "../../components/utils/API";
-import { RefreshControl } from "react-native-web-refresh-control";
 
 export default class BlockedUsersScreen extends Component {
   constructor(props) {
@@ -21,28 +19,23 @@ export default class BlockedUsersScreen extends Component {
     this.state = {
       isLoading: true,
       blockedContacsData: [],
-      refreshing: false,
     };
   }
 
   componentDidMount() {
+    this.unsubscribe = this.props.navigation.addListener("focus", () => {
+      this.getData();
+    });
+  }
+
+  componentWillUnmount() {
+    this.unsubscribe();
+  }
+
+  getData = () => {
     loadKey().then((key) =>
       getBlockedContacts(key).then((responseJson) =>
         this.setState({ blockedContacsData: responseJson, isLoading: false })
-      )
-    );
-  }
-
-  refresh = () => {
-    this.setState({ refreshing: true });
-
-    loadKey().then((key) =>
-      getBlockedContacts(key).then((responseJson) =>
-        this.setState({
-          blockedContacsData: responseJson,
-          isLoading: false,
-          refreshing: false,
-        })
       )
     );
   };
@@ -56,14 +49,7 @@ export default class BlockedUsersScreen extends Component {
       );
     }
     return (
-      <ScrollView
-        refreshControl={
-          <RefreshControl
-            refreshing={this.state.refreshing}
-            onRefresh={this.refresh}
-          />
-        }
-      >
+      <ScrollView>
         <FlatList
           data={this.state.blockedContacsData}
           renderItem={({ item }) => (

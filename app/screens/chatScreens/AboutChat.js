@@ -14,7 +14,7 @@ import {
   removeMember,
   updateChatName,
 } from "../../components/utils/API";
-import { loadCurrentUser, loadKey } from "../../components/utils/utils";
+
 import { styles } from "../../components/Styles/customStyle";
 import { TouchableOpacity } from "react-native-web";
 import { MaterialCommunityIcons } from "react-native-vector-icons";
@@ -28,29 +28,35 @@ export default class AboutChat extends Component {
       chatInfo: "",
       creator: "",
       members: [],
-      key: "",
+      key: this.props.route.params.key,
       membersWithPic: "",
-      chatID: this.props.route.params.chat_id,
-      currentUserID: "",
+      chatInfo: this.props.route.params.chatInfo,
+      chatDetails: "",
+      currentUserID: this.props.route.params.user_id,
       newTitle: "",
     };
   }
 
-  async componentDidMount() {
-    await loadCurrentUser().then((response) =>
-      this.setState({ currentUserID: response })
-    );
-    await loadKey().then((response) => this.setState({ key: response }));
-    await getChatDetails(this.state.chatID, this.state.key).then(
+  componentDidMount() {
+    this.unsubscribe = this.props.navigation.addListener("focus", () => {
+      this.getData();
+    });
+  }
+
+  componentWillUnmount() {
+    this.unsubscribe();
+  }
+
+  async getData() {
+    await getChatDetails(this.state.chatInfo.chat_id, this.state.key).then(
       (responseJson) =>
         this.setState({
-          chatInfo: responseJson,
+          chatDetails: responseJson,
           creator: responseJson.creator,
           members: responseJson.members,
         })
     );
-
-    this.getPicsOfMembers(this.state.members);
+    await this.getPicsOfMembers(this.state.members);
   }
 
   async getPicsOfMembers(members) {
@@ -75,12 +81,17 @@ export default class AboutChat extends Component {
     this.setState({ membersWithPic: members });
   }
 
+  async handleMemberRemoval(memberID) {
+    await removeMember(this.state.chatInfo.chat_id, memberID, this.state.key);
+    this.getData();
+  }
+
   checkAmItheMember(memberID, currentUserID) {
     if (memberID != currentUserID) {
       return (
         <TouchableOpacity
           onPress={() => {
-            removeMember(this.state.chatID, memberID, this.state.key);
+            this.handleMemberRemoval(memberID);
           }}
         >
           <MaterialCommunityIcons
@@ -111,10 +122,10 @@ export default class AboutChat extends Component {
   };
 
   render() {
-    let chatInfo = this.state.chatInfo;
+    let chatDetails = this.state.chatDetails;
     let creator = this.state.creator;
     let members = this.state.members;
-    let chatID = this.state.chatID;
+    let chat_id = this.state.chatInfo.chat_id;
 
     if (this.state.isLoading) {
       return (
@@ -131,7 +142,7 @@ export default class AboutChat extends Component {
             <Text>
               Created by: {creator.first_name} {creator.last_name}
             </Text>
-            <Text>Total of messages:{this.state.chatInfo.messages.length}</Text>
+            <Text>Total of messages:{chatDetails.messages.length}</Text>
           </View>
 
           <View style={styles.searchContactsContainer}>
@@ -141,7 +152,7 @@ export default class AboutChat extends Component {
             <TextInput
               style={styles.inputSearch}
               name="Amend"
-              defaultValue={chatInfo.name}
+              defaultValue={chatDetails.name}
               onChange={this.titleChangeHandler}
               keyboardType="text"
             />
@@ -149,7 +160,7 @@ export default class AboutChat extends Component {
               <Button
                 title="Amend"
                 onPress={() =>
-                  updateChatName(this.state.newTitle, chatID, this.state.key)
+                  updateChatName(this.state.newTitle, chat_id, this.state.key)
                 }
               />
             </View>
@@ -163,7 +174,7 @@ export default class AboutChat extends Component {
                 onPress={() => {
                   this.props.navigation.navigate("AddNewMemberScreen", {
                     members,
-                    chatID,
+                    chat_id,
                   });
                 }}
               >

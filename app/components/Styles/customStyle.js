@@ -1,6 +1,5 @@
 import { StyleSheet } from "react-native";
-import { Dimensions, StatusBar } from "react-native";
-import React from "react";
+import { Dimensions } from "react-native";
 
 let ScreenHeight = Dimensions.get("window").height;
 let ScreenWidth = Dimensions.get("window").width;
@@ -286,18 +285,7 @@ export const styles = StyleSheet.create({
     flexDirection: "row",
     justifyContent: "space-between",
   },
-  chatHeader: {
-    flexDirection: "row",
-    justifyContent: "space-between",
-    backgroundColor: "#5D80F0",
-    height: 60,
-    alignItems: "center",
-    paddingHorizontal: 20,
-  },
-  nameChat: {
-    color: "white",
-    fontSize: 20,
-  },
+
   aboutContainer: {
     padding: 20,
   },
@@ -328,20 +316,7 @@ export const styles = StyleSheet.create({
     justifyContent: "flex-start",
     alignSelf: "center",
   },
-  sendMessageContainer: {
-    flexDirection: "row",
-    justifyContent: "center",
-    alignContent: "center",
-    paddingHorizontal: 20,
-    paddingVertical: 5,
-    backgroundColor: "#EBF2F7",
-    justifyContent: "flex-end",
-    position: "absolute",
-    height: 70,
-    top: ScreenHeight - 70,
-    width: ScreenWidth,
-    left: 0,
-  },
+
   amendContainer: {
     flexDirection: "row",
     justifyContent: "center",
@@ -357,8 +332,6 @@ export const styles = StyleSheet.create({
     left: 0,
   },
 
-  screenContainer: { flex: 1, backgroundColor: "white" },
-
   memberpic: {
     width: 50,
     height: 50,
@@ -369,42 +342,18 @@ export const styles = StyleSheet.create({
     borderRadius: 100,
   },
 
-  membersHeader: {
-    justifyContent: "space-between",
-    backgroundColor: "#EBF2F7",
-    height: 60,
-    alignItems: "center",
-    paddingHorizontal: 20,
-    alignItems: "center",
-    justifyContent: "center",
-  },
-
-  membersPicsRow: {
-    flexDirection: "row",
-  },
-
-  conversationContainer: {
-    flex: 1,
+  authorPic: {
+    width: "100%",
     height: "100%",
+    alignSelf: "center",
+    borderRadius: 100,
+    alignContent: "flex-end",
+    justifyContent: "center",
+    borderRadius: 100,
   },
 
-  outerContainer: { padding: 5 },
-
-  messageContainer: {
-    padding: 10,
-    backgroundColor: "#33B7FF",
-    width: "70%",
-    borderRadius: 15,
-    alignSelf: "flex-start",
-  },
-
-  myMessageContainer: {
-    flexDirection: "row",
-    padding: 10,
-    width: "70%",
-    backgroundColor: "#63D25C",
-    borderRadius: 15,
-    alignSelf: "flex-end",
+  outerContainer: {
+    padding: 5,
   },
 
   textMessage: {
@@ -425,13 +374,6 @@ export const styles = StyleSheet.create({
     height: "30%",
   },
 
-  menuContainer: {
-    height: ScreenHeight * 0.6,
-    top: ScreenHeight / 2,
-    justifyContent: "center",
-    alignItems: "center",
-  },
-
   membersListHeader: {
     flexDirection: "row",
     justifyContent: "space-between",
@@ -444,5 +386,74 @@ export const styles = StyleSheet.create({
   chatTitle: {
     //alignItems: "center",
     justifyContent: "center",
+  },
+
+  ChatScreenContainer: {
+    flex: 1,
+    backgroundColor: "white",
+  },
+  chatHeader: {
+    flexDirection: "row",
+    justifyContent: "space-between",
+    backgroundColor: "#5D80F0",
+    height: 60,
+    alignItems: "center",
+    paddingHorizontal: 20,
+  },
+  nameChat: {
+    color: "white",
+    fontSize: 20,
+  },
+
+  membersHeader: {
+    justifyContent: "space-between",
+    backgroundColor: "#EBF2F7",
+    height: 60,
+    alignItems: "center",
+    paddingHorizontal: 20,
+    alignItems: "center",
+    justifyContent: "center",
+  },
+  membersPicsRow: {
+    flexDirection: "row",
+  },
+
+  menuContainer: {
+    height: ScreenHeight * 0.6,
+    top: ScreenHeight / 2,
+    justifyContent: "center",
+    alignItems: "center",
+  },
+
+  messageContainer: {
+    padding: 10,
+    backgroundColor: "#33B7FF",
+    width: "70%",
+    borderRadius: 15,
+    alignSelf: "flex-start",
+    flexDirection: "row",
+  },
+
+  myMessageContainer: {
+    flexDirection: "row",
+    padding: 10,
+    width: "70%",
+    backgroundColor: "#63D25C",
+    borderRadius: 15,
+    alignSelf: "flex-end",
+  },
+  sendMessageContainer: {
+    flexDirection: "row",
+    justifyContent: "center",
+    alignContent: "center",
+    paddingHorizontal: 20,
+    paddingVertical: 5,
+    backgroundColor: "#EBF2F7",
+    justifyContent: "flex-end",
+    position: "absolute",
+    height: 70,
+    top: ScreenHeight - 70,
+    width: ScreenWidth,
+    left: 0,
   },
 });

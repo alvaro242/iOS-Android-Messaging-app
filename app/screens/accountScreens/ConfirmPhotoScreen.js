@@ -11,9 +11,19 @@ export default class ConfirmPhotoScreen extends Component {
     this.state = {};
   }
 
+  async handleSubmission() {
+    await loadKeyAndID().then((keyAndID) =>
+      uploadProfilePic(
+        keyAndID[0],
+        keyAndID[1],
+        this.props.route.params.photoData.uri
+      )
+    );
+    await this.props.navigation.navigate("AccountScreen");
+  }
+
   render() {
     console.log(this.props.route.params);
-    let newPicUri = this.props.route.params.photoData.uri;
 
     return (
       <View>
@@ -29,14 +39,7 @@ export default class ConfirmPhotoScreen extends Component {
           title="No"
           onPress={() => this.props.navigation.navigate("AccountScreen")}
         />
-        <Button
-          title="Yes"
-          onPress={() =>
-            loadKeyAndID().then((keyAndID) =>
-              uploadProfilePic(keyAndID[0], keyAndID[1], newPicUri)
-            )
-          }
-        />
+        <Button title="Yes" onPress={() => this.handleSubmission()} />
       </View>
     );
   }

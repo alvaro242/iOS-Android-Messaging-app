@@ -24,7 +24,7 @@ export default class AddNewMemberScreen extends Component {
       searchWord: "",
       isLoading: "",
       members: this.props.route.params.members,
-      chatID: this.props.route.params.chatID,
+      chat_id: this.props.route.params.chat_id,
       NewPossibleMembers: "",
       responseAPI: "",
     };
@@ -84,8 +84,10 @@ export default class AddNewMemberScreen extends Component {
     });
   };
 
-  addMember(userID) {
-    addNewMemberToChat(this.state.chatID, userID, this.state.key); //Feedback pending
+  async addMember(userID) {
+    addNewMemberToChat(this.state.chat_id, userID, this.state.key);
+
+    //feedbackpending
   }
 
   render() {

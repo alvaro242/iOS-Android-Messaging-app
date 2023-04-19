@@ -7,9 +7,7 @@ import {
   FlatList,
   ActivityIndicator,
 } from "react-native";
-import { Formik } from "formik";
-import * as yup from "yup";
-import axios from "axios";
+
 import { styles } from "../../components/Styles/customStyle";
 import React, { Component } from "react";
 

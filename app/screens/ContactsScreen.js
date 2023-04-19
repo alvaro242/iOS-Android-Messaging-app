@@ -9,22 +9,13 @@ import {
   Alert,
   ScrollView,
 } from "react-native";
-import { Formik } from "formik";
-import * as yup from "yup";
-import axios from "axios";
 
 import { styles } from "./../components/Styles/customStyle";
-import { MaterialCommunityIcons } from "react-native-vector-icons";
 
-import { createNativeStackNavigator } from "@react-navigation/native-stack";
 import React, { Component, useState, useEffect } from "react";
-import AsyncStorage from "@react-native-async-storage/async-storage";
+
 import { loadKey } from "../components/utils/utils";
-import {
-  getAllContacts,
-  searchCurrentUsers,
-  getProfilePicture,
-} from "../components/utils/API";
+import { getAllContacts, searchCurrentUsers } from "../components/utils/API";
 import { RefreshControl } from "react-native-web-refresh-control";
 import { TouchableOpacity } from "react-native-web";
 
@@ -116,7 +107,6 @@ export default class ContactsScreen extends Component {
             />
           </View>
         </View>
-
         <View>
           <FlatList
             refreshControl={
