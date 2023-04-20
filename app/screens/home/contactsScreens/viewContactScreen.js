@@ -21,6 +21,7 @@ import {
   successAlert,
   warningAlert,
 } from "../../../components/utils/errorHandling";
+import { getLanguage, t } from "../../../../locales";
 
 export default class ViewContactScreen extends Component {
   constructor(props) {
@@ -35,6 +36,7 @@ export default class ViewContactScreen extends Component {
   }
 
   componentDidMount() {
+    getLanguage();
     loadKey().then((key) =>
       getProfilePicture(this.props.route.params.item.user_id, key).then(
         (response) => this.setState({ photo: response, isLoading: false })
@@ -46,23 +48,23 @@ export default class ViewContactScreen extends Component {
     console.log(response);
     if (response.status == 200) {
       this.setState({
-        alertMessage: successAlert("The contact has been deleted"),
+        alertMessage: successAlert(t("contactDeleted")),
       });
     } else if (response.status == 400) {
       this.setState({
-        alertMessage: warningAlert("You can´t remove yourself"),
+        alertMessage: warningAlert(t("cantremoveyourself")),
       });
     } else if (response.status == 401) {
       his.setState({
-        alertMessage: warningAlert("You are not authorized"),
+        alertMessage: warningAlert(t("notAuthorized")),
       });
     } else if (response.status == 404) {
       his.setState({
-        alertMessage: warningAlert("User not found"),
+        alertMessage: warningAlert(t("contactNotFound")),
       });
     } else {
       his.setState({
-        alertMessage: errorAlert("Server error"),
+        alertMessage: errorAlert(t("serverError")),
       });
     }
   }
@@ -71,23 +73,23 @@ export default class ViewContactScreen extends Component {
     console.log(response);
     if (response.status == 200) {
       this.setState({
-        alertMessage: successAlert("The contact has been blocked"),
+        alertMessage: successAlert(t("blocked")),
       });
     } else if (response.status == 400) {
       this.setState({
-        alertMessage: warningAlert("Unable to block"),
+        alertMessage: warningAlert(t("unableBlock")),
       });
     } else if (response.status == 401) {
       this.setState({
-        alertMessage: warningAlert("You are not authorized"),
+        alertMessage: warningAlert(t("notAuthorized")),
       });
     } else if (response.status == 404) {
       this.setState({
-        alertMessage: warningAlert("User not found"),
+        alertMessage: warningAlert(t("contactNotFound")),
       });
     } else {
       this.setState({
-        alertMessage: errorAlert("Server error"),
+        alertMessage: errorAlert(t("serverError")),
       });
     }
   }
@@ -108,13 +110,19 @@ export default class ViewContactScreen extends Component {
         <View style={styles.picture}>
           <Image style={styles.myPic} source={this.state.photo} />
         </View>
-        <Text>Name : {contact.first_name}</Text>
-        <Text>Last Name : {contact.last_name}</Text>
+        <Text>
+          {t("FirtName")} : {contact.first_name}
+        </Text>
+        <Text>
+          {t("LastName")} : {contact.last_name}
+        </Text>
         <Text>ID : {contact.user_id}</Text>
-        <Text>Email : {contact.email}</Text>
+        <Text>
+          {t("email")} : {contact.email}
+        </Text>
         <Button
           color="#F93939"
-          title="Delete"
+          title={t("delete")}
           onPress={() =>
             loadKey().then((key) =>
               removeContact(contact.user_id, key).then((response) =>
@@ -124,7 +132,7 @@ export default class ViewContactScreen extends Component {
           }
         />
         <Button
-          title="Block"
+          title={t("block")}
           onPress={() =>
             loadKey().then((key) =>
               blockContact(contact.user_id, key).then((response) =>

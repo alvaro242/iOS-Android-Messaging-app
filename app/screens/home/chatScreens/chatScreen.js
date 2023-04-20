@@ -27,6 +27,7 @@ import {
 } from "../../../components/utils/API";
 import { Menu, Provider } from "react-native-paper";
 import { TouchableOpacity } from "react-native-web";
+import { t } from "../../../../locales";
 
 export default class ChatScreen extends Component {
   constructor(props) {
@@ -204,7 +205,10 @@ export default class ChatScreen extends Component {
             style={styles.inputForm}
           ></TextInput>
           <View style={styles.sendButton}>
-            <Button title="amend" onPress={() => this.AmendMessageHandler()} />
+            <Button
+              title={t("amend")}
+              onPress={() => this.AmendMessageHandler()}
+            />
           </View>
         </View>
       ),
@@ -347,13 +351,13 @@ export default class ChatScreen extends Component {
                     onPress={() => {
                       this.openAmendContainer(this.state.originalMessage);
                     }}
-                    title="Amend"
+                    title={t("amend")}
                   />
                   <Menu.Item
                     onPress={() => {
                       this.handleDeleteMessage();
                     }}
-                    title="Delete"
+                    title={t("delete")}
                   />
                 </Menu>
               </View>
@@ -372,7 +376,10 @@ export default class ChatScreen extends Component {
                 style={styles.inputForm}
               ></TextInput>
               <View style={styles.sendButton}>
-                <Button title="send" onPress={() => this.handleSendMessage()} />
+                <Button
+                  title={t("send")}
+                  onPress={() => this.handleSendMessage()}
+                />
               </View>
             </View>
           </View>

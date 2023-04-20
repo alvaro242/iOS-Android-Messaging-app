@@ -24,6 +24,7 @@ import {
   warningAlert,
 } from "../../../components/utils/errorHandling";
 import { Button } from "native-base";
+import { getLanguage, t } from "../../../../locales";
 
 export default class AddContactScreen extends Component {
   constructor(props) {
@@ -45,15 +46,11 @@ export default class AddContactScreen extends Component {
   handleFeedback(response) {
     console.log(response.status);
 
-    let positiveFeedback = successAlert("The contact has been added");
-    let informativeFeedback = informativeAlert(
-      "You can't add yourself as a contact"
-    );
-    let warningFeedback401 = warningAlert("You are not authorized");
-    let warningFeedbackAlready = warningAlert(
-      "It seems this is already a contact!"
-    );
-    let warningFeedback404 = warningAlert("The contact has not been found");
+    let positiveFeedback = successAlert(t("contactAdded"));
+    let informativeFeedback = informativeAlert(t("addYourself"));
+    let warningFeedback401 = warningAlert(t("notAuthorized"));
+    let warningFeedbackAlready = warningAlert(t("alreadyAContact"));
+    let warningFeedback404 = warningAlert(t("contactNotFound"));
 
     if (response.status == 200) {
       //it seems like api returns 200 when already a contact so this will handle that response as an
@@ -86,6 +83,7 @@ export default class AddContactScreen extends Component {
   }
 
   componentDidMount() {
+    getLanguage();
     loadKey().then((key) =>
       getAllContacts(key).then((responseJson) =>
         this.setState({
@@ -131,11 +129,9 @@ export default class AddContactScreen extends Component {
     this.setState({
       isLoading: false,
       NewUsers: results,
-      NoteForUser: informativeAlert(
-        "Note: Friends that are already your friends won't appear here"
-      ),
+      NoteForUser: informativeAlert(t("yourFriendsWontAppear")),
       clearText: (
-        <Button onPress={() => this.clearSearch()}>Clear Search</Button>
+        <Button onPress={() => this.clearSearch()}>{t("clearSearch")}</Button>
       ),
     });
 
@@ -165,7 +161,7 @@ export default class AddContactScreen extends Component {
           <TextInput
             style={styles.inputInsertID}
             name="friendID"
-            placeholder="Insert ID"
+            placeholder={t("insertID")}
             onChange={this.IDChangeHandler}
             keyboardType={"number-pad"}
           />
@@ -179,24 +175,26 @@ export default class AddContactScreen extends Component {
                 )
               }
             >
-              Add Friend
+              {t("addContact")}
             </Button>
           </View>
         </View>
         <View style={styles.searchText}>
-          <Text>Or search by Name, Last Name or Email:</Text>
+          <Text>{t("otherSearchMethods")}</Text>
         </View>
 
         <View style={styles.searchContactsContainer}>
           <TextInput
             style={styles.inputSearch}
             name="Search"
-            placeholder="Search Contacts"
+            placeholder={t("searchContacts")}
             onChange={this.SearchChangeHandler}
             keyboardType="text"
           />
           <View style={styles.submitButton}>
-            <Button onPress={() => this.searchNewContacts()}>Search</Button>
+            <Button onPress={() => this.searchNewContacts()}>
+              {t("search")}
+            </Button>
           </View>
         </View>
 
@@ -217,7 +215,7 @@ export default class AddContactScreen extends Component {
                     )
                   }
                 >
-                  Add Contact
+                  {t("addContact")}
                 </Button>
               </View>
             </View>

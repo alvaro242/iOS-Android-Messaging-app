@@ -21,6 +21,7 @@ import {
   errorAlert,
   informativeAlert,
 } from "../../../components/utils/errorHandling";
+import { t } from "../../../../locales";
 
 export default class AddNewMemberScreen extends Component {
   constructor(props) {
@@ -78,20 +79,14 @@ export default class AddNewMemberScreen extends Component {
     this.setState({
       isLoading: false,
       NewPossibleMembers: results,
-      NoteForUser: (
-        <View>
-          {informativeAlert(
-            "Note: Friends that are already members won't appear here."
-          )}
-        </View>
-      ),
+      NoteForUser: <View>{informativeAlert(t("membersWontAppear"))}</View>,
       clearText: (
         <Button
           onPress={() => {
             this.clearSearch();
           }}
         >
-          Clear Search
+          {t("clearSearch")}
         </Button>
       ),
     });
@@ -104,7 +99,7 @@ export default class AddNewMemberScreen extends Component {
 
     if (response.status == 200) {
       this.setState({
-        alertMessage: successAlert("The user has been added"),
+        alertMessage: successAlert(t("contactAdded")),
       });
     } else if (
       response.status == 400 ||
@@ -113,11 +108,11 @@ export default class AddNewMemberScreen extends Component {
       response.status == 404
     ) {
       this.setState({
-        alertMessage: warningAlert("The user can´t be added"),
+        alertMessage: warningAlert(t("unableAdd")),
       });
     } else {
       this.setState({
-        alertMessage: errorAlert("Error. Unable to add this user as a member"),
+        alertMessage: errorAlert(t("unableAdd")),
       });
     }
   }
@@ -153,12 +148,14 @@ export default class AddNewMemberScreen extends Component {
           <TextInput
             style={styles.inputSearch}
             name="Search"
-            placeholder="Search Contacts"
+            placeholder={t("searchContacts")}
             onChange={this.SearchChangeHandler}
             keyboardType="text"
           />
           <View style={styles.submitButton}>
-            <Button onPress={() => this.loadContactsNotInChat()}>Search</Button>
+            <Button onPress={() => this.loadContactsNotInChat()}>
+              {t("search")}
+            </Button>
           </View>
         </View>
 
@@ -179,7 +176,7 @@ export default class AddNewMemberScreen extends Component {
               </TouchableOpacity>
               <View style={styles.submitButton}>
                 <Button onPress={() => this.addMember(item.user_id)}>
-                  Add Member
+                  {t("addMember")}
                 </Button>
               </View>
             </View>

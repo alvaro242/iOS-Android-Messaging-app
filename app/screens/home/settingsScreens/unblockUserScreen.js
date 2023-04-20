@@ -33,35 +33,31 @@ export default class UnblockUserScreen extends Component {
   }
 
   componentDidMount() {
-    getLanguage();
-    loadKey().then((key) =>
-      getProfilePicture(this.props.route.params.item.user_id, key).then(
-        (response) => this.setState({ photo: response, isLoading: false })
-      )
-    );
+    getLanguage() &
+      loadKey().then((key) =>
+        getProfilePicture(this.props.route.params.item.user_id, key).then(
+          (response) => this.setState({ photo: response, isLoading: false })
+        )
+      );
   }
 
   handleFeedbackDelete(response) {
     console.log(response);
     if (response.status == 200) {
       this.setState({
-        alertMessage: successAlert("The contact has been deleted"),
+        alertMessage: successAlert(t("contactDeleted")),
       });
-    } else if (response.status == 400) {
+    } else if (
+      rresponse.status == 400 ||
+      response.status == 401 ||
+      response.status == 404
+    ) {
       this.setState({
-        alertMessage: warningAlert("You can´t remove yourself"),
-      });
-    } else if (response.status == 401) {
-      his.setState({
-        alertMessage: warningAlert("You are not authorized"),
-      });
-    } else if (response.status == 404) {
-      his.setState({
-        alertMessage: warningAlert("User not found"),
+        alertMessage: warningAlert(t("cantDelete")),
       });
     } else {
       his.setState({
-        alertMessage: errorAlert("Server error"),
+        alertMessage: errorAlert(t("serverError")),
       });
     }
   }
@@ -70,21 +66,19 @@ export default class UnblockUserScreen extends Component {
     console.log(response);
     if (response.status == 200) {
       this.setState({
-        alertMessage: successAlert("The contact has been unblocked"),
+        alertMessage: successAlert(t("unblocked")),
       });
     } else if (
       response.status == 400 ||
-      response.status == 400 ||
+      response.status == 401 ||
       response.status == 404
     ) {
       this.setState({
-        alertMessage: warningAlert("Unable to process the unblock action"),
+        alertMessage: warningAlert(t("unableUnblock")),
       });
     } else {
       this.setState({
-        alertMessage: errorAlert(
-          "Server error. Please try again later or try with a different user"
-        ),
+        alertMessage: errorAlert(t("serverError")),
       });
     }
   }
@@ -105,13 +99,19 @@ export default class UnblockUserScreen extends Component {
         <View style={styles.picture}>
           <Image style={styles.myPic} source={this.state.photo} />
         </View>
-        <Text>Name : {contact.first_name}</Text>
-        <Text>Last Name : {contact.last_name}</Text>
+        <Text>
+          {t("FirtName")} : {contact.first_name}
+        </Text>
+        <Text>
+          {t("LastName")} : {contact.last_name}
+        </Text>
         <Text>ID : {contact.user_id}</Text>
-        <Text>Email : {contact.email}</Text>
+        <Text>
+          {t("email")} : {contact.email}
+        </Text>
         <Button
           color="#F93939"
-          title="Delete"
+          title={t("delete")}
           onPress={() =>
             loadKey().then((key) =>
               removeContact(contact.user_id, key)
@@ -121,7 +121,7 @@ export default class UnblockUserScreen extends Component {
           }
         />
         <Button
-          title="Unblock"
+          title={t("unblock")}
           onPress={() =>
             loadKey().then((key) =>
               unblockContact(contact.user_id, key)

@@ -3,6 +3,7 @@ import { View, Text, Image, Button } from "react-native";
 import { styles } from "../../../components/Styles/customStyle";
 import { loadKeyAndID } from "../../../components/utils/utils";
 import { uploadProfilePic } from "../../../components/utils/API";
+import { t } from "../../../../locales";
 
 export default class ConfirmPhotoScreen extends Component {
   constructor(props) {
@@ -31,15 +32,13 @@ export default class ConfirmPhotoScreen extends Component {
           style={styles.myPic}
           source={this.props.route.params.photoData.uri}
         />
-        <Text>
-          Would you like to replace your current profile picture to this one?
-        </Text>
+        <Text>{t("confirmTheNewPicture")}</Text>
         <Button
           color="#F93939"
           title="No"
           onPress={() => this.props.navigation.navigate("AccountScreen")}
         />
-        <Button title="Yes" onPress={() => this.handleSubmission()} />
+        <Button title={t("yes")} onPress={() => this.handleSubmission()} />
       </View>
     );
   }

@@ -9,6 +9,7 @@ import {
   warningAlert,
 } from "../../../components/utils/errorHandling";
 import { Button } from "native-base";
+import { getLanguage, t } from "../../../../locales";
 
 export default class CreateChatScreen extends Component {
   constructor(props) {
@@ -29,21 +30,25 @@ export default class CreateChatScreen extends Component {
   handleFeedback(response) {
     if (response.status == 201) {
       this.setState({
-        alertMessage: successAlert("The conversation has been created"),
+        alertMessage: successAlert(t("conversationCreated")),
       });
     } else if (response.status == 400) {
       this.setState({
-        alertMessage: warningAlert("Unable to create the conversation"),
+        alertMessage: warningAlert(t("unableCreate")),
       });
     } else if (response.status == 401) {
       this.setState({
-        alertMessage: warningAlert("You are not authorized"),
+        alertMessage: warningAlert(t("notAuthorized")),
       });
     } else {
       this.setState({
-        alertMessage: errorAlert("Server error"),
+        alertMessage: errorAlert(t("serverError")),
       });
     }
+  }
+
+  componentDidMount() {
+    getLanguage();
   }
 
   render() {
@@ -55,7 +60,7 @@ export default class CreateChatScreen extends Component {
           maxLength={50}
           style={styles.inputForm}
           name="ConversationTItle"
-          placeholder="Title of the conversation"
+          placeholder={t("titleOfConversation")}
           onChange={this.TitleChangeHandler}
           keyboardType={"Text"}
         />
@@ -69,7 +74,7 @@ export default class CreateChatScreen extends Component {
               )
             }
           >
-            Create Conversation
+            {t("createConversation")}
           </Button>
         </View>
         {this.state.alertMessage}

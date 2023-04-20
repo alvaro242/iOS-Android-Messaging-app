@@ -18,6 +18,7 @@ import {
   warningAlert,
   errorAlert,
 } from "../../../components/utils/errorHandling";
+import { getLanguage, t } from "../../../../locales";
 
 export default class ChangePassword extends Component {
   constructor(props) {
@@ -30,6 +31,7 @@ export default class ChangePassword extends Component {
   }
 
   componentDidMount() {
+    getLanguage();
     loadKeyAndID().then((result) => this.setState({ keyAndId: result })); //keyid will be an array with key and ID
   }
 
@@ -37,7 +39,7 @@ export default class ChangePassword extends Component {
     console.log(response);
     if (response.status == 200) {
       this.setState({
-        alertMessage: successAlert("The password has been amended"),
+        alertMessage: successAlert(t("passwordAmended")),
       });
     } else if (
       response.status == 400 ||
@@ -46,13 +48,11 @@ export default class ChangePassword extends Component {
       response.status == 404
     ) {
       this.setState({
-        alertMessage: warningAlert(
-          "The password hasn´t been amended. Please try again and make sure is in the correct format"
-        ),
+        alertMessage: warningAlert(t("passwordNotAmended")),
       });
     } else {
       his.setState({
-        alertMessage: errorAlert("Unable to process the amendment"),
+        alertMessage: errorAlert(t("passwordAmendmentError")),
       });
     }
   }
@@ -102,7 +102,7 @@ export default class ChangePassword extends Component {
             <>
               <TextInput
                 name="password"
-                placeholder="Password"
+                placeholder={t("password")}
                 style={styles.inputForm}
                 onChangeText={handleChange("password")}
                 onBlur={handleBlur("password")}
@@ -113,7 +113,7 @@ export default class ChangePassword extends Component {
               )}
               <TextInput
                 name="confirmPassword"
-                placeholder="Confirm Password"
+                placeholder={t("confirmpassword")}
                 style={styles.inputForm}
                 onChangeText={handleChange("confirmPassword")}
                 onBlur={handleBlur("confirmPassword")}
@@ -125,7 +125,7 @@ export default class ChangePassword extends Component {
 
               <Button
                 onPress={handleSubmit}
-                title="Update password"
+                title={t("updatePassword")}
                 disabled={!isValid}
               />
             </>

@@ -109,7 +109,7 @@ export default class App extends Component {
                 name="blockedUsersScreen"
                 component={blockedUsersScreen}
                 options={{
-                  title: t("blokedUsers"),
+                  title: t("blockedUsers"),
                   headerShown: true,
                   gestureEnabled: true,
                 }}

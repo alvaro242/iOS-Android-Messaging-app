@@ -1,14 +1,3 @@
-import {
-  StyleSheet,
-  Icon,
-  Text,
-  View,
-  Button,
-  Image,
-  TextInput,
-} from "react-native";
-import { t, getLanguage } from "../../locales";
-
 import { createBottomTabNavigator } from "@react-navigation/bottom-tabs";
 import ChatsScreen from "./home/ChatsScreen";
 import AccountScreen from "./home/AccountScreen";
@@ -19,6 +8,7 @@ import React, { Component } from "react";
 
 import { logOut } from "../components/utils/API";
 import { loadKey } from "../components/utils/utils";
+import { getLanguage, t } from "../../locales";
 
 const HomeTab = createBottomTabNavigator();
 
@@ -164,42 +154,3 @@ export default class HomeScreen extends Component {
     );
   }
 }
-
-const styles = StyleSheet.create({
-  container: {
-    justifyContent: "center",
-    alignItems: "center",
-    //backgroundColor: "white",
-  },
-  logo: {
-    width: 60,
-    height: 45,
-    margin: 10,
-  },
-  logoContainer: {
-    alignItems: "center",
-  },
-  formContainer: {
-    width: "80%",
-    alignItems: "center",
-    backgroundColor: "white",
-    padding: 10,
-    elevation: 10,
-  },
-
-  input: {
-    height: 50,
-    padding: 10,
-    width: "90%",
-    margin: 10,
-    backgroundColor: "white",
-    borderColor: "gray",
-    borderWidth: StyleSheet.hairlineWidth,
-    borderRadius: 10,
-  },
-
-  error: {
-    fontSize: 14,
-    color: "red",
-  },
-});

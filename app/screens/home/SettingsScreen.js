@@ -27,7 +27,7 @@ export default class SettingsScreen extends Component {
               this.props.navigation.navigate("blockedUsersScreen");
             }}
           >
-            {t("blokedUsers")}
+            {t("blockedUsers")}
           </Text>
         </View>
       </ScrollView>

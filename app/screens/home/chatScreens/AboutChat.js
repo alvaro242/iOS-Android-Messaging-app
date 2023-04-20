@@ -24,6 +24,7 @@ import {
   successAlert,
   warningAlert,
 } from "../../../components/utils/errorHandling";
+import { getLanguage, t } from "../../../../locales";
 
 export default class AboutChat extends Component {
   constructor(props) {
@@ -46,6 +47,7 @@ export default class AboutChat extends Component {
 
   componentDidMount() {
     const subscription = this.props.navigation.addListener("focus", () => {
+      getLanguage();
       this.getData();
     });
     return () => {
@@ -70,7 +72,7 @@ export default class AboutChat extends Component {
 
     if (response.status == 200) {
       this.setState({
-        alertMessage: successAlert("The name has been changed."),
+        alertMessage: successAlert(t("nameChanged")),
       });
     } else if (
       response.status == 400 ||
@@ -78,13 +80,11 @@ export default class AboutChat extends Component {
       response.status == 404
     ) {
       this.setState({
-        alertMessage: warningAlert("The name can´t be changed"),
+        alertMessage: warningAlert(t("nameCantBeChanged")),
       });
     } else {
       this.setState({
-        alertMessage: errorAlert(
-          "The server is not available. Please try it again later"
-        ),
+        alertMessage: errorAlert(t("serverError")),
       });
     }
   }
@@ -94,7 +94,7 @@ export default class AboutChat extends Component {
 
     if (response.status == 200) {
       this.setState({
-        alertMessage: successAlert("The user has been deleted from the chat."),
+        alertMessage: successAlert(t("removedFromChat")),
       });
     } else if (
       response.status == 400 ||
@@ -103,11 +103,11 @@ export default class AboutChat extends Component {
       response.status == 404
     ) {
       this.setState({
-        alertMessage: warningAlert("This user can´t be removed"),
+        alertMessage: warningAlert(t("cantBeRemovedFromChat")),
       });
     } else {
       this.setState({
-        alertMessage: errorAlert("The member removal failed"),
+        alertMessage: errorAlert(t("removalFailed")),
       });
     }
   }
@@ -195,14 +195,17 @@ export default class AboutChat extends Component {
         <View>
           <View>
             <Text>
-              Created by: {creator.first_name} {creator.last_name}
+              {t("createdBy")} {creator.first_name} {creator.last_name}
             </Text>
-            <Text>Total of messages:{chatDetails.messages.length}</Text>
+            <Text>
+              {t("totalMessages")}
+              {chatDetails.messages.length}
+            </Text>
           </View>
 
           <View style={styles.searchContactsContainer}>
             <View style={styles.chatTitle}>
-              <Text>Title: </Text>
+              <Text>{t("title")} </Text>
             </View>
             <TextInput
               style={styles.inputSearch}
@@ -213,7 +216,7 @@ export default class AboutChat extends Component {
             />
             <View style={styles.submitButton}>
               <Button
-                title="Amend"
+                title={t("amend")}
                 onPress={() =>
                   updateChatName(this.state.newTitle, chat_id, this.state.key)
                     .then((response) =>
@@ -227,7 +230,7 @@ export default class AboutChat extends Component {
         </View>
         <View style={styles.membersContainer}>
           <View style={styles.membersListHeader}>
-            <Text>Members: </Text>
+            <Text>{t("members")} </Text>
             <View>
               <TouchableOpacity
                 onPress={() => {
@@ -281,7 +284,7 @@ export default class AboutChat extends Component {
             ) & this.props.navigation.navigate("Chats");
           }}
         >
-          <Text>Abandon Chat</Text>
+          <Text>{t("abandonChat")}</Text>
         </TouchableOpacity>
         {this.state.alertMessage}
       </View>
