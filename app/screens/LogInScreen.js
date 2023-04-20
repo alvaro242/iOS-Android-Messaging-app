@@ -4,10 +4,33 @@ import * as yup from "yup";
 import { styles } from "./../components/Styles/customStyle";
 import { logIn } from "../components/utils/API";
 import React, { Component } from "react";
+import { warningAlert } from "../components/utils/errorHandling";
+import { NativeBaseProvider } from "native-base";
 
 export default class LogInScreen extends Component {
   constructor(props) {
     super(props);
+
+    this.state = {
+      alertMessage: "",
+    };
+  }
+
+  handleFeedback(response) {
+    console.log(response.status);
+    let warningFeedback400 = warningAlert("Invalid email or password");
+
+    if (response.status == 200) {
+      this.props.navigation.navigate("HomeScreen");
+    } else if (response.status == 400) {
+      this.setState({
+        alertMessage: warningFeedback400,
+      });
+    } else {
+      this.setState({
+        alertMessage: warningFeedback400,
+      });
+    }
   }
 
   render() {
@@ -36,7 +59,11 @@ export default class LogInScreen extends Component {
           <Formik
             validationSchema={loginValidationSchema}
             initialValues={{ email: "", password: "" }}
-            onSubmit={(values) => logIn(values)}
+            onSubmit={(values) =>
+              logIn(values)
+                .then((response) => this.handleFeedback(response))
+                .catch((error) => this.handleFeedback(error))
+            }
           >
             {({
               handleChange,
@@ -82,6 +109,7 @@ export default class LogInScreen extends Component {
             )}
           </Formik>
         </View>
+        <NativeBaseProvider>{this.state.alertMessage}</NativeBaseProvider>
       </View>
     );
   }

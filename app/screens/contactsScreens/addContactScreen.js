@@ -17,7 +17,13 @@ import {
   searchBetweenAllUsers,
   getAllContacts,
 } from "../../components/utils/API";
-
+import {
+  informativeAlert,
+  errorAlert,
+  successAlert,
+  warningAlert,
+} from "../../components/utils/errorHandling";
+import { NativeBaseProvider } from "native-base";
 export default class AddContactScreen extends Component {
   constructor(props) {
     super(props);
@@ -31,7 +37,51 @@ export default class AddContactScreen extends Component {
       clearText: "",
       NoteForUser: "",
       isLoading: false,
+      alertMessage: "",
     };
+  }
+
+  handleFeedback(response) {
+    let positiveFeedback = successAlert("The contact has been added");
+    let informativeFeedback = informativeAlert(
+      "You can't add yourself as a contact"
+    );
+    let warningFeedback401 = warningAlert("You are not authorized");
+    let warningFeedbackAlready = warningAlert(
+      "It seems this is already a contact!"
+    );
+    let warningFeedback404 = warningAlert("The contact has not been found");
+
+    let errorFeedback = errorAlert("Server error. Please try it later");
+
+    if (response.status == 200) {
+      //it seems like api returns 200 when already a contact so this will handle that response as an
+      if (response.data === "Already a contact") {
+        this.setState({
+          alertMessage: warningFeedbackAlready,
+        });
+      } else {
+        this.setState({
+          alertMessage: positiveFeedback,
+        });
+      }
+    } else if (response.status == 400) {
+      this.setState({
+        alertMessage: informativeFeedback,
+      });
+    } else if (response.status == 401) {
+      this.setState({
+        alertMessage: warningFeedback401,
+      });
+    } else if (response.status == 404) {
+      this.setState({
+        alertMessage: warningFeedback404,
+      });
+    } else {
+      this.setState({
+        alertMessage: errorFeedback,
+      });
+    }
   }
 
   componentDidMount() {
@@ -119,7 +169,11 @@ export default class AddContactScreen extends Component {
             <Button
               title="Add Friend"
               onPress={() =>
-                loadKey().then((key) => addFriend(this.state.friendID, key))
+                loadKey().then((key) =>
+                  addFriend(this.state.friendID, key)
+                    .then((response) => this.handleFeedback(response))
+                    .catch((error) => this.handleFeedback(error))
+                )
               }
             />
           </View>
@@ -152,7 +206,11 @@ export default class AddContactScreen extends Component {
                 <Button
                   title="Add Contact  "
                   onPress={() =>
-                    loadKey().then((key) => addFriend(item.user_id, key))
+                    loadKey().then((key) =>
+                      addFriend(item.user_id, key)
+                        .then((response) => this.handleFeedback(response))
+                        .catch((error) => this.handleFeedback(error))
+                    )
                   }
                 />
               </View>
@@ -169,6 +227,7 @@ export default class AddContactScreen extends Component {
         >
           {this.state.clearText}
         </Text>
+        <NativeBaseProvider>{this.state.alertMessage}</NativeBaseProvider>
       </ScrollView>
     );
   }

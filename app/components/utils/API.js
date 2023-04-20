@@ -7,8 +7,7 @@ let serverIP = "localhost:3333";
 
 export function registerUser(values) {
   let url = "http://" + serverIP + "/api/1.0.0/user/";
-  console.log(values);
-  fetch(url, {
+  return fetch(url, {
     method: "POST",
     headers: {
       "Content-Type": "application/json",
@@ -18,20 +17,13 @@ export function registerUser(values) {
   })
     .then((response) => {
       //returns user ID on response.data.user_id, pending autologin
-      console.log(response.status);
-      //if response 201 I should make a logged in.
 
-      if (response.status == 201) {
-        RootNavigation.navigate("LogInScreen");
-        // or go to root
-        // pending: auto-login
-      } else {
-        console.log(response);
-      }
+      return response;
     })
     .catch((error) => {
       //Error handling pending
-      console.log(error);
+
+      return error;
     });
 } //validation on front end
 
@@ -72,7 +64,7 @@ export function UpdateUserInformation(values, userID, token) {
 export function logIn(values) {
   let url = "http://" + serverIP + "/api/1.0.0/login/";
 
-  fetch(url, {
+  return fetch(url, {
     method: "POST",
     headers: {
       "Content-Type": "application/json",
@@ -81,6 +73,7 @@ export function logIn(values) {
     body: JSON.stringify(values),
   })
     .then(async (response) => {
+      let responseToReturn = response;
       const responseJson = await response.json();
 
       try {
@@ -92,14 +85,14 @@ export function logIn(values) {
           "whatsthat_session_token",
           responseJson.token
         );
-        RootNavigation.navigate("HomeScreen");
       } catch (error) {
         throw error;
       }
+      return responseToReturn;
     })
 
     .catch((error) => {
-      console.log(error);
+      return error;
     });
 }
 
@@ -241,7 +234,7 @@ export function getAllContacts(token) {
 export function addFriend(friendID, authKey) {
   let url = "http://" + serverIP + "/api/1.0.0/user/" + friendID + "/contact";
 
-  axios
+  return axios
     .post(
       url,
       {},
@@ -255,29 +248,12 @@ export function addFriend(friendID, authKey) {
       //returns user ID on response.data.user_id, pending autologin
       //if response 201 I should make a logged in.
 
-      if (response.status == 200) {
-        if (response.data === "Already a contact") {
-          console.log("Already a contact");
-        } else {
-          alert("Contact added");
-        }
-      } else {
-        //show error informing about error from API
-      }
+      return response;
     })
     .catch((error) => {
       //Error handling pending
-      console.log(error);
 
-      if (error.response.status == 401) {
-        console.log("not auth");
-      } else if (error.response.status == 400) {
-        console.log("You can´t add yourself as a contact");
-      } else if (error.response.status == 404) {
-        console.log("This friend ID doesn´t exist");
-      } else {
-        console.log("Error.  try again  later");
-      }
+      return error;
     });
 }
 

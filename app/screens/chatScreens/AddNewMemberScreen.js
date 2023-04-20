@@ -15,6 +15,7 @@ import {
   addNewMemberToChat,
 } from "../../components/utils/API";
 import { styles } from "../../components/Styles/customStyle";
+import { informativeAlert } from "../../components/utils/errorHandling";
 
 export default class AddNewMemberScreen extends Component {
   constructor(props) {
@@ -30,6 +31,7 @@ export default class AddNewMemberScreen extends Component {
     };
   }
   componentDidMount() {
+    this.setState({ alert: informativeAlert("hola") });
     loadKey().then(
       (key) =>
         this.setState({ key: key }) &

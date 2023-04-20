@@ -50,7 +50,6 @@ export default class StartScreen extends Component {
         <TouchableHighlight
           style={styles.loginContainer}
           onPress={() => {
-            console.log("Login Button!");
             navigation.push("LogInScreen");
           }}
         >
@@ -59,7 +58,6 @@ export default class StartScreen extends Component {
         <TouchableHighlight
           style={styles.signupContainer}
           onPress={() => {
-            console.log("Sign Up Button!");
             navigation.push("SignUpScreen");
           }}
         >

@@ -14,3 +14,4 @@ ChatScreen - loading the conversation. For the style I created a function that c
 I imported a menu from a framework called react paper. 
 Then I play a bit with the states so on Amend tap an invisible amend container appears with the content of the message. This disappears after I press the X or Amend
 The time of the last message is quite cool as I made a function to convert the timestamp a date and it returns a different thing depending on that time being more than 7 days ago, within this week or within this day. 
+NativeBase used for alert messages // feedback from api
