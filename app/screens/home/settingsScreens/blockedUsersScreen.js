@@ -11,6 +11,7 @@ import {
 import { styles } from "../../../components/Styles/customStyle";
 import { loadKey } from "../../../components/utils/utils";
 import { getBlockedContacts } from "../../../components/utils/API";
+import { getLanguage, t } from "../../../../locales";
 
 export default class BlockedUsersScreen extends Component {
   constructor(props) {
@@ -24,6 +25,7 @@ export default class BlockedUsersScreen extends Component {
 
   componentDidMount() {
     const subscription = this.props.navigation.addListener("focus", () => {
+      getLanguage();
       this.getData();
     });
     return () => {

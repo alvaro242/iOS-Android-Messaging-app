@@ -7,6 +7,7 @@ import {
   Image,
   TextInput,
 } from "react-native";
+import { t, getLanguage } from "../../locales";
 
 import { createBottomTabNavigator } from "@react-navigation/bottom-tabs";
 import ChatsScreen from "./home/ChatsScreen";
@@ -24,6 +25,10 @@ const HomeTab = createBottomTabNavigator();
 export default class HomeScreen extends Component {
   constructor(props) {
     super(props);
+  }
+
+  componentDidMount() {
+    getLanguage();
   }
 
   render() {
@@ -52,7 +57,8 @@ export default class HomeScreen extends Component {
           name="Contacts"
           component={ContactsScreen}
           options={{
-            tabBarLabel: "Contacts",
+            tabBarLabel: t("contacts"),
+            title: t("contacts"),
             headerShown: true,
             tabBarIcon: ({ color, size }) => (
               <MaterialCommunityIcons
@@ -80,7 +86,7 @@ export default class HomeScreen extends Component {
           name="Chats"
           component={ChatsScreen}
           options={{
-            tabBarLabel: "Chats",
+            tabBarLabel: t("chats"),
             headerShown: true,
             tabBarIcon: ({ color, size }) => (
               <MaterialCommunityIcons name="chat" color={color} size={size} />
@@ -105,8 +111,8 @@ export default class HomeScreen extends Component {
           name="AccountScreen"
           component={AccountScreen}
           options={{
-            title: "My Account",
-            tabBarLabel: "Account",
+            title: t("myAccount"),
+            tabBarLabel: t("account"),
             headerShown: true,
             tabBarIcon: ({ color, size }) => (
               <MaterialCommunityIcons
@@ -134,8 +140,8 @@ export default class HomeScreen extends Component {
           name="SettingsScreen"
           component={SettingsScreen}
           options={{
-            title: "Settings",
-            tabBarLabel: "Settings",
+            title: t("settings"),
+            tabBarLabel: t("settings"),
             headerShown: true,
             tabBarIcon: ({ color, size }) => (
               <MaterialCommunityIcons name="cog" color={color} size={size} />

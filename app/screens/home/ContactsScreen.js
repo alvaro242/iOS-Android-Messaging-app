@@ -20,6 +20,7 @@ import { loadKey } from "../../components/utils/utils";
 import { getAllContacts, searchCurrentUsers } from "../../components/utils/API";
 import { RefreshControl } from "react-native-web-refresh-control";
 import { TouchableOpacity } from "react-native-web";
+import { t, getLanguage } from "../../../locales";
 
 export default class ContactsScreen extends Component {
   constructor(props) {
@@ -38,6 +39,7 @@ export default class ContactsScreen extends Component {
   }
 
   componentDidMount() {
+    getLanguage();
     loadKey().then((key) =>
       getAllContacts(key).then((responseJson) =>
         this.setState({
@@ -77,7 +79,7 @@ export default class ContactsScreen extends Component {
           contactsData: responseJson,
           isLoading: false,
           clearFilter: (
-            <Button onPress={() => this.refresh()}>Clear search</Button>
+            <Button onPress={() => this.refresh()}>{t("clearSearch")}</Button>
           ),
         })
       );
@@ -97,8 +99,8 @@ export default class ContactsScreen extends Component {
         <View style={styles.searchContactsContainer}>
           <TextInput
             style={styles.inputSearch}
-            name="Search"
-            placeholder="Search Contacts"
+            name={t("search")}
+            placeholder={t("searchContacts")}
             onChange={this.changeHandler}
             keyboardType="text"
           />
@@ -107,7 +109,7 @@ export default class ContactsScreen extends Component {
               variant="outline"
               onPress={() => this.showFilteredContacts()}
             >
-              Search
+              {t("search")}
             </Button>
           </View>
         </View>

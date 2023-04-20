@@ -12,6 +12,7 @@ import {
 } from "../components/utils/errorHandling";
 import { NativeBaseProvider } from "native-base";
 import { TouchableOpacity } from "react-native";
+import { t, getLanguage } from "../../locales";
 
 export default class SignUpScreen extends Component {
   constructor(props) {
@@ -22,7 +23,9 @@ export default class SignUpScreen extends Component {
     };
   }
 
-  componentDidMount() {}
+  componentDidMount() {
+    getLanguage();
+  }
 
   handleFeedback(response) {
     let positiveFeedback = successAlert(
@@ -77,7 +80,7 @@ export default class SignUpScreen extends Component {
             />
           </View>
           <View style={styles.formContainerSignUp}>
-            <Text>Create a new account</Text>
+            <Text>{t("CreateAccount")}</Text>
             <Formik
               validationSchema={signUpvalidationSchema}
               initialValues={{
@@ -105,7 +108,7 @@ export default class SignUpScreen extends Component {
                 <>
                   <TextInput
                     name="first_name"
-                    placeholder="First Name"
+                    placeholder={t("FirtName")}
                     style={styles.inputForm}
                     onChangeText={handleChange("first_name")}
                     onBlur={handleBlur("first_name")}
@@ -117,7 +120,7 @@ export default class SignUpScreen extends Component {
                   )}
                   <TextInput
                     name="last_name"
-                    placeholder="Last Name"
+                    placeholder={t("LastName")}
                     style={styles.inputForm}
                     onChangeText={handleChange("last_name")}
                     onBlur={handleBlur("last_name")}
@@ -129,7 +132,7 @@ export default class SignUpScreen extends Component {
                   )}
                   <TextInput
                     name="email"
-                    placeholder="Email Address"
+                    placeholder={t("email")}
                     autoCapitalize="none"
                     style={styles.inputForm}
                     onChangeText={handleChange("email")}
@@ -142,7 +145,7 @@ export default class SignUpScreen extends Component {
                   )}
                   <TextInput
                     name="password"
-                    placeholder="Password"
+                    placeholder={t("password")}
                     style={styles.inputForm}
                     onChangeText={handleChange("password")}
                     onBlur={handleBlur("password")}
@@ -154,7 +157,7 @@ export default class SignUpScreen extends Component {
                   )}
                   <TextInput
                     name="confirmPassword"
-                    placeholder="Confirm Password"
+                    placeholder={t("confirmpassword")}
                     style={styles.inputForm}
                     onChangeText={handleChange("confirmPassword")}
                     onBlur={handleBlur("confirmPassword")}
@@ -169,7 +172,7 @@ export default class SignUpScreen extends Component {
 
                   <Button
                     onPress={handleSubmit}
-                    title="Sign Up"
+                    title={t("SignUp")}
                     disabled={!isValid}
                   />
                 </>

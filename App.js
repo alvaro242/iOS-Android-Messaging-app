@@ -20,12 +20,17 @@ import ChatScreen from "./app/screens/home/chatScreens/chatScreen";
 import CreateChatScreen from "./app/screens/home/chatScreens/CreateChatScreen";
 import AboutChat from "./app/screens/home/chatScreens/AboutChat";
 import { NativeBaseProvider } from "native-base";
+import { t, getLanguage } from "./locales/";
 
 const Stack = createNativeStackNavigator();
 
 export default class App extends Component {
   constructor(props) {
     super(props);
+  }
+
+  componentDidMount() {
+    getLanguage();
   }
 
   /*
@@ -57,7 +62,7 @@ export default class App extends Component {
               <Stack.Screen
                 name="StartScreen"
                 component={StartScreen}
-                options={{ title: "Welcome", headerShown: false }}
+                options={{ title: "welcome", headerShown: false }}
               />
               <Stack.Screen
                 name="HomeScreen"
@@ -71,20 +76,20 @@ export default class App extends Component {
               <Stack.Screen
                 name="LogInScreen"
                 component={LogInScreen}
-                options={{ title: "Log In" }}
+                options={{ title: t("LogIn") }}
               />
 
               <Stack.Screen
                 name="SignUpScreen"
                 component={SignUpScreen}
-                options={{ title: "Sign Up" }}
+                options={{ title: t("SignUp") }}
               />
 
               <Stack.Screen
                 name="addContactScreen"
                 component={addContactScreen}
                 options={{
-                  title: "Add Contact",
+                  title: t("addContact"),
                   headerShown: true,
                   gestureEnabled: true,
                 }}
@@ -94,7 +99,7 @@ export default class App extends Component {
                 name="viewContactScreen"
                 component={viewContactScreen}
                 options={{
-                  title: "Contact",
+                  title: t("contact"),
                   headerShown: true,
                   gestureEnabled: true,
                 }}
@@ -104,7 +109,7 @@ export default class App extends Component {
                 name="blockedUsersScreen"
                 component={blockedUsersScreen}
                 options={{
-                  title: "Blocked Users",
+                  title: t("blokedUsers"),
                   headerShown: true,
                   gestureEnabled: true,
                 }}
@@ -114,7 +119,7 @@ export default class App extends Component {
                 name="unblockUserScreen"
                 component={unblockUserScreen}
                 options={{
-                  title: "Blocked User",
+                  title: t("blockedUser"),
                   headerShown: true,
                   gestureEnabled: true,
                 }}
@@ -123,7 +128,7 @@ export default class App extends Component {
                 name="ChangePassword"
                 component={ChangePassword}
                 options={{
-                  title: "Change Password",
+                  title: t("changePassword"),
                   headerShown: true,
                   gestureEnabled: true,
                 }}
@@ -132,7 +137,7 @@ export default class App extends Component {
                 name="CameraComponent"
                 component={CameraComponent}
                 options={{
-                  title: "Take a new profile pic",
+                  title: t("takeAPic"),
                   headerShown: true,
                   gestureEnabled: true,
                 }}
@@ -141,7 +146,7 @@ export default class App extends Component {
                 name="ConfirmPhotoScreen"
                 component={ConfirmPhotoScreen}
                 options={{
-                  title: "Confirm new picture",
+                  title: t("confirmNewPicture"),
                   headerShown: true,
                   gestureEnabled: true,
                 }}
@@ -158,7 +163,7 @@ export default class App extends Component {
                 name="CreateChatScreen"
                 component={CreateChatScreen}
                 options={{
-                  title: "Create a new chat",
+                  title: t("createNewChat"),
                   headerShown: true,
                   gestureEnabled: true,
                 }}
@@ -176,7 +181,7 @@ export default class App extends Component {
                 name="AddNewMemberScreen"
                 component={AddNewMemberScreen}
                 options={{
-                  title: "Add a new member",
+                  title: t("about"),
                   headerShown: true,
                   gestureEnabled: true,
                 }}

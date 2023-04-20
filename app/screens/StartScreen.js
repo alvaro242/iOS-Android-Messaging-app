@@ -9,6 +9,7 @@ import {
 import { styles } from "./../components/Styles/customStyle";
 import { Component } from "react";
 import AsyncStorage from "@react-native-async-storage/async-storage";
+import { t, getLanguage } from "../../locales";
 
 export default class StartScreen extends Component {
   constructor(props) {
@@ -17,6 +18,7 @@ export default class StartScreen extends Component {
 
   componentDidMount() {
     const subscription = this.props.navigation.addListener("focus", () => {
+      getLanguage();
       this.checkLoggedIn();
     });
     return () => {
@@ -44,7 +46,7 @@ export default class StartScreen extends Component {
             style={styles.logoStart}
             source={require("../assets/logo.png")}
           />
-          <Text>Telechat</Text>
+          {<Text>{t("appName")}</Text>}
         </View>
         <TouchableHighlight
           style={styles.loginContainer}
@@ -52,7 +54,7 @@ export default class StartScreen extends Component {
             navigation.push("LogInScreen");
           }}
         >
-          <Text>Log In</Text>
+          <Text>{t("LogIn")}</Text>
         </TouchableHighlight>
         <TouchableHighlight
           style={styles.signupContainer}
@@ -60,7 +62,7 @@ export default class StartScreen extends Component {
             navigation.push("SignUpScreen");
           }}
         >
-          <Text>Sign Up</Text>
+          <Text>{t("SignUp")}</Text>
         </TouchableHighlight>
       </ImageBackground>
     );

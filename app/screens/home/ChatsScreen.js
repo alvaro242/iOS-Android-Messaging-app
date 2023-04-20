@@ -17,6 +17,7 @@ import { loadKey } from "../../components/utils/utils";
 import { getAllChats } from "../../components/utils/API";
 import { styles } from "../../components/Styles/customStyle";
 import { showTime } from "../../components/utils/utils";
+import { getLanguage, t } from "../../../locales";
 
 export default class ChatsScreen extends Component {
   constructor(props) {
@@ -30,6 +31,7 @@ export default class ChatsScreen extends Component {
   }
   componentDidMount() {
     const subscription = this.props.navigation.addListener("focus", () => {
+      getLanguage();
       this.getData();
     });
     return () => {
@@ -127,7 +129,7 @@ export default class ChatsScreen extends Component {
                     <Text style={styles.conversationTitle}>{item.name}</Text>
                   </View>
                   <View>
-                    <Text>No messages</Text>
+                    <Text>{t("noMessages")}</Text>
                   </View>
                 </TouchableOpacity>
               );

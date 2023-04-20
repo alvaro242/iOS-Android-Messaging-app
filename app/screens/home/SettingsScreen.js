@@ -11,8 +11,12 @@ import {
 
 import React, { Component } from "react";
 import { styles } from "../../components/Styles/customStyle";
+import { getLanguage, t } from "../../../locales";
 
 export default class SettingsScreen extends Component {
+  componentDidMount() {
+    getLanguage();
+  }
   render() {
     return (
       <ScrollView style={styles.settingsScreen}>
@@ -23,7 +27,7 @@ export default class SettingsScreen extends Component {
               this.props.navigation.navigate("blockedUsersScreen");
             }}
           >
-            Blocked users
+            {t("blokedUsers")}
           </Text>
         </View>
       </ScrollView>

@@ -14,6 +14,7 @@ import { logIn } from "../components/utils/API";
 import React, { Component } from "react";
 import { warningAlert } from "../components/utils/errorHandling";
 import { NativeBaseProvider } from "native-base";
+import { t, getLanguage } from "../../locales";
 
 export default class LogInScreen extends Component {
   constructor(props) {
@@ -24,8 +25,12 @@ export default class LogInScreen extends Component {
     };
   }
 
+  componentDidMount() {
+    getLanguage();
+  }
+
   handleFeedback(response) {
-    let warningFeedback400 = warningAlert("Invalid email or password");
+    let warningFeedback400 = warningAlert(t("invalidlogin"));
 
     if (response.status == 200) {
       this.props.navigation.navigate("HomeScreen");
@@ -60,7 +65,7 @@ export default class LogInScreen extends Component {
           />
         </View>
 
-        <Text>Create a new account</Text>
+        <Text>{t("createNewAccount")}</Text>
 
         <View style={styles.formContainerLogin}>
           <Formik
@@ -83,7 +88,7 @@ export default class LogInScreen extends Component {
               <>
                 <TextInput
                   name="email"
-                  placeholder="Email Address"
+                  placeholder={t("email")}
                   style={styles.inputForm}
                   onChangeText={handleChange("email")}
                   onBlur={handleBlur("email")}
@@ -95,7 +100,7 @@ export default class LogInScreen extends Component {
                 )}
                 <TextInput
                   name="password"
-                  placeholder="Password"
+                  placeholder={t("password")}
                   autoCapitalize="none"
                   style={styles.inputForm}
                   onChangeText={handleChange("password")}
@@ -109,7 +114,7 @@ export default class LogInScreen extends Component {
 
                 <Button
                   onPress={handleSubmit}
-                  title="Log In"
+                  title={t("LogIn")}
                   disabled={!isValid}
                 />
               </>

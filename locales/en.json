@@ -1,0 +1,44 @@
+{
+	"appName": "Telechat",
+    "LogIn": "Iniciar Sesión",
+    "SignUp": "Registrarse",
+    "CreateAccount": "Create a new account",
+    "FirtName": "First Name",
+    "LastName": "Last Name",
+    "email": "Email address",
+    "password": "Password",
+    "confirmpassword": "Confirm Password",
+    "invalidlogin": "Invalid email or password",
+    "createNewAccount": "Create a new account",
+    "welcome": "Welcome",
+    "addContact": "Add contact",
+    "contact": "contact",
+    "blokedUsers" : "Blocked Users",
+    "blockedUser" : "Blocked User",
+    "changePassword": "Change Password",
+    "takeAPic": "Take a new profile pic",
+    "confirmNewPicture": "Confirm new picture",
+    "createNewChat": "Create a new chat",
+    "about": "About",
+    "contacts": "Contacs",
+    "chats": "Chats",
+    "myAccount": "My Account",
+    "account": "Account",
+    "settings": "Settings",
+    "clearSearch": "Clear search",
+    "search": "Search",
+    "searchContacts" : "Search Contacts",
+    "noMessages": "No Messages",
+    "detailsAmended": "The details has been amended",
+    "noAmend": "These details can´t be amended. Please try with different characters or different email format",
+    "unableAmend": "Unable to process the amendment",
+    "emailNoValid": "Email must be valid",
+    "updateDetails": "Update Details",
+    "changePic": "Change Profile Pic"
+
+
+
+}
+
+
+

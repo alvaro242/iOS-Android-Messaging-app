@@ -1,0 +1,45 @@
+
+{   
+	"appName": "Telechat",
+    "LogIn": "Iniciar sesión",
+    "SignUp": "Registrarse",
+    "CreateAccount": "Crear una nueva cuenta",
+    "FirtName": "Nombre",
+    "LastName": "Apellido",
+    "email": "Correo electrónico",
+    "password": "Contraseña",
+    "confirmpassword": "Confirmar contraseña",
+    "invalidlogin": "Correo o clave inválida",
+    "createNewAccount": "Crea una cuenta nueva",
+    "welcome": "Bienvenido",
+    "addContact": "Añadir Contacto",
+    "contact": "Contacto",
+    "blokedUsers" : "Usuarios bloqueados",
+    "blockedUser" : "Usuario bloqueado",
+    "changePassword": "Cambiar contraseña",
+    "takeAPic": "Tomar una nueva foto",
+    "confirmNewPicture": "Confirmar nueva foto",
+    "createNewChat": "Crear un chat nuevo",
+    "about": "Acerca de",
+    "contacts": "Contactos", 
+    "chats": "Chats",
+    "myAccount": "Mi Cuenta",
+    "account": "Cuenta",
+    "settings": "Ajustes",
+    "clearSearch": "Limpiar búsqueda",
+    "search": "Buscar",
+    "searchContacts" : "Buscar Contactos",
+    "noMessages" : "No hay mensajes",
+    "detailsAmended": "Los datos han sido modificados",
+    "noAmend": "Estos datos no se pueden modificar. Trata cambiarlos por otros y reintentarlo",
+    "unableAmend": "Intento de modificación fallido",
+    "emailNoValid": "El correo debe ser válido",
+    "updateDetails": "Actualizar datos",
+    "changePic": "Cambiar foto de perfil"
+}
+
+ 
+
+
+
+

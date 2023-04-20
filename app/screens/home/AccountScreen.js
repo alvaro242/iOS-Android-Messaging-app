@@ -24,6 +24,7 @@ import {
 
 import * as yup from "yup";
 import { Formik } from "formik";
+import { getLanguage, t } from "../../../locales";
 
 export default class AccountScreen extends Component {
   constructor(props) {
@@ -42,6 +43,7 @@ export default class AccountScreen extends Component {
 
   componentDidMount() {
     const subscription = this.props.navigation.addListener("focus", () => {
+      getLanguage();
       loadKeyAndID()
         .then(
           (response) =>
@@ -74,7 +76,7 @@ export default class AccountScreen extends Component {
     console.log(response);
     if (response.status == 200) {
       this.setState({
-        alertMessage: successAlert("The details has been amended"),
+        alertMessage: successAlert(t("detailsAmended")),
       });
     } else if (
       response.status == 400 ||
@@ -83,13 +85,11 @@ export default class AccountScreen extends Component {
       response.status == 404
     ) {
       this.setState({
-        alertMessage: warningAlert(
-          "These details can´t be amended. Please try with different characters or different email format"
-        ),
+        alertMessage: warningAlert(t("noAmend")),
       });
     } else {
       his.setState({
-        alertMessage: errorAlert("Unable to process the amendment"),
+        alertMessage: errorAlert(t("unableAmend")),
       });
     }
   }
@@ -98,7 +98,7 @@ export default class AccountScreen extends Component {
     const UpdateAccountValidationSchema = yup.object().shape({
       first_name: yup.string(), //empty so we dont show any message is is not completed
       last_name: yup.string(),
-      email: yup.string().email("Email must be valid"),
+      email: yup.string().email(t("emailNoValid")),
     });
 
     if (this.state.errorLoading) {
@@ -180,7 +180,7 @@ export default class AccountScreen extends Component {
                   />
                   <TextInput
                     name="first_name"
-                    placeholder="First Name"
+                    placeholder={t("FirtName")}
                     style={styles.inputForm}
                     onChangeText={handleChange("first_name")}
                     onBlur={handleBlur("first_name")}
@@ -192,7 +192,7 @@ export default class AccountScreen extends Component {
                   )}
                   <TextInput
                     name="last_name"
-                    placeholder="Last Name"
+                    placeholder={t("LastName")}
                     style={styles.inputForm}
                     onChangeText={handleChange("last_name")}
                     onBlur={handleBlur("last_name")}
@@ -204,7 +204,7 @@ export default class AccountScreen extends Component {
                   )}
                   <TextInput
                     name="email"
-                    placeholder="Email Address"
+                    placeholder={t("email")}
                     autoCapitalize="none"
                     style={styles.inputForm}
                     onChangeText={handleChange("email")}
@@ -218,7 +218,7 @@ export default class AccountScreen extends Component {
 
                   <Button
                     onPress={handleSubmit}
-                    title="Update details"
+                    title={t("updateDetails")}
                     disabled={!isValid}
                   />
                 </>
@@ -231,7 +231,7 @@ export default class AccountScreen extends Component {
                   this.props.navigation.navigate("ChangePassword");
                 }}
               >
-                Change Password
+                {t("changePassword")}
               </Text>
               <Text
                 style={styles.settingsOption}
@@ -239,7 +239,7 @@ export default class AccountScreen extends Component {
                   this.props.navigation.navigate("CameraComponent");
                 }}
               >
-                Change Profile Picture
+                {t("changePic")}
               </Text>
             </View>
           </View>
