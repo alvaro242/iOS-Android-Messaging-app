@@ -11,13 +11,14 @@ import {
   warningAlert,
 } from "../components/utils/errorHandling";
 import { NativeBaseProvider } from "native-base";
+import { TouchableOpacity } from "react-native";
 
 export default class SignUpScreen extends Component {
   constructor(props) {
     super(props);
 
     this.state = {
-      alertMessage: "",
+      alertMessage: <View></View>,
     };
   }
 
@@ -175,9 +176,7 @@ export default class SignUpScreen extends Component {
               )}
             </Formik>
           </View>
-          <View>
-            <NativeBaseProvider>{this.state.alertMessage}</NativeBaseProvider>
-          </View>
+          <TouchableOpacity>{this.state.alertMessage}</TouchableOpacity>
         </View>
       </View>
     );

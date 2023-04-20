@@ -8,9 +8,9 @@ import {
   ScrollView,
   FlatList,
 } from "react-native";
-import { styles } from "./../../components/Styles/customStyle";
-import { loadKey } from "../../components/utils/utils";
-import { getBlockedContacts } from "../../components/utils/API";
+import { styles } from "../../../components/Styles/customStyle";
+import { loadKey } from "../../../components/utils/utils";
+import { getBlockedContacts } from "../../../components/utils/API";
 
 export default class BlockedUsersScreen extends Component {
   constructor(props) {
@@ -23,13 +23,12 @@ export default class BlockedUsersScreen extends Component {
   }
 
   componentDidMount() {
-    this.unsubscribe = this.props.navigation.addListener("focus", () => {
+    const subscription = this.props.navigation.addListener("focus", () => {
       this.getData();
     });
-  }
-
-  componentWillUnmount() {
-    this.unsubscribe();
+    return () => {
+      subscription.remove();
+    };
   }
 
   getData = () => {

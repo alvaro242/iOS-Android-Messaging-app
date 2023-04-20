@@ -9,10 +9,10 @@ import {
 } from "react-native";
 
 import { createBottomTabNavigator } from "@react-navigation/bottom-tabs";
-import ChatsScreen from "./ChatsScreen";
-import AccountScreen from "./AccountScreen";
-import ContactsScreen from "./ContactsScreen";
-import SettingsScreen from "./SettingsScreen";
+import ChatsScreen from "./home/ChatsScreen";
+import AccountScreen from "./home/AccountScreen";
+import ContactsScreen from "./home/ContactsScreen";
+import SettingsScreen from "./home/SettingsScreen";
 import { MaterialCommunityIcons } from "react-native-vector-icons";
 import React, { Component } from "react";
 

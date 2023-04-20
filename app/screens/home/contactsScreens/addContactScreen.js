@@ -1,29 +1,30 @@
 import {
   TextInput,
   View,
-  Button,
   ScrollView,
   Text,
   FlatList,
   ActivityIndicator,
+  TouchableOpacity,
 } from "react-native";
 
-import { styles } from "../../components/Styles/customStyle";
+import { styles } from "../../../components/Styles/customStyle";
 import React, { Component } from "react";
 
-import { loadKey } from "../../components/utils/utils";
+import { loadKey } from "../../../components/utils/utils";
 import {
   addFriend,
   searchBetweenAllUsers,
   getAllContacts,
-} from "../../components/utils/API";
+} from "../../../components/utils/API";
 import {
   informativeAlert,
   errorAlert,
   successAlert,
   warningAlert,
-} from "../../components/utils/errorHandling";
-import { NativeBaseProvider } from "native-base";
+} from "../../../components/utils/errorHandling";
+import { Button } from "native-base";
+
 export default class AddContactScreen extends Component {
   constructor(props) {
     super(props);
@@ -34,14 +35,16 @@ export default class AddContactScreen extends Component {
       NewUsers: [],
       SearchWord: "",
       isLoading: "false",
-      clearText: "",
-      NoteForUser: "",
+      clearText: <View></View>,
+      NoteForUser: <View></View>,
       isLoading: false,
-      alertMessage: "",
+      alertMessage: <View></View>,
     };
   }
 
   handleFeedback(response) {
+    console.log(response.status);
+
     let positiveFeedback = successAlert("The contact has been added");
     let informativeFeedback = informativeAlert(
       "You can't add yourself as a contact"
@@ -51,8 +54,6 @@ export default class AddContactScreen extends Component {
       "It seems this is already a contact!"
     );
     let warningFeedback404 = warningAlert("The contact has not been found");
-
-    let errorFeedback = errorAlert("Server error. Please try it later");
 
     if (response.status == 200) {
       //it seems like api returns 200 when already a contact so this will handle that response as an
@@ -79,7 +80,7 @@ export default class AddContactScreen extends Component {
       });
     } else {
       this.setState({
-        alertMessage: errorFeedback,
+        alertMessage: warningFeedback404,
       });
     }
   }
@@ -130,9 +131,12 @@ export default class AddContactScreen extends Component {
     this.setState({
       isLoading: false,
       NewUsers: results,
-      NoteForUser:
-        "Note: Friends that are already your friends won't appear here.",
-      clearText: "Clear Search",
+      NoteForUser: informativeAlert(
+        "Note: Friends that are already your friends won't appear here"
+      ),
+      clearText: (
+        <Button onPress={() => this.clearSearch()}>Clear Search</Button>
+      ),
     });
 
     console.log(results);
@@ -141,8 +145,8 @@ export default class AddContactScreen extends Component {
   clearSearch = () => {
     this.setState({
       NewUsers: [],
-      clearText: "",
-      NoteForUser: "",
+      clearText: <View></View>,
+      NoteForUser: <View></View>,
     });
   };
 
@@ -167,7 +171,6 @@ export default class AddContactScreen extends Component {
           />
           <View style={styles.submitButton}>
             <Button
-              title="Add Friend"
               onPress={() =>
                 loadKey().then((key) =>
                   addFriend(this.state.friendID, key)
@@ -175,7 +178,9 @@ export default class AddContactScreen extends Component {
                     .catch((error) => this.handleFeedback(error))
                 )
               }
-            />
+            >
+              Add Friend
+            </Button>
           </View>
         </View>
         <View style={styles.searchText}>
@@ -191,7 +196,7 @@ export default class AddContactScreen extends Component {
             keyboardType="text"
           />
           <View style={styles.submitButton}>
-            <Button title="Search" onPress={() => this.searchNewContacts()} />
+            <Button onPress={() => this.searchNewContacts()}>Search</Button>
           </View>
         </View>
 
@@ -204,7 +209,6 @@ export default class AddContactScreen extends Component {
               </Text>
               <View style={styles.submitButton}>
                 <Button
-                  title="Add Contact  "
                   onPress={() =>
                     loadKey().then((key) =>
                       addFriend(item.user_id, key)
@@ -212,22 +216,17 @@ export default class AddContactScreen extends Component {
                         .catch((error) => this.handleFeedback(error))
                     )
                   }
-                />
+                >
+                  Add Contact
+                </Button>
               </View>
             </View>
           )}
           keyExtractor={({ user_id }, index) => user_id}
         />
         <Text>{this.state.NoteForUser}</Text>
-        <Text
-          style={styles.clearSearch}
-          onPress={() => {
-            this.clearSearch();
-          }}
-        >
-          {this.state.clearText}
-        </Text>
-        <NativeBaseProvider>{this.state.alertMessage}</NativeBaseProvider>
+        <View style={styles.clearSearch}>{this.state.clearText}</View>
+        <TouchableOpacity>{this.state.alertMessage}</TouchableOpacity>
       </ScrollView>
     );
   }

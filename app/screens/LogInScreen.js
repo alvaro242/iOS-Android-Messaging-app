@@ -1,4 +1,12 @@
-import { Text, View, Image, TextInput, Button, Alert } from "react-native";
+import {
+  Text,
+  View,
+  Image,
+  TextInput,
+  Button,
+  Alert,
+  TouchableOpacity,
+} from "react-native";
 import { Formik } from "formik";
 import * as yup from "yup";
 import { styles } from "./../components/Styles/customStyle";
@@ -12,12 +20,11 @@ export default class LogInScreen extends Component {
     super(props);
 
     this.state = {
-      alertMessage: "",
+      alertMessage: <View></View>,
     };
   }
 
   handleFeedback(response) {
-    console.log(response.status);
     let warningFeedback400 = warningAlert("Invalid email or password");
 
     if (response.status == 200) {
@@ -109,7 +116,7 @@ export default class LogInScreen extends Component {
             )}
           </Formik>
         </View>
-        <NativeBaseProvider>{this.state.alertMessage}</NativeBaseProvider>
+        <TouchableOpacity>{this.state.alertMessage}</TouchableOpacity>
       </View>
     );
   }

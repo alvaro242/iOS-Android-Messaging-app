@@ -57,8 +57,12 @@ export function UpdateUserInformation(values, userID, token) {
     },
     body: JSON.stringify(values),
   })
-    .then((response) => console.log(response))
-    .catch((error) => console.log(error));
+    .then((response) => {
+      return response;
+    })
+    .catch((error) => {
+      return error;
+    });
 }
 
 export function logIn(values) {
@@ -268,23 +272,10 @@ export function removeContact(userID, key) {
     }
   )
     .then(async (response) => {
-      if (response.status == 200) {
-        console.log("The contact has been removed");
-        alert("The Contact has been removed");
-      } else if (response.status == 400) {
-        console.log("You can´t remove yourself as a contact");
-      } else if (response.status == 401) {
-        console.log("Unauthorized");
-      } else if (response.status == 404) {
-        console.log("Not Found");
-      } else if (response.status == 500) {
-        console.log("Server error");
-      } else {
-        throw "Error";
-      }
+      return response;
     })
     .catch((error) => {
-      console.log("error");
+      return error;
     });
 }
 
@@ -315,23 +306,10 @@ export function blockContact(userID, key) {
     },
   })
     .then(async (response) => {
-      if (response.status == 200) {
-        console.log("The contact has been blocked");
-        alert("The contact has been blocked");
-      } else if (response.status == 400) {
-        console.log("You can´t block yourself");
-      } else if (response.status == 401) {
-        console.log("Unauthorized");
-      } else if (response.status == 404) {
-        console.log("Not Found");
-      } else if (response.status == 500) {
-        console.log("Server error");
-      } else {
-        throw "Error";
-      }
+      return response;
     })
     .catch((error) => {
-      console.log("error");
+      return error;
     });
 }
 
@@ -343,23 +321,10 @@ export function unblockContact(userID, key) {
     },
   })
     .then(async (response) => {
-      if (response.status == 200) {
-        console.log("The contact has been unblocked");
-        RootNavigation.navigate("blockedUsersScreen");
-      } else if (response.status == 400) {
-        console.log("You can´t block yourself");
-      } else if (response.status == 401) {
-        console.log("Unauthorized");
-      } else if (response.status == 404) {
-        console.log("Not Found");
-      } else if (response.status == 500) {
-        console.log("Server error");
-      } else {
-        throw "Error";
-      }
+      return response;
     })
     .catch((error) => {
-      console.log("error");
+      return error;
     });
 }
 
@@ -385,7 +350,7 @@ export function getAllChats(token) {
 export function createConversation(title, key) {
   let url = "http://" + serverIP + "/api/1.0.0/chat/";
 
-  fetch(url, {
+  return fetch(url, {
     method: "POST",
     headers: {
       "Content-Type": "application/json",
@@ -395,15 +360,11 @@ export function createConversation(title, key) {
     body: JSON.stringify(title),
   })
     .then((response) => {
-      if (response.status == 201) {
-        alert("Conversation created: " + title);
-      } else {
-        console.log("error. Something went wrong");
-      }
+      return response;
     })
 
     .catch((error) => {
-      console.log(error);
+      return error;
     });
 }
 
@@ -457,7 +418,7 @@ export function addNewMemberToChat(chatID, userID, key) {
   let url =
     "http://" + serverIP + "/api/1.0.0/chat/" + chatID + "/user/" + userID;
 
-  fetch(url, {
+  return fetch(url, {
     method: "POST",
     headers: {
       "Content-Type": "application/json",
@@ -466,15 +427,11 @@ export function addNewMemberToChat(chatID, userID, key) {
     },
   })
     .then((response) => {
-      if (response.status == 200) {
-        console.log("member added");
-      } else {
-        console.log("error. Something went wrong");
-      }
+      return response;
     })
 
     .catch((error) => {
-      console.log(error);
+      return error;
     });
 }
 
@@ -489,10 +446,10 @@ export function removeMember(chatID, userID, key) {
     }
   )
     .then(async (response) => {
-      console.log(response);
+      return response;
     })
     .catch((error) => {
-      console.log(error);
+      return error;
     });
 }
 
@@ -509,8 +466,12 @@ export function updateChatName(newName, chatID, token) {
     },
     body: JSON.stringify(nameToServer),
   })
-    .then((response) => console.log(response))
-    .catch((error) => console.log(error));
+    .then((response) => {
+      return response;
+    })
+    .catch((error) => {
+      return error;
+    });
 }
 
 export function updateMessage(chatID, messageID, token, newMessage) {

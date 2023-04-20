@@ -5,17 +5,19 @@ import {
   ActivityIndicator,
   Image,
   TextInput,
-  Button,
+  //Button,
   Alert,
   ScrollView,
+  AppState,
 } from "react-native";
+import { Button } from "native-base";
 
-import { styles } from "./../components/Styles/customStyle";
+import { styles } from "../../components/Styles/customStyle";
 
-import React, { Component, useState, useEffect } from "react";
+import React, { Component } from "react";
 
-import { loadKey } from "../components/utils/utils";
-import { getAllContacts, searchCurrentUsers } from "../components/utils/API";
+import { loadKey } from "../../components/utils/utils";
+import { getAllContacts, searchCurrentUsers } from "../../components/utils/API";
 import { RefreshControl } from "react-native-web-refresh-control";
 import { TouchableOpacity } from "react-native-web";
 
@@ -30,19 +32,18 @@ export default class ContactsScreen extends Component {
       arrayOfPics: [],
       token: "",
       searchWord: "",
-      clearFilter: "",
+      clearFilter: <View></View>,
       counter: 0,
     };
   }
 
   componentDidMount() {
     loadKey().then((key) =>
-      getAllContacts(key).then(
-        (responseJson) =>
-          this.setState({
-            isLoading: false,
-            contactsData: responseJson,
-          }) // & this.loadAllPictures(responseJson, key)
+      getAllContacts(key).then((responseJson) =>
+        this.setState({
+          isLoading: false,
+          contactsData: responseJson,
+        })
       )
     );
   }
@@ -54,7 +55,7 @@ export default class ContactsScreen extends Component {
         this.setState({
           contactsData: responseJson,
           refreshing: false,
-          clearFilter: "",
+          clearFilter: <View></View>,
         })
       )
     );
@@ -75,8 +76,9 @@ export default class ContactsScreen extends Component {
         this.setState({
           contactsData: responseJson,
           isLoading: false,
-
-          clearFilter: "Clear search",
+          clearFilter: (
+            <Button onPress={() => this.refresh()}>Clear search</Button>
+          ),
         })
       );
   };
@@ -102,9 +104,11 @@ export default class ContactsScreen extends Component {
           />
           <View style={styles.submitButton}>
             <Button
-              title="Search"
+              variant="outline"
               onPress={() => this.showFilteredContacts()}
-            />
+            >
+              Search
+            </Button>
           </View>
         </View>
         <View>
@@ -135,14 +139,7 @@ export default class ContactsScreen extends Component {
             keyExtractor={({ user_id }, index) => user_id}
           />
         </View>
-        <Text
-          style={styles.clearSearch}
-          onPress={() => {
-            this.refresh();
-          }}
-        >
-          {this.state.clearFilter}
-        </Text>
+        <View style={styles.clearSearch}>{this.state.clearFilter}</View>
       </ScrollView>
     );
   }

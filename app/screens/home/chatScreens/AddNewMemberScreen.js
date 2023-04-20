@@ -2,20 +2,25 @@ import React, { Component } from "react";
 import {
   View,
   TextInput,
-  Button,
   ActivityIndicator,
   FlatList,
   Text,
   TouchableOpacity,
 } from "react-native";
-import { loadKey } from "../../components/utils/utils";
+import { loadKey } from "../../../components/utils/utils";
 import {
   searchCurrentUsers,
   getAllContacts,
   addNewMemberToChat,
-} from "../../components/utils/API";
-import { styles } from "../../components/Styles/customStyle";
-import { informativeAlert } from "../../components/utils/errorHandling";
+} from "../../../components/utils/API";
+import { styles } from "../../../components/Styles/customStyle";
+import { Button } from "native-base";
+import {
+  successAlert,
+  warningAlert,
+  errorAlert,
+  informativeAlert,
+} from "../../../components/utils/errorHandling";
 
 export default class AddNewMemberScreen extends Component {
   constructor(props) {
@@ -27,7 +32,9 @@ export default class AddNewMemberScreen extends Component {
       members: this.props.route.params.members,
       chat_id: this.props.route.params.chat_id,
       NewPossibleMembers: "",
-      responseAPI: "",
+      alertMessage: <View></View>,
+      clearText: <View></View>,
+      noteForUser: <View></View>,
     };
   }
   componentDidMount() {
@@ -71,23 +78,62 @@ export default class AddNewMemberScreen extends Component {
     this.setState({
       isLoading: false,
       NewPossibleMembers: results,
-      NoteForUser: "Note: Friends that are already members won't appear here.",
-      clearText: "Clear Search",
+      NoteForUser: (
+        <View>
+          {informativeAlert(
+            "Note: Friends that are already members won't appear here."
+          )}
+        </View>
+      ),
+      clearText: (
+        <Button
+          onPress={() => {
+            this.clearSearch();
+          }}
+        >
+          Clear Search
+        </Button>
+      ),
     });
 
     console.log(results);
   }
 
+  handleFeedback(response) {
+    console.log(response);
+
+    if (response.status == 200) {
+      this.setState({
+        alertMessage: successAlert("The user has been added"),
+      });
+    } else if (
+      response.status == 400 ||
+      response.status == 401 ||
+      response.status == 403 ||
+      response.status == 404
+    ) {
+      this.setState({
+        alertMessage: warningAlert("The user can´t be added"),
+      });
+    } else {
+      this.setState({
+        alertMessage: errorAlert("Error. Unable to add this user as a member"),
+      });
+    }
+  }
+
   clearSearch = () => {
     this.setState({
       NewPossibleMembers: [],
-      clearText: "",
-      NoteForUser: "",
+      clearText: <View></View>,
+      NoteForUser: <View></View>,
     });
   };
 
   async addMember(userID) {
-    addNewMemberToChat(this.state.chat_id, userID, this.state.key);
+    addNewMemberToChat(this.state.chat_id, userID, this.state.key)
+      .then((response) => this.handleFeedback(response))
+      .catch((error) => this.handleFeedback(error));
 
     //feedbackpending
   }
@@ -112,10 +158,7 @@ export default class AddNewMemberScreen extends Component {
             keyboardType="text"
           />
           <View style={styles.submitButton}>
-            <Button
-              title="Search"
-              onPress={() => this.loadContactsNotInChat()}
-            />
+            <Button onPress={() => this.loadContactsNotInChat()}>Search</Button>
           </View>
         </View>
 
@@ -135,25 +178,17 @@ export default class AddNewMemberScreen extends Component {
                 </Text>
               </TouchableOpacity>
               <View style={styles.submitButton}>
-                <Button
-                  title="Add Member"
-                  onPress={() => this.addMember(item.user_id)}
-                />
+                <Button onPress={() => this.addMember(item.user_id)}>
+                  Add Member
+                </Button>
               </View>
             </View>
           )}
           keyExtractor={({ user_id }, index) => user_id}
         />
         <Text>{this.state.NoteForUser}</Text>
-        <Text
-          style={styles.clearSearch}
-          onPress={() => {
-            this.clearSearch();
-          }}
-        >
-          {this.state.clearText}
-          {this.state.responseAPI}
-        </Text>
+        {this.state.alertMessage}
+        {this.state.clearText}
       </View>
     );
   }

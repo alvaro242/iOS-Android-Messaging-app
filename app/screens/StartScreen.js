@@ -16,13 +16,12 @@ export default class StartScreen extends Component {
   }
 
   componentDidMount() {
-    this.unsubscribe = this.props.navigation.addListener("focus", () => {
+    const subscription = this.props.navigation.addListener("focus", () => {
       this.checkLoggedIn();
     });
-  }
-
-  componentWillUnmount() {
-    this.unsubscribe();
+    return () => {
+      subscription.remove();
+    };
   }
 
   checkLoggedIn = async () => {

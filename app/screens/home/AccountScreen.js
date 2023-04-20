@@ -11,11 +11,16 @@ import {
   FlatList,
 } from "react-native";
 import React, { Component } from "react";
-import { loadKeyAndID } from "../components/utils/utils";
-import { styles } from "./../components/Styles/customStyle";
-import { getUserInformation, logOut } from "../components/utils/API";
-import { UpdateUserInformation } from "../components/utils/API";
-import { getProfilePicture } from "../components/utils/API";
+import { loadKeyAndID } from "../../components/utils/utils";
+import { styles } from "../../components/Styles/customStyle";
+import { getUserInformation, logOut } from "../../components/utils/API";
+import { UpdateUserInformation } from "../../components/utils/API";
+import { getProfilePicture } from "../../components/utils/API";
+import {
+  errorAlert,
+  successAlert,
+  warningAlert,
+} from "../../components/utils/errorHandling";
 
 import * as yup from "yup";
 import { Formik } from "formik";
@@ -31,11 +36,12 @@ export default class AccountScreen extends Component {
       errorLoadingMessage: "error",
       token: "",
       photo: "",
+      alertMessage: <View></View>,
     };
   }
 
   componentDidMount() {
-    this.unsubscribe = this.props.navigation.addListener("focus", () => {
+    const subscription = this.props.navigation.addListener("focus", () => {
       loadKeyAndID()
         .then(
           (response) =>
@@ -59,10 +65,33 @@ export default class AccountScreen extends Component {
           })
         );
     });
+    return () => {
+      subscription.remove();
+    };
   }
 
-  componentWillUnmount() {
-    this.unsubscribe();
+  handleFeedback(response) {
+    console.log(response);
+    if (response.status == 200) {
+      this.setState({
+        alertMessage: successAlert("The details has been amended"),
+      });
+    } else if (
+      response.status == 400 ||
+      response.status == 401 ||
+      response.status == 403 ||
+      response.status == 404
+    ) {
+      this.setState({
+        alertMessage: warningAlert(
+          "These details can´t be amended. Please try with different characters or different email format"
+        ),
+      });
+    } else {
+      his.setState({
+        alertMessage: errorAlert("Unable to process the amendment"),
+      });
+    }
   }
 
   render() {
@@ -90,6 +119,7 @@ export default class AccountScreen extends Component {
     return (
       <ScrollView>
         <View style={styles.myAccount}>
+          {this.state.alertMessage}
           <View style={styles.picture}>
             <Image style={styles.myPic} source={this.state.photo} />
           </View>
@@ -126,7 +156,9 @@ export default class AccountScreen extends Component {
                   objectToAPI,
                   this.state.accountData.user_id,
                   this.state.token
-                );
+                )
+                  .then((response) => this.handleFeedback(response))
+                  .catch((error) => this.handleFeedback(error));
               }}
             >
               {({

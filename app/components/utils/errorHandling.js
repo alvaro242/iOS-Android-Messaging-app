@@ -6,7 +6,6 @@ import {
   CloseIcon,
   Text,
   Center,
-  NativeBaseProvider,
   Stack,
 } from "native-base";
 

@@ -14,11 +14,16 @@ import {
   getProfilePicture,
   removeMember,
   updateChatName,
-} from "../../components/utils/API";
-import { showAlert } from "../../components/utils/utils";
-import { styles } from "../../components/Styles/customStyle";
+} from "../../../components/utils/API";
+import { styles } from "../../../components/Styles/customStyle";
 import { TouchableOpacity } from "react-native-web";
 import { MaterialCommunityIcons } from "react-native-vector-icons";
+import {
+  informativeAlert,
+  errorAlert,
+  successAlert,
+  warningAlert,
+} from "../../../components/utils/errorHandling";
 
 export default class AboutChat extends Component {
   constructor(props) {
@@ -35,17 +40,17 @@ export default class AboutChat extends Component {
       chatDetails: "",
       currentUserID: this.props.route.params.user_id,
       newTitle: "",
+      alertMessage: <View></View>,
     };
   }
 
   componentDidMount() {
-    this.unsubscribe = this.props.navigation.addListener("focus", () => {
+    const subscription = this.props.navigation.addListener("focus", () => {
       this.getData();
     });
-  }
-
-  componentWillUnmount() {
-    this.unsubscribe();
+    return () => {
+      subscription.remove();
+    };
   }
 
   async getData() {
@@ -58,6 +63,53 @@ export default class AboutChat extends Component {
         })
     );
     await this.getPicsOfMembers(this.state.members);
+  }
+
+  handleFeedbackChangeChatName(response) {
+    console.log(response);
+
+    if (response.status == 200) {
+      this.setState({
+        alertMessage: successAlert("The name has been changed."),
+      });
+    } else if (
+      response.status == 400 ||
+      response.status == 401 ||
+      response.status == 404
+    ) {
+      this.setState({
+        alertMessage: warningAlert("The name can´t be changed"),
+      });
+    } else {
+      this.setState({
+        alertMessage: errorAlert(
+          "The server is not available. Please try it again later"
+        ),
+      });
+    }
+  }
+
+  handleFeedbackRemoveMember(response) {
+    console.log(response);
+
+    if (response.status == 200) {
+      this.setState({
+        alertMessage: successAlert("The user has been deleted from the chat."),
+      });
+    } else if (
+      response.status == 400 ||
+      response.status == 401 ||
+      response.status == 403 ||
+      response.status == 404
+    ) {
+      this.setState({
+        alertMessage: warningAlert("This user can´t be removed"),
+      });
+    } else {
+      this.setState({
+        alertMessage: errorAlert("The member removal failed"),
+      });
+    }
   }
 
   async getPicsOfMembers(members) {
@@ -83,7 +135,9 @@ export default class AboutChat extends Component {
   }
 
   async handleMemberRemoval(memberID) {
-    await removeMember(this.state.chatInfo.chat_id, memberID, this.state.key);
+    await removeMember(this.state.chatInfo.chat_id, memberID, this.state.key)
+      .then((response) => this.handleFeedbackRemoveMember(response))
+      .catch((error) => this.handleFeedbackRemoveMember(error));
     this.getData();
   }
 
@@ -162,6 +216,10 @@ export default class AboutChat extends Component {
                 title="Amend"
                 onPress={() =>
                   updateChatName(this.state.newTitle, chat_id, this.state.key)
+                    .then((response) =>
+                      this.handleFeedbackChangeChatName(response)
+                    )
+                    .catch((error) => this.handleFeedbackChangeChatName(error))
                 }
               />
             </View>
@@ -225,6 +283,7 @@ export default class AboutChat extends Component {
         >
           <Text>Abandon Chat</Text>
         </TouchableOpacity>
+        {this.state.alertMessage}
       </View>
     );
   }

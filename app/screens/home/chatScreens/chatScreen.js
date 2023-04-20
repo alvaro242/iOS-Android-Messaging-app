@@ -10,21 +10,21 @@ import {
   ScrollView,
 } from "react-native";
 import React, { Component } from "react";
-import { styles } from "../../components/Styles/customStyle";
+import { styles } from "../../../components/Styles/customStyle";
 import { MaterialCommunityIcons } from "react-native-vector-icons";
-import * as RootNavigation from "../../components/utils/RootNavigation";
+import * as RootNavigation from "../../../components/utils/RootNavigation";
 import {
   loadKey,
   loadCurrentUser,
   showOnlyTime,
-} from "../../components/utils/utils";
+} from "../../../components/utils/utils";
 import {
   getChatDetails,
   getProfilePicture,
   sendNewMessage,
   updateMessage,
   deleteMessage,
-} from "../../components/utils/API";
+} from "../../../components/utils/API";
 import { Menu, Provider } from "react-native-paper";
 import { TouchableOpacity } from "react-native-web";
 
@@ -49,13 +49,12 @@ export default class ChatScreen extends Component {
     };
   }
   componentDidMount() {
-    this.unsubscribe = this.props.navigation.addListener("focus", () => {
+    const subscription = this.props.navigation.addListener("focus", () => {
       this.getData();
     });
-  }
-
-  componentWillUnmount() {
-    this.unsubscribe();
+    return () => {
+      subscription.remove();
+    };
   }
 
   async getData() {

@@ -8,11 +8,16 @@ import {
   ScrollView,
   FlatList,
 } from "react-native";
-import { styles } from "../../components/Styles/customStyle";
-import { UpdateUserInformation } from "../../components/utils/API";
-import { loadKeyAndID } from "../../components/utils/utils";
+import { styles } from "../../../components/Styles/customStyle";
+import { UpdateUserInformation } from "../../../components/utils/API";
+import { loadKeyAndID } from "../../../components/utils/utils";
 import * as yup from "yup";
 import { Formik } from "formik";
+import {
+  successAlert,
+  warningAlert,
+  errorAlert,
+} from "../../../components/utils/errorHandling";
 
 export default class ChangePassword extends Component {
   constructor(props) {
@@ -20,11 +25,36 @@ export default class ChangePassword extends Component {
 
     this.state = {
       keyAndId: [],
+      alertMessage: <View></View>,
     };
   }
 
   componentDidMount() {
     loadKeyAndID().then((result) => this.setState({ keyAndId: result })); //keyid will be an array with key and ID
+  }
+
+  handleFeedback(response) {
+    console.log(response);
+    if (response.status == 200) {
+      this.setState({
+        alertMessage: successAlert("The password has been amended"),
+      });
+    } else if (
+      response.status == 400 ||
+      response.status == 401 ||
+      response.status == 403 ||
+      response.status == 404
+    ) {
+      this.setState({
+        alertMessage: warningAlert(
+          "The password hasn´t been amended. Please try again and make sure is in the correct format"
+        ),
+      });
+    } else {
+      his.setState({
+        alertMessage: errorAlert("Unable to process the amendment"),
+      });
+    }
   }
 
   render() {
@@ -57,6 +87,8 @@ export default class ChangePassword extends Component {
               this.state.keyAndId[1], //key
               this.state.keyAndId[0] //id
             )
+              .then((response) => this.handleFeedback(response))
+              .catch((error) => this.handleFeedback(error))
           }
         >
           {({
@@ -99,6 +131,7 @@ export default class ChangePassword extends Component {
             </>
           )}
         </Formik>
+        {this.state.alertMessage}
       </View>
     );
   }

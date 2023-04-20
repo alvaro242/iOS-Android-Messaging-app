@@ -10,7 +10,7 @@ import {
 } from "react-native";
 
 import React, { Component } from "react";
-import { styles } from "./../components/Styles/customStyle";
+import { styles } from "../../components/Styles/customStyle";
 
 export default class SettingsScreen extends Component {
   render() {

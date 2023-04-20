@@ -13,10 +13,10 @@ import {
 } from "react-native";
 
 import React, { Component } from "react";
-import { loadKey } from "../components/utils/utils";
-import { getAllChats } from "../components/utils/API";
-import { styles } from "./../components/Styles/customStyle";
-import { showTime } from "../components/utils/utils";
+import { loadKey } from "../../components/utils/utils";
+import { getAllChats } from "../../components/utils/API";
+import { styles } from "../../components/Styles/customStyle";
+import { showTime } from "../../components/utils/utils";
 
 export default class ChatsScreen extends Component {
   constructor(props) {
@@ -29,13 +29,12 @@ export default class ChatsScreen extends Component {
     };
   }
   componentDidMount() {
-    this.unsubscribe = this.props.navigation.addListener("focus", () => {
+    const subscription = this.props.navigation.addListener("focus", () => {
       this.getData();
     });
-  }
-
-  componentWillUnmount() {
-    this.unsubscribe();
+    return () => {
+      subscription.remove();
+    };
   }
 
   getData = () => {
