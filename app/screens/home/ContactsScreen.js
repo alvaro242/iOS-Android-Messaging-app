@@ -20,7 +20,7 @@ import { loadKey } from "../../components/utils/utils";
 import { getAllContacts, searchCurrentUsers } from "../../components/utils/API";
 import { RefreshControl } from "react-native-web-refresh-control";
 import { TouchableOpacity } from "react-native-web";
-import { t, getLanguage } from "../../../locales";
+import { t, getLanguage, getLanguagePreference } from "../../../locales";
 
 export default class ContactsScreen extends Component {
   constructor(props) {
@@ -39,7 +39,6 @@ export default class ContactsScreen extends Component {
   }
 
   componentDidMount() {
-    getLanguage();
     loadKey().then((key) =>
       getAllContacts(key).then((responseJson) =>
         this.setState({

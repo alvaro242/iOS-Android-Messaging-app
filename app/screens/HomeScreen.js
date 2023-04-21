@@ -8,7 +8,7 @@ import React, { Component } from "react";
 
 import { logOut } from "../components/utils/API";
 import { loadKey } from "../components/utils/utils";
-import { getLanguage, t } from "../../locales";
+import { t, getLanguagePreference } from "../../locales";
 
 const HomeTab = createBottomTabNavigator();
 
@@ -17,9 +17,7 @@ export default class HomeScreen extends Component {
     super(props);
   }
 
-  componentDidMount() {
-    getLanguage();
-  }
+  componentDidMount() {}
 
   render() {
     return (

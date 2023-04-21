@@ -9,7 +9,7 @@ import {
 import { styles } from "./../components/Styles/customStyle";
 import { Component } from "react";
 import AsyncStorage from "@react-native-async-storage/async-storage";
-import { t, getLanguage } from "../../locales";
+import { t, getLanguagePreference } from "../../locales";
 
 export default class StartScreen extends Component {
   constructor(props) {
@@ -18,7 +18,6 @@ export default class StartScreen extends Component {
 
   componentDidMount() {
     const subscription = this.props.navigation.addListener("focus", () => {
-      getLanguage();
       this.checkLoggedIn();
     });
     return () => {

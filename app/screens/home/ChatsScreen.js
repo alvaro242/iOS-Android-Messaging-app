@@ -17,7 +17,7 @@ import { loadKey } from "../../components/utils/utils";
 import { getAllChats } from "../../components/utils/API";
 import { styles } from "../../components/Styles/customStyle";
 import { showTime } from "../../components/utils/utils";
-import { getLanguage, t } from "../../../locales";
+import { getLanguage, getLanguagePreference, t } from "../../../locales";
 
 export default class ChatsScreen extends Component {
   constructor(props) {
@@ -31,7 +31,6 @@ export default class ChatsScreen extends Component {
   }
   componentDidMount() {
     const subscription = this.props.navigation.addListener("focus", () => {
-      getLanguage();
       this.getData();
     });
     return () => {

@@ -9,7 +9,7 @@ import {
   warningAlert,
 } from "../../../components/utils/errorHandling";
 import { Button } from "native-base";
-import { getLanguage, t } from "../../../../locales";
+import { getLanguage, getLanguagePreference, t } from "../../../../locales";
 
 export default class CreateChatScreen extends Component {
   constructor(props) {
@@ -47,9 +47,7 @@ export default class CreateChatScreen extends Component {
     }
   }
 
-  componentDidMount() {
-    getLanguage();
-  }
+  componentDidMount() {}
 
   render() {
     const objectToAPI = { name: this.state.name };

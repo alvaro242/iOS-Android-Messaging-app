@@ -14,7 +14,7 @@ import { logIn } from "../components/utils/API";
 import React, { Component } from "react";
 import { warningAlert } from "../components/utils/errorHandling";
 import { NativeBaseProvider } from "native-base";
-import { t, getLanguage } from "../../locales";
+import { t, getLanguage, getLanguagePreference } from "../../locales";
 
 export default class LogInScreen extends Component {
   constructor(props) {
@@ -25,9 +25,7 @@ export default class LogInScreen extends Component {
     };
   }
 
-  componentDidMount() {
-    getLanguage();
-  }
+  componentDidMount() {}
 
   handleFeedback(response) {
     let warningFeedback400 = warningAlert(t("invalidlogin"));

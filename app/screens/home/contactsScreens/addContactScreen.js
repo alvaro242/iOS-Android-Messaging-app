@@ -24,7 +24,7 @@ import {
   warningAlert,
 } from "../../../components/utils/errorHandling";
 import { Button } from "native-base";
-import { getLanguage, t } from "../../../../locales";
+import { getLanguage, getLanguagePreference, t } from "../../../../locales";
 
 export default class AddContactScreen extends Component {
   constructor(props) {
@@ -83,7 +83,6 @@ export default class AddContactScreen extends Component {
   }
 
   componentDidMount() {
-    getLanguage();
     loadKey().then((key) =>
       getAllContacts(key).then((responseJson) =>
         this.setState({

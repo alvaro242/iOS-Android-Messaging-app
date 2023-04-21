@@ -20,7 +20,7 @@ import ChatScreen from "./app/screens/home/chatScreens/chatScreen";
 import CreateChatScreen from "./app/screens/home/chatScreens/CreateChatScreen";
 import AboutChat from "./app/screens/home/chatScreens/AboutChat";
 import { NativeBaseProvider } from "native-base";
-import { t, getLanguage } from "./locales/";
+import { t, getLanguagePreference } from "./locales/";
 
 const Stack = createNativeStackNavigator();
 
@@ -30,17 +30,9 @@ export default class App extends Component {
   }
 
   componentDidMount() {
-    getLanguage();
+    getLanguagePreference();
   }
 
-  /*
-  checkLoggedIn = async () => {
-    const value = await AsyncStorage.getItem("whatsthat_session_token");
-    if (value == null) {
-      this.props.navigation.navigate("LogInScreen");
-    }
-  };
-*/
   render() {
     return (
       //SafeArea for iPhoneX+ devices
@@ -48,7 +40,7 @@ export default class App extends Component {
         <SafeAreaView edges={["right", "left", "top"]} style={styles.root}>
           <NavigationContainer ref={navigationRef}>
             <Stack.Navigator
-              initialRouteName="Home"
+              initialRouteName="StartScreen"
               screenOptions={({ route }) => ({
                 headerStyle: {
                   backgroundColor: "#5D80F0",

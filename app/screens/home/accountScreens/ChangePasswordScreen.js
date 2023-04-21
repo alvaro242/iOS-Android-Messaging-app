@@ -18,7 +18,7 @@ import {
   warningAlert,
   errorAlert,
 } from "../../../components/utils/errorHandling";
-import { getLanguage, t } from "../../../../locales";
+import { getLanguage, getLanguagePreference, t } from "../../../../locales";
 
 export default class ChangePassword extends Component {
   constructor(props) {
@@ -31,7 +31,6 @@ export default class ChangePassword extends Component {
   }
 
   componentDidMount() {
-    getLanguage();
     loadKeyAndID().then((result) => this.setState({ keyAndId: result })); //keyid will be an array with key and ID
   }
 

@@ -12,7 +12,7 @@ import {
 } from "../components/utils/errorHandling";
 import { NativeBaseProvider } from "native-base";
 import { TouchableOpacity } from "react-native";
-import { t, getLanguage } from "../../locales";
+import { t } from "../../locales";
 
 export default class SignUpScreen extends Component {
   constructor(props) {
@@ -23,9 +23,7 @@ export default class SignUpScreen extends Component {
     };
   }
 
-  componentDidMount() {
-    getLanguage();
-  }
+  componentDidMount() {}
 
   handleFeedback(response) {
     let positiveFeedback = successAlert(

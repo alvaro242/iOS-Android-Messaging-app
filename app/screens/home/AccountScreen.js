@@ -24,7 +24,7 @@ import {
 
 import * as yup from "yup";
 import { Formik } from "formik";
-import { getLanguage, t } from "../../../locales";
+import { getLanguagePreference, t } from "../../../locales";
 
 export default class AccountScreen extends Component {
   constructor(props) {
@@ -43,7 +43,6 @@ export default class AccountScreen extends Component {
 
   componentDidMount() {
     const subscription = this.props.navigation.addListener("focus", () => {
-      getLanguage();
       loadKeyAndID()
         .then(
           (response) =>

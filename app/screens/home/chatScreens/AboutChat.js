@@ -24,7 +24,7 @@ import {
   successAlert,
   warningAlert,
 } from "../../../components/utils/errorHandling";
-import { getLanguage, t } from "../../../../locales";
+import { getLanguage, getLanguagePreference, t } from "../../../../locales";
 
 export default class AboutChat extends Component {
   constructor(props) {
@@ -47,7 +47,6 @@ export default class AboutChat extends Component {
 
   componentDidMount() {
     const subscription = this.props.navigation.addListener("focus", () => {
-      getLanguage();
       this.getData();
     });
     return () => {

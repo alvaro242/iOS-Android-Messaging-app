@@ -79,7 +79,9 @@
     "updatePassword": "Update Password",
     "confirmTheNewPicture": "Would you like to replace your current profile picture to this one?",
     "yes" : "Yes",
-    "no": "No"
+    "no": "No",
+    "selectLanguage": "Language"
+    
 
 
 

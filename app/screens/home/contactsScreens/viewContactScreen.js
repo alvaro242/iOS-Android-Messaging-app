@@ -21,7 +21,7 @@ import {
   successAlert,
   warningAlert,
 } from "../../../components/utils/errorHandling";
-import { getLanguage, t } from "../../../../locales";
+import { getLanguage, getLanguagePreference, t } from "../../../../locales";
 
 export default class ViewContactScreen extends Component {
   constructor(props) {
@@ -36,7 +36,6 @@ export default class ViewContactScreen extends Component {
   }
 
   componentDidMount() {
-    getLanguage();
     loadKey().then((key) =>
       getProfilePicture(this.props.route.params.item.user_id, key).then(
         (response) => this.setState({ photo: response, isLoading: false })
