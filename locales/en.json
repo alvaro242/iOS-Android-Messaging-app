@@ -80,7 +80,10 @@
     "confirmTheNewPicture": "Would you like to replace your current profile picture to this one?",
     "yes" : "Yes",
     "no": "No",
-    "selectLanguage": "Language"
+    "selectLanguage": "Language",
+    "savedraft" : "Save as draft",
+    "viewSavedDrafts" : "View saved drafts",
+    "drafts" : "Drafts"
     
 
 

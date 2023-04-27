@@ -81,8 +81,10 @@
     "confirmTheNewPicture": "¿Te gustaría cambiar la fotografía?",
     "yes": "Sí",
     "no": "No",
-    "selectLanguage": "Idioma"
-
+    "selectLanguage": "Idioma",
+    "savedraft" : "Guardar como borrador",
+    "viewSavedDrafts": "Ver borradores",
+    "drafts" : "Borradores"
 }
 
  

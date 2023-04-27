@@ -29,10 +29,11 @@ export default class ChatsScreen extends Component {
       key: "",
     };
   }
-  componentDidMount() {
+  async componentDidMount() {
     const subscription = this.props.navigation.addListener("focus", () => {
       this.getData();
     });
+
     return () => {
       subscription.remove();
     };

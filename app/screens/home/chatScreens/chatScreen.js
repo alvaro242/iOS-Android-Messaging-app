@@ -28,6 +28,7 @@ import {
 import { Menu, Provider } from "react-native-paper";
 import { TouchableOpacity } from "react-native-web";
 import { t } from "../../../../locales";
+import AsyncStorage from "@react-native-async-storage/async-storage";
 
 export default class ChatScreen extends Component {
   constructor(props) {
@@ -43,6 +44,7 @@ export default class ChatScreen extends Component {
       message: "",
       user_id: "",
       menuVisible: false,
+      draftMenuVisible: false,
       originalMessage: "",
       amendedMessage: "",
       amendContainer: <View></View>,
@@ -51,7 +53,15 @@ export default class ChatScreen extends Component {
   }
   componentDidMount() {
     const subscription = this.props.navigation.addListener("focus", () => {
+      window.addEventListener("contextmenu", function (event) {
+        //prevents contextmenu on long press
+
+        event.preventDefault();
+      });
+
       this.getData();
+
+      //if navigator has passed a prop then message will equal that prop
     });
     return () => {
       subscription.remove();
@@ -127,29 +137,11 @@ export default class ChatScreen extends Component {
     return Images;
   }
 
-  MessageChangeHandler = (e) => {
-    this.setState({
-      message: e.target.value,
-    });
-  };
+  //Message Menu
 
-  AmendMessageInputChangeHandler = (e) => {
-    this.setState({
-      amendedMessage: e.target.value,
-    });
-  };
+  _openMenu = () => this.setState({ menuVisible: true });
 
-  messageStyleHandler(userID, authorID) {
-    if (userID == authorID) {
-      return styles.myMessageContainer;
-    } else {
-      return styles.messageContainer;
-    }
-  }
-
-  _openMenu = () => this.setState({ visible: true });
-
-  _closeMenu = () => this.setState({ visible: false });
+  _closeMenu = () => this.setState({ menuVisible: false });
 
   handleMenu(message) {
     //run the following only if user is author
@@ -164,16 +156,6 @@ export default class ChatScreen extends Component {
     }
   }
 
-  handleSendMessage() {
-    sendNewMessage(
-      this.state.message,
-      this.state.chatInfo.chat_id,
-      this.state.key
-    );
-    this.getData();
-    this.textInput.clear();
-  }
-
   AmendMessageHandler() {
     this.hideAmendContainerMessage();
     updateMessage(
@@ -183,6 +165,16 @@ export default class ChatScreen extends Component {
       this.state.amendedMessage
     );
     this.getData();
+  }
+
+  handleDeleteMessage() {
+    this.getData();
+    this._closeMenu();
+    deleteMessage(
+      this.state.chatInfo.chat_id,
+      this.state.messageID,
+      this.state.key
+    );
   }
 
   openAmendContainer(originalMessage) {
@@ -215,18 +207,73 @@ export default class ChatScreen extends Component {
     });
   }
 
-  handleDeleteMessage() {
-    this.getData();
-    this._closeMenu();
-    deleteMessage(
-      this.state.chatInfo.chat_id,
-      this.state.messageID,
-      this.state.key
-    );
-  }
-
   hideAmendContainerMessage() {
     this.setState({ amendContainer: <View></View> });
+  }
+
+  //
+
+  _openDraftMenu = () => this.setState({ draftMenuVisible: true });
+
+  _closeDraftMenu = () => this.setState({ draftMenuVisible: false });
+
+  async handleSaveAsDraft(newDraft) {
+    // check if drafts exist in local memory. If exist then add. If it doesnt then create
+
+    try {
+      let savedDrafts = await AsyncStorage.getItem("drafts");
+
+      if (savedDrafts !== null) {
+        let arrayOfDrafts = JSON.parse(savedDrafts);
+
+        arrayOfDrafts.push(newDraft);
+
+        try {
+          await AsyncStorage.setItem("drafts", JSON.stringify(arrayOfDrafts));
+        } catch (error) {
+          throw error;
+        }
+      } else {
+        //new array
+        try {
+          await AsyncStorage.setItem("drafts", JSON.stringify([newDraft]));
+        } catch (error) {
+          throw error;
+        }
+      }
+    } catch (err) {}
+  }
+
+  //
+
+  MessageChangeHandler = (e) => {
+    this.setState({
+      message: e.target.value,
+    });
+  };
+
+  AmendMessageInputChangeHandler = (e) => {
+    this.setState({
+      amendedMessage: e.target.value,
+    });
+  };
+
+  messageStyleHandler(userID, authorID) {
+    if (userID == authorID) {
+      return styles.myMessageContainer;
+    } else {
+      return styles.messageContainer;
+    }
+  }
+
+  handleSendMessage() {
+    sendNewMessage(
+      this.state.message,
+      this.state.chatInfo.chat_id,
+      this.state.key
+    );
+    this.getData();
+    this.textInput.clear();
   }
 
   renderAuthorDetails(author, LoggedUser) {
@@ -306,7 +353,7 @@ export default class ChatScreen extends Component {
               <View>
                 <Menu
                   style={styles.menuContainer}
-                  visible={this.state.visible}
+                  visible={this.state.menuVisible}
                   onDismiss={this._closeMenu}
                   anchor={
                     <ScrollView>
@@ -316,7 +363,7 @@ export default class ChatScreen extends Component {
                         renderItem={({ item }) => (
                           <View style={styles.outerContainer}>
                             <TouchableWithoutFeedback
-                              onPress={() => {
+                              onLongPress={() => {
                                 this.handleMenu(item);
                               }}
                             >
@@ -375,12 +422,34 @@ export default class ChatScreen extends Component {
                 }}
                 style={styles.inputForm}
               ></TextInput>
-              <View style={styles.sendButton}>
-                <Button
-                  title={t("send")}
-                  onPress={() => this.handleSendMessage()}
+              <Menu
+                style={styles.menuContainer}
+                visible={this.state.draftMenuVisible}
+                onDismiss={this._closeDraftMenu}
+                anchor={
+                  <View style={styles.sendButton}>
+                    <TouchableWithoutFeedback
+                      onPress={() => this.handleSendMessage()}
+                      onLongPress={() => this._openDraftMenu()}
+                    >
+                      <Text>Send</Text>
+                    </TouchableWithoutFeedback>
+                  </View>
+                }
+              >
+                <Menu.Item
+                  onPress={() => {
+                    RootNavigation.navigate("draftsScreen");
+                  }}
+                  title={t("drafts")}
                 />
-              </View>
+                <Menu.Item
+                  onPress={() => {
+                    this.handleSaveAsDraft(this.state.message);
+                  }}
+                  title={t("savedraft")}
+                />
+              </Menu>
             </View>
           </View>
         </View>

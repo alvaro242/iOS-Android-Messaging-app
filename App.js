@@ -21,6 +21,7 @@ import CreateChatScreen from "./app/screens/home/chatScreens/CreateChatScreen";
 import AboutChat from "./app/screens/home/chatScreens/AboutChat";
 import { NativeBaseProvider } from "native-base";
 import { t, getLanguagePreference } from "./locales/";
+import DraftScreen from "./app/screens/home/chatScreens/draftsScreen";
 
 const Stack = createNativeStackNavigator();
 
@@ -174,6 +175,15 @@ export default class App extends Component {
                 component={AddNewMemberScreen}
                 options={{
                   title: t("about"),
+                  headerShown: true,
+                  gestureEnabled: true,
+                }}
+              />
+              <Stack.Screen
+                name="draftsScreen"
+                component={DraftScreen}
+                options={{
+                  title: t("drafts"),
                   headerShown: true,
                   gestureEnabled: true,
                 }}
