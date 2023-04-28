@@ -218,7 +218,7 @@ export default class ChatScreen extends Component {
   _closeDraftMenu = () => this.setState({ draftMenuVisible: false });
 
   async handleSaveAsDraft(newDraft) {
-    // check if drafts exist in local memory. If exist then add. If it doesnt then create
+    // check if drafts exist in local memory. If exist then add to the array of obj. If it doesnt then create
 
     try {
       let savedDrafts = await AsyncStorage.getItem("drafts");
@@ -226,7 +226,7 @@ export default class ChatScreen extends Component {
       if (savedDrafts !== null) {
         let arrayOfDrafts = JSON.parse(savedDrafts);
 
-        arrayOfDrafts.push(newDraft);
+        arrayOfDrafts[arrayOfDrafts.length] = newDraft;
 
         try {
           await AsyncStorage.setItem("drafts", JSON.stringify(arrayOfDrafts));
@@ -234,14 +234,19 @@ export default class ChatScreen extends Component {
           throw error;
         }
       } else {
-        //new array
+        //new array of objects
+
         try {
           await AsyncStorage.setItem("drafts", JSON.stringify([newDraft]));
         } catch (error) {
           throw error;
         }
       }
-    } catch (err) {}
+    } catch (err) {
+      console.log(err);
+    }
+    this.setState({ message: "" });
+    this._closeDraftMenu();
   }
 
   //
