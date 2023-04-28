@@ -358,7 +358,10 @@ export default class ChatScreen extends Component {
                   name="arrow-left"
                   size={25}
                   color="white"
-                  onPress={() => RootNavigation.navigate("Chats")}
+                  onPress={() =>
+                    clearInterval(this.interval) &
+                    RootNavigation.navigate("Chats")
+                  }
                 />
               </View>
               <View>
@@ -372,6 +375,7 @@ export default class ChatScreen extends Component {
                   size={25}
                   color="white"
                   onPress={() =>
+                    clearInterval(this.interval) &
                     RootNavigation.navigate(
                       "AboutChat",
 
@@ -493,7 +497,8 @@ export default class ChatScreen extends Component {
               >
                 <Menu.Item
                   onPress={() => {
-                    RootNavigation.navigate("draftsScreen");
+                    clearInterval(this.interval) &
+                      RootNavigation.navigate("draftsScreen");
                   }}
                   title={t("drafts")}
                 />
