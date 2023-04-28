@@ -17,6 +17,7 @@ import {
   loadKey,
   loadCurrentUser,
   showOnlyTime,
+  showOnlyDate,
 } from "../../../components/utils/utils";
 import {
   getChatDetails,
@@ -29,6 +30,7 @@ import { Menu, Provider } from "react-native-paper";
 import { TouchableOpacity } from "react-native-web";
 import { t } from "../../../../locales";
 import AsyncStorage from "@react-native-async-storage/async-storage";
+import { date } from "yup";
 
 export default class ChatScreen extends Component {
   constructor(props) {
@@ -49,6 +51,7 @@ export default class ChatScreen extends Component {
       amendedMessage: "",
       amendContainer: <View></View>,
       valueMessage: "",
+      DateMessage: "",
     };
   }
   componentDidMount() {
@@ -76,7 +79,8 @@ export default class ChatScreen extends Component {
     );
 
     await getChatDetails(this.state.chatInfo.chat_id, this.state.key).then(
-      (response) => this.setState({ conversation: response })
+      (response) => this.changeMessagesOrder(response)
+      //I change the order of messages and store it conversation state
     );
 
     this.loadPicsOfAuthors(this.state.conversation.messages, this.state.key);
@@ -89,6 +93,15 @@ export default class ChatScreen extends Component {
         this.state.conversation.members
       );
     }
+  }
+
+  changeMessagesOrder(conversation) {
+    let messages = conversation.messages;
+
+    let newConversation = conversation;
+    newConversation.messages = messages.reverse();
+
+    this.setState({ conversation: newConversation });
   }
 
   async loadPicsOfAuthors(messages, key) {
@@ -301,7 +314,22 @@ export default class ChatScreen extends Component {
     }
   }
 
+  renderDate(Date) {
+    return (
+      <View style={styles.messageDay}>
+        <Text>{Date}</Text>
+      </View>
+    );
+  }
+
   render() {
+    let previousDate = "";
+    let renderDate = (
+      <View>
+        <Text></Text>
+      </View>
+    );
+
     //New header and disable default
 
     let user_id = this.state.user_id;
@@ -364,36 +392,53 @@ export default class ChatScreen extends Component {
                     <ScrollView>
                       <FlatList
                         data={this.state.conversation.messages}
-                        inverted={true}
-                        renderItem={({ item }) => (
-                          <View style={styles.outerContainer}>
-                            <TouchableWithoutFeedback
-                              onLongPress={() => {
-                                this.handleMenu(item);
-                              }}
-                            >
+                        inverted={false}
+                        renderItem={({ item, index }) => {
+                          let currentDate = showOnlyDate(item.timestamp);
+
+                          if (previousDate != currentDate) {
+                            renderDate = this.renderDate(currentDate);
+                          } else {
+                            renderDate = (
                               <View>
-                                <View
-                                  style={this.messageStyleHandler(
-                                    this.state.user_id,
-                                    item.author.user_id
-                                  )}
-                                >
-                                  {this.renderAuthorDetails(
-                                    item.author,
-                                    this.state.user_id
-                                  )}
-                                  <Text style={styles.textMessage}>
-                                    {item.message}
-                                  </Text>
-                                  <Text style={styles.timeMessage}>
-                                    {showOnlyTime(item.timestamp)}
-                                  </Text>
-                                </View>
+                                <Text></Text>
                               </View>
-                            </TouchableWithoutFeedback>
-                          </View>
-                        )}
+                            );
+                          }
+
+                          previousDate = currentDate;
+
+                          return (
+                            <View style={styles.outerContainer}>
+                              {renderDate}
+                              <TouchableWithoutFeedback
+                                onLongPress={() => {
+                                  this.handleMenu(item);
+                                }}
+                              >
+                                <View>
+                                  <View
+                                    style={this.messageStyleHandler(
+                                      this.state.user_id,
+                                      item.author.user_id
+                                    )}
+                                  >
+                                    {this.renderAuthorDetails(
+                                      item.author,
+                                      this.state.user_id
+                                    )}
+                                    <Text style={styles.textMessage}>
+                                      {item.message}
+                                    </Text>
+                                    <Text style={styles.timeMessage}>
+                                      {showOnlyTime(item.timestamp)}
+                                    </Text>
+                                  </View>
+                                </View>
+                              </TouchableWithoutFeedback>
+                            </View>
+                          );
+                        }}
                         keyExtractor={({ message_id }, index) => message_id}
                       />
                     </ScrollView>

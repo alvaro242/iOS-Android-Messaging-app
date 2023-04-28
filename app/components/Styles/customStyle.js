@@ -464,4 +464,10 @@ export const styles = StyleSheet.create({
     borderWidth: 1,
     borderColor: "red",
   },
+  messageDay: {
+    alignItems: "center",
+    padding: 1,
+    backgroundColor: "#E3E3B0",
+    borderRadius: 10,
+  },
 });

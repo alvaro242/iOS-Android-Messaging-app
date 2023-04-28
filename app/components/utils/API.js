@@ -512,7 +512,7 @@ export function deleteMessage(chatID, messageID, key) {
     }
   )
     .then(async (response) => {
-      console.log(response);
+      // no need response as the chatscreen will render wiuth the removal
     })
     .catch((error) => {
       console.log(error);

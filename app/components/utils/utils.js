@@ -108,3 +108,16 @@ export function showOnlyTime(messageTimeStamp) {
 
   return timeMessage;
 }
+
+export function showOnlyDate(messageTimeStamp) {
+  var dateMessage = new Date(messageTimeStamp);
+
+  var dayMessage =
+    dateMessage.getDate() +
+    "/" +
+    dateMessage.getMonth() +
+    "/" +
+    dateMessage.getFullYear();
+
+  return dayMessage;
+}
