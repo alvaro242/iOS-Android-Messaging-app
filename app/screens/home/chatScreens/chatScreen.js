@@ -61,14 +61,18 @@ export default class ChatScreen extends Component {
 
         event.preventDefault();
       });
-
       this.getData();
+      this.interval = setInterval(() => this.setState(this.getData()), 5000);
 
       //if navigator has passed a prop then message will equal that prop
     });
     return () => {
       subscription.remove();
     };
+  }
+
+  componentWillUnmount() {
+    clearInterval(this.interval);
   }
 
   async getData() {
