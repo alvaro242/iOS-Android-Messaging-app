@@ -3,6 +3,7 @@ import React, { Component } from "react";
 import AsyncStorage from "@react-native-async-storage/async-storage";
 import { styles } from "../../../components/Styles/customStyle";
 import { MaterialCommunityIcons } from "react-native-vector-icons";
+//import * as RootNavigation from "./../../../components/utils/RootNavigation";
 
 export default class DraftScreen extends Component {
   constructor(props) {
@@ -62,12 +63,20 @@ export default class DraftScreen extends Component {
           <View>
             <FlatList
               data={this.state.drafts}
-              renderItem={({ item }) => (
+              renderItem={({ item: draft }) => (
                 <View>
-                  <TouchableOpacity style={styles.memberContainer}>
-                    <Text style={styles.nameMember}>{item}</Text>
+                  {console.log(draft)}
+                  <TouchableOpacity
+                    style={styles.memberContainer}
+                    onPress={() =>
+                      this.props.navigation.navigate("ChatScreen", {
+                        draft,
+                      })
+                    }
+                  >
+                    <Text style={styles.nameMember}>{draft}</Text>
 
-                    <TouchableOpacity onPress={() => this.remove(item)}>
+                    <TouchableOpacity onPress={() => this.remove(draft)}>
                       <MaterialCommunityIcons
                         name="trash-can-outline"
                         color="red"
@@ -77,7 +86,7 @@ export default class DraftScreen extends Component {
                   </TouchableOpacity>
                 </View>
               )}
-              keyExtractor={({ item }, index) => index}
+              keyExtractor={({ draft }, index) => index}
               //avoid error unique key
             />
           </View>

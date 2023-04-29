@@ -38,6 +38,7 @@ export default class ChatScreen extends Component {
 
     this.state = {
       chatInfo: this.props.route.params.item,
+
       key: "",
       conversation: "",
       arrayOfUris: [],
@@ -57,10 +58,10 @@ export default class ChatScreen extends Component {
   componentDidMount() {
     const subscription = this.props.navigation.addListener("focus", () => {
       window.addEventListener("contextmenu", function (event) {
-        //prevents contextmenu on long press
-
+        //prevents contextmenu on long press by avoiding right click on this screen
         event.preventDefault();
       });
+      this.draftToMessage();
       this.getData();
       this.interval = setInterval(() => this.setState(this.getData()), 5000);
 
@@ -73,6 +74,14 @@ export default class ChatScreen extends Component {
 
   componentWillUnmount() {
     clearInterval(this.interval);
+  }
+
+  draftToMessage() {
+    //if draft has been recevied from navigator then update message from draft will render as default in input
+
+    if (this.props.route.params.draft !== undefined) {
+      this.setState({ message: this.props.route.params.draft });
+    }
   }
 
   async getData() {
@@ -228,7 +237,7 @@ export default class ChatScreen extends Component {
     this.setState({ amendContainer: <View></View> });
   }
 
-  //
+  // Draft Menu
 
   _openDraftMenu = () => this.setState({ draftMenuVisible: true });
 
@@ -467,13 +476,12 @@ export default class ChatScreen extends Component {
                 </Menu>
               </View>
             </View>
-
             {this.state.amendContainer}
-
             <View style={styles.sendMessageContainer}>
               <TextInput
                 name="Message"
                 onChange={this.MessageChangeHandler}
+                defaultValue={this.state.message}
                 keyboardType={"Text"}
                 ref={(input) => {
                   this.textInput = input;
@@ -498,6 +506,7 @@ export default class ChatScreen extends Component {
                 <Menu.Item
                   onPress={() => {
                     clearInterval(this.interval) &
+                      this._closeDraftMenu() &
                       RootNavigation.navigate("draftsScreen");
                   }}
                   title={t("drafts")}
