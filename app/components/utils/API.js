@@ -41,7 +41,6 @@ export function getUserInformation(token, userID) {
     })
 
     .catch((error) => {
-      console.log("No response / not auth");
       console.log(error);
     });
 }
@@ -101,7 +100,6 @@ export function logIn(values) {
 }
 
 export function logOut(token) {
-  console.log(token);
   return fetch("http://" + serverIP + "/api/1.0.0/logout", {
     method: "POST",
     headers: {
@@ -184,7 +182,6 @@ export function searchCurrentUsers(searchWord, token) {
     },
   })
     .then((response) => {
-      console.log(response);
       return response.json();
     })
 
@@ -208,7 +205,6 @@ export function searchBetweenAllUsers(searchWord, token) {
     },
   })
     .then((response) => {
-      console.log(response);
       return response.json();
     })
 
@@ -293,7 +289,6 @@ export function getBlockedContacts(token) {
     })
 
     .catch((error) => {
-      console.log("No response / not auth");
       console.log(error);
     });
 }
@@ -382,7 +377,6 @@ export function getChatDetails(chatID, token) {
     })
 
     .catch((error) => {
-      console.log("No response / not auth");
       console.log(error);
     });
 }

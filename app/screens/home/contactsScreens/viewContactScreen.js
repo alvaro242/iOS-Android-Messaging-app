@@ -44,7 +44,6 @@ export default class ViewContactScreen extends Component {
   }
 
   handleFeedbackDelete(response) {
-    console.log(response);
     if (response.status == 200) {
       this.setState({
         alertMessage: successAlert(t("contactDeleted")),
@@ -69,7 +68,6 @@ export default class ViewContactScreen extends Component {
   }
 
   handleFeedbackBlock(response) {
-    console.log(response);
     if (response.status == 200) {
       this.setState({
         alertMessage: successAlert(t("blocked")),

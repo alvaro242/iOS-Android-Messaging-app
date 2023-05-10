@@ -72,7 +72,6 @@ export default class AccountScreen extends Component {
   }
 
   handleFeedback(response) {
-    console.log(response);
     if (response.status == 200) {
       this.setState({
         alertMessage: successAlert(t("detailsAmended")),

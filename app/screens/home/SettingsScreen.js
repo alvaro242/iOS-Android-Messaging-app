@@ -31,7 +31,6 @@ export default class SettingsScreen extends Component {
   };
 
   async handleSubmit() {
-    console.log(this.state.valueLanguage);
     let language = "";
 
     if (this.state.valueLanguage == "Default") {

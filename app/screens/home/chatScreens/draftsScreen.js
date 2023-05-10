@@ -65,7 +65,6 @@ export default class DraftScreen extends Component {
               data={this.state.drafts}
               renderItem={({ item: draft }) => (
                 <View>
-                  {console.log(draft)}
                   <TouchableOpacity
                     style={styles.memberContainer}
                     onPress={() =>

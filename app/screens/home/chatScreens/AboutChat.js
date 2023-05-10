@@ -67,8 +67,6 @@ export default class AboutChat extends Component {
   }
 
   handleFeedbackChangeChatName(response) {
-    console.log(response);
-
     if (response.status == 200) {
       this.setState({
         alertMessage: successAlert(t("nameChanged")),
@@ -89,8 +87,6 @@ export default class AboutChat extends Component {
   }
 
   handleFeedbackRemoveMember(response) {
-    console.log(response);
-
     if (response.status == 200) {
       this.setState({
         alertMessage: successAlert(t("removedFromChat")),

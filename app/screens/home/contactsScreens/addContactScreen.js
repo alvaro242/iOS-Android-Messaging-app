@@ -44,8 +44,6 @@ export default class AddContactScreen extends Component {
   }
 
   handleFeedback(response) {
-    console.log(response.status);
-
     let positiveFeedback = successAlert(t("contactAdded"));
     let informativeFeedback = informativeAlert(t("addYourself"));
     let warningFeedback401 = warningAlert(t("notAuthorized"));
@@ -133,8 +131,6 @@ export default class AddContactScreen extends Component {
         <Button onPress={() => this.clearSearch()}>{t("clearSearch")}</Button>
       ),
     });
-
-    console.log(results);
   }
 
   clearSearch = () => {

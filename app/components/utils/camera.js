@@ -18,7 +18,6 @@ export default function CameraComponent() {
     setType((current) =>
       current === CameraType.back ? CameraType.front : CameraType.back
     );
-    console.log("Camera: ", type);
   }
 
   async function takePhoto() {

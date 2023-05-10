@@ -42,7 +42,6 @@ export default class UnblockUserScreen extends Component {
   }
 
   handleFeedbackDelete(response) {
-    console.log(response);
     if (response.status == 200) {
       this.setState({
         alertMessage: successAlert(t("contactDeleted")),
@@ -63,7 +62,6 @@ export default class UnblockUserScreen extends Component {
   }
 
   handleFeedbackUnblock(response) {
-    console.log(response);
     if (response.status == 200) {
       this.setState({
         alertMessage: successAlert(t("unblocked")),

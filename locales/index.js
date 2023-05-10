@@ -27,7 +27,6 @@ export async function getLanguagePreference() {
       //I18n.initAsync();
       console.log("language preference is " + language);
     } else {
-      console.log("trigger");
       getDefaultLanguage();
     }
   } catch (err) {
